@@ -92,7 +92,30 @@ Dask-on-Ray is designed as a special Dask scheduler. A Dask scheduler is a funct
 
 = Design of Doreisa
 
+== First proof of concept
 
+=== Design
+
+The general design of the first proof of concept of Doreisa is shown in figure @doreisa-poc.
+
+#figure(
+    image("resources/doreisa-poc.png", width: 105%),
+    caption: [Architecture of the first Doreisa proof of concept],
+) <doreisa-poc>
+
+Each step of the analysis pipeline consists of the following steps:
+
+  1. The MPI processes terminate their simulation. The data is ready for analytics. It is made available to Doreisa using PDI, which serves here as an interface between Doreisa and the simulation code.
+  2. The data produced by the simulation is placed in the Ray object store. An ObjectRef is produced: this reference to the data is sent to a main actor running on the head node.
+  3. The head actor collects the references of all the processes. Once it has received all of them, it builds a Dask array from it.
+  4. The user script receives the Dask array. The array can be used as a standard Dask array, to perform any kind of analysis. Performing operations on the Dask array produces a task graph.
+  5. The task graph is passed to the Dask-on-Ray scheduler that is in charge of executing it. Each Dask task is converted to a Ray task, and scheduled by Ray. Ray takes into account data locality when scheduling tasks, so unnecessary data movements should be avoided.
+
+=== Performance evaluation
+
+This first solution has the drawback of being really centralized: the head actor need to collect an ObjectRef for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks. The same node will be in charge of scheduling all these tasks, and retrieving their results.
+
+For big simulations running on hundreds of nodes, the head node would have to process tens of thousands of references and tasks at each iteration, which is too costly, as shown on Figure XXX demonstrates this.
 
 == Building the Dask Aray
 
