@@ -2,7 +2,7 @@
 #SBATCH --job-name=doreisa_test
 #SBATCH --nodes=2
 
-#SBATCH --time=00:05:00
+#SBATCH --time=00:02:00
 #SBATCH --output=job-%j.out
 #SBATCH --error=job-%j.err
 
@@ -27,6 +27,10 @@ srun --nodes=1 --nodelist=$headnode --ntasks-per-node=1 python3 head.py 1 &
 
 sleep 5
 echo "Head node started"
+
+# TODO delete
+srun --nodes=$((SLURM_JOB_NUM_NODES - 1)) --nodelist=$workernodes --ntasks-per-node=1 ping -c 3 $headnode
+srun --nodes=$((SLURM_JOB_NUM_NODES - 1)) --nodelist=$workernodes --ntasks-per-node=1 ifconfig -a
 
 # Start the simulation nodes
 srun --nodes=$((SLURM_JOB_NUM_NODES - 1)) --nodelist=$workernodes --ntasks-per-node=1 /linkhome/rech/genlig01/ufw76xj/.local/bin/ray start --address=$headnode:4242
