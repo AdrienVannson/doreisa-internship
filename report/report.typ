@@ -90,6 +90,12 @@ Dask-on-Ray is a project aiming at bringing the best of Dask and Ray together. I
 
 Dask-on-Ray is designed as a special Dask scheduler. A Dask scheduler is a function taking two main parameters: a Dask graph and a list of the keys to compute. The scheduler is in charge of computing the value of the requested keys and returning them. The Dask-on-Ray scheduler goes through all the graph: for each computation in the graph, it performs the computation in a Ray remote function call.
 
+=== PDI
+
+PDI (the PDI Data Interface) is a project aiming at coupling C / C++ programs (typically MPI simulations) with plugins in charge of using the data for various tasks. Plugins make it possible to save the data to HDF5 files, export it to JSON, etc. The user needs to write a YAML file to choose how to use the data, without having to recompile the simulation code each time the usage changes.
+
+In this project, we will use the Pycall plugin, which allows making the data available to a Python script as a Numpy array without copying it.
+
 = Design of Doreisa
 
 == First proof of concept
