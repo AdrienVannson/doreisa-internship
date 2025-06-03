@@ -10,6 +10,11 @@ module purge
 
 module load python/3.12.7
 
+# Add Ray to the PATH
+export PATH="/linkhome/rech/genlig01/ufw76xj/.local/bin:$PATH"
+
+export OPENBLAS_NUM_THREADS=1
+
 # Create directories for results
 mkdir -p timesteps
 
@@ -21,23 +26,55 @@ tail -n +2 nodes.txt > workernodes.txt
 headnode=$(cat headnode.txt)
 workernodes=$(cat workernodes.txt | tr '\n' ',' | sed 's/,$//')
 
-# Start the head node
-srun --nodes=1 --nodelist=$headnode --ntasks-per-node=1 /linkhome/rech/genlig01/ufw76xj/.local/bin/ray start --head --port=4242 
-srun --nodes=1 --nodelist=$headnode --ntasks-per-node=1 python3 head.py 1 &
+# Find the IP of the head node. We use ib0 for the InfiniBand interface.
+head_node_ip=$(srun --nodes=1 --nodelist=$headnode --ntasks-per-node=1 bash -c 'ip -o -4 addr show ib0 | awk "{print \$4}" | cut -d/ -f1')
+echo "Head node IP: $head_node_ip"
 
-sleep 5
+# Start the head node
+srun --nodes=1 --nodelist=$headnode --ntasks=1 --cpus-per-task=40 bash -c "
+    ulimit -n 65535
+    export OPENBLAS_NUM_THREADS=1
+    ray start --head --node-ip-address=$head_node_ip --port=4242 --disable-usage-stats
+    python3 head.py 1
+" &
+
+sleep 30
+
 echo "Head node started"
 
-# TODO delete
-srun --nodes=$((SLURM_JOB_NUM_NODES - 1)) --nodelist=$workernodes --ntasks-per-node=1 ping -c 3 $headnode
-srun --nodes=$((SLURM_JOB_NUM_NODES - 1)) --nodelist=$workernodes --ntasks-per-node=1 ifconfig -a
+mapfile -t nodes < workernodes.txt
 
-# Start the simulation nodes
-srun --nodes=$((SLURM_JOB_NUM_NODES - 1)) --nodelist=$workernodes --ntasks-per-node=1 /linkhome/rech/genlig01/ufw76xj/.local/bin/ray start --address=$headnode:4242
+for node in "${nodes[@]}"; do
+    echo "Starting node $node"
+    srun --nodes=1 --nodelist=$node --ntasks=1 --cpus-per-task=40 bash -c "
+        ulimit -n 65535
+        export OPENBLAS_NUM_THREADS=1
+        ray start --address=$head_node_ip:4242
+        ray status
+        python3 worker.py 00 20 20 &
+        python3 worker.py 01 20 20 &
+        python3 worker.py 02 20 20 &
+        python3 worker.py 03 20 20 &
+        python3 worker.py 04 20 20 &
+        python3 worker.py 05 20 20 &
+        python3 worker.py 06 20 20 &
+        python3 worker.py 07 20 20 &
+        python3 worker.py 08 20 20 &
+        python3 worker.py 09 20 20 &
+        python3 worker.py 10 20 20 &
+        python3 worker.py 11 20 20 &
+        python3 worker.py 12 20 20 &
+        python3 worker.py 13 20 20 &
+        python3 worker.py 14 20 20 &
+        python3 worker.py 15 20 20 &
+        python3 worker.py 16 20 20 &
+        python3 worker.py 17 20 20 &
+        python3 worker.py 18 20 20 &
+        python3 worker.py 19 20 20 &
+        wait
+    " &
+done
 
-# Start the workers
-echo "Starting the simulation"
-
-srun --nodes=$((SLURM_JOB_NUM_NODES - 1)) --nodelist=$workernodes --ntasks-per-node=$SLURM_CPUS_ON_NODE python3 worker.py &
+echo "All workers started"
 
 wait
