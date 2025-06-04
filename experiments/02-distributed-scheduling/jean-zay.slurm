@@ -46,31 +46,18 @@ mapfile -t nodes < workernodes.txt
 
 for node in "${nodes[@]}"; do
     echo "Starting node $node"
+
+    # On Jean Zay, we are allowed to start at most 96 processes per
+    # node (see slurm.conf). We need to be careful not to exceed this limit.
+    # TODO start more workers per node after updating doreisa.
     srun --nodes=1 --nodelist=$node --ntasks=1 --cpus-per-task=40 bash -c "
         ulimit -n 65535
         export OPENBLAS_NUM_THREADS=1
         ray start --address=$head_node_ip:4242
         ray status
-        python3 worker.py 00 20 20 &
-        python3 worker.py 01 20 20 &
-        python3 worker.py 02 20 20 &
-        python3 worker.py 03 20 20 &
-        python3 worker.py 04 20 20 &
-        python3 worker.py 05 20 20 &
-        python3 worker.py 06 20 20 &
-        python3 worker.py 07 20 20 &
-        python3 worker.py 08 20 20 &
-        python3 worker.py 09 20 20 &
-        python3 worker.py 10 20 20 &
-        python3 worker.py 11 20 20 &
-        python3 worker.py 12 20 20 &
-        python3 worker.py 13 20 20 &
-        python3 worker.py 14 20 20 &
-        python3 worker.py 15 20 20 &
-        python3 worker.py 16 20 20 &
-        python3 worker.py 17 20 20 &
-        python3 worker.py 18 20 20 &
-        python3 worker.py 19 20 20 &
+        for i in $(seq 0 19); do
+            python3 worker.py $i 20 20 &
+        done
         wait
     " &
 done
