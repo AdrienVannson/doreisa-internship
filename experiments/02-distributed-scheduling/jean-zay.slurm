@@ -44,7 +44,7 @@ echo "Head node started"
 
 mapfile -t nodes < workernodes.txt
 
-export iNode=0
+iNode=0
 for node in "${nodes[@]}"; do
     echo "Starting node $node"
 
@@ -54,7 +54,9 @@ for node in "${nodes[@]}"; do
     srun --nodes=1 --nodelist=$node --ntasks=1 --cpus-per-task=40 bash -c "
         ulimit -n 65535
         export OPENBLAS_NUM_THREADS=1
-        ray start --address=$head_node_ip:4242
+        node_ip=\$(ip -o -4 addr show ib0 | awk \"{print \\\$4}\" | cut -d/ -f1)
+        echo \"Node IP: \$node_ip\"
+        ray start --address=$head_node_ip:4242 --node-ip-address=\$node_ip
         sleep 10
         ray status
         for i in \$(seq $((20 * iNode)) $((20 * (iNode+1) - 1))); do
