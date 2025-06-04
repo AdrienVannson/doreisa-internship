@@ -1,6 +1,5 @@
 #!/bin/bash
 #SBATCH --job-name=doreisa_test
-#SBATCH --nodes=2
 
 #SBATCH --time=00:02:00
 #SBATCH --output=job-%j.out
@@ -35,6 +34,7 @@ srun --nodes=1 --nodelist=$headnode --ntasks=1 --cpus-per-task=40 bash -c "
     ulimit -n 65535
     export OPENBLAS_NUM_THREADS=1
     ray start --head --node-ip-address=$head_node_ip --port=4242 --disable-usage-stats
+    sleep 10
     python3 head.py 1
 " &
 
@@ -44,6 +44,7 @@ echo "Head node started"
 
 mapfile -t nodes < workernodes.txt
 
+export iNode=0
 for node in "${nodes[@]}"; do
     echo "Starting node $node"
 
@@ -54,12 +55,15 @@ for node in "${nodes[@]}"; do
         ulimit -n 65535
         export OPENBLAS_NUM_THREADS=1
         ray start --address=$head_node_ip:4242
+        sleep 10
         ray status
-        for i in $(seq 0 19); do
-            python3 worker.py $i 20 20 &
+        for i in \$(seq $((20 * iNode)) $((20 * (iNode+1) - 1))); do
+            python3 worker.py \$i $((20 * (SLURM_NNODES-1))) 20 &
         done
         wait
     " &
+
+    iNode=$((iNode + 1))
 done
 
 echo "All workers started"
