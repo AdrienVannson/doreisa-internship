@@ -8,9 +8,6 @@ from doreisa.simulation_node import Client
 
 rank, total, nb_chunks_of_node = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
 
-with open("debug.txt", "a") as f:
-    f.write(f"rank={rank} total={total} nb_chunks_of_node={nb_chunks_of_node}\n")
-
 ray.init(address="auto")
 
 client = Client()
