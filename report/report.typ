@@ -145,7 +145,37 @@ In practice, to avoid useless network use, a good compromise is to place an acto
 #figure(
     image("resources/results-method-1.png", width: 107%),
     caption: [Performance of the first method],
-) <ref-collecting-benchq>
+)
+
+== Decentralized scheduler
+
+== Evaluation (TODO titre)
+
+As we saw in the previous section, the current system is able to scale well until about TODO nodes are added. Once this threeshold is reached, a new bottleneck appears and the execution time starts being proportionnal to the number of nodes in the Ray cluster.
+
+To understand where this problem comes from, a more detailed analysis was realized. This experiment is named `03-TODO` in the `doreisa-internship` repository. The total execution time of a simple data analysis has been measured with a varying number of nodes: 10, 20, 40 and 80. This experiment has been realized on the `gros` cluster from `Grid5000`. The goal is to determine what are the parts of the process that take too much time, to identify the bottleneck. Four execution times are measured:
+
+  1. Without performing any analysis at all. This is the time taken by the head node to receive the information by the scheduling actors that the chunks are ready, and to build the Dask array as well as the task graph.
+  2. Executing the scheduling algorithm without sending the task graph to the scheduling actors. In addition to the previous step, each node of the task graph is assigned to a scheduling actor.
+  3. Executing the scheduling algorithm and sending the task graph to the scheduling actors, without having the actors perform any computation at all. In addition to the previous step, the information about the tasks and the scheduling are sent to the scheduling actors.
+  4. Performing all the computations required for the analysis. The scheduling actors actually run the computation.
+
+#figure(
+    image("resources/exp-03-time-per-action.svg"),
+    caption: [Time per iteration per action],
+) <exp-03-time-per-action>
+
+#figure(
+    image("resources/exp-03-time-for-cluster-size.svg"),
+    caption: [Decomposition of the time per iteration depending on the cluster size],
+) <exp-03-time-for-cluster-size>
+
+@exp-03-time-per-action shows the time per iteration for these four parts of the analytics, and @exp-03-time-for-cluster-size shows, for each cluster size, the proportion of the time spent in each phase of the computation. (TODO: delete @exp-03-time-per-action ?)
+
+First, we can notice that the distributed scheduler designed in the previous section scales very well: the execution time per iteration only slightly increase by a constant amont each time the cluster size doubles.
+
+The high execution times for the bigger cluster sizes come from the first three tasks, which were negligible in smaller runs. To further optimize the system, we need to focus on them.
+
 
 = Scalability
 
