@@ -47,6 +47,16 @@ Physical simulations such as Gysela @gysela or Parflow (TODO ref?).
 
 This Master thesis introduces a new way to process data coming from HPC simulations, easily and in a distributed and efficient manner. The proposed solution should be able to scale on supercomputers such as the Adastra and Jean Zay.
 
+== State of the art
+
+=== Deisa
+
+Deisa
+
+=== Reisa
+
+Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray instead of Dask. One of the main limitation of the approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define two callback functions: 
+
 == Performance requirements
 
 The proposed solution needs to scale well to some of the biggest supercomputers such as the french Adastra and Jean Zay.
@@ -80,9 +90,13 @@ Dask also provides APIs similar to pandas and numpy: the user can call functions
 
 In particular, a Dask array is a distributed implementation of numpy arrays. It is composed of several chunks, each chunk being represented as a numpy array. Performing computations on such a graph produces a task graph that can be executed in a distributed manner, hiding all the complexity from the final user.
 
-Unfortunately, Dask suffer from several limitations that have an impact on performance: data can't be shared between workers on the same node without a copy, and the centralized scheduler can become a bottleneck in very large-scale computations.
+Unfortunately, Dask suffer from several limitations that have an impact on performance:
+  - Data can't be shared between workers without a copy, even when the workers are running on the same node.
+  - Dask's scheduler is centralized, and can become a bottleneck in very large-scale computations. According to Dask's documentation @dask-actors-motivation, it can handle at most around 4000 tasks per second.
 
 === Ray
+
+See @exoshuffle
 
 === Dask-on-Ray
 
@@ -193,6 +207,15 @@ A first approach consists of having a central node that gather the references to
 
 
 = Performance evaluation
+
+
+= Challenges
+
+= Technical issues
+
+During the development of Doreisa, I came across several problems that took me a lot of time to fully understand and solve. This section briefly describes some of them.
+
+ - *Deployement on SLURM.* Supercomputers typically rely on SLURM @slurm to manage their resources. To use Doreisa on such supercomputers, it was necessary to start a Ray cluster with SLURM. When it is starting on a node, Ray starts the worker processes that will be used to execute remote tasks. The number of such processes corresponds to the number of available cores (TODO threads?) on the machine. Since supercomputers are optimized for efficient computations, each machine typically has several CPUs, each one having tens of cores. As a consequence, a lot of Ray workers can be started at the same time (TODO 40 or 80 for Jean Zay). Each of these processes performs operations on Numpy arrays. Numpy internally relies on OpenBLAS, which itself starts many threads to take advantage of the parallelism offered by the machine. This high number of threads made SLURM kill Ray processes.
 
 
 = Conclusion
