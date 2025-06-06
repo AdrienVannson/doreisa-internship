@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=doreisa_test
 
-#SBATCH --time=00:02:00
+#SBATCH --time=00:05:00
 #SBATCH --output=job-%j.out
 #SBATCH --error=job-%j.err
 
@@ -33,7 +33,7 @@ echo "Head node IP: $head_node_ip"
 srun --nodes=1 --nodelist=$headnode --ntasks=1 --cpus-per-task=40 bash -c "
     ulimit -n 65535
     export OPENBLAS_NUM_THREADS=1
-    ray start --head --node-ip-address=$head_node_ip --port=4242 --disable-usage-stats
+    ray start --head --node-ip-address=$head_node_ip --port=4242 --disable-usage-stats --include-dashboard=false
     sleep 10
     python3 head.py 1
 " &
@@ -59,8 +59,8 @@ for node in "${nodes[@]}"; do
         ray start --address=$head_node_ip:4242 --node-ip-address=\$node_ip
         sleep 10
         ray status
-        for i in \$(seq $((20 * iNode)) $((20 * (iNode+1) - 1))); do
-            python3 worker.py \$i $((20 * (SLURM_NNODES-1))) 20 &
+        for i in \$(seq $((40 * iNode)) $((40 * (iNode+1) - 1))); do
+            python3 worker.py \$i $((40 * (SLURM_NNODES-1))) 40 &
         done
         wait
     " &

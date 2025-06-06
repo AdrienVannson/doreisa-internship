@@ -5,10 +5,10 @@ import random
 
 import dask.array as da
 import numpy as np
+import ray
 
 from doreisa.head_node import init
 from doreisa.window_api import ArrayDefinition, run_simulation
-import ray
 
 exp_dir = os.path.dirname(os.path.realpath(__file__))
 do_computation = bool(int(sys.argv[1]))

@@ -2,13 +2,10 @@ import sys
 import time
 
 import numpy as np
-import ray
 
 from doreisa.simulation_node import Client
 
 rank, total, nb_chunks_of_node = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
-
-ray.init(address="auto")
 
 client = Client()
 array = np.random.randint(0, 100, (10, 10), dtype=np.int64)
