@@ -156,7 +156,7 @@ For big simulations running on hundreds of nodes, the head node would have to pr
 We can notice that both the gathering of the references and the execution of the task graph are slow tasks, one of them is not negligible compared to the other. Both aspects will need to be optimized in order to obtain a fast system.
 
 #figure(
-    image("resources/results-method-1.png", width: 107%),
+    image("resources/exp-01.svg", width: 105%),
     caption: [Performance of the naive method (weak scaling with a simple analysis)],
 ) <performance-naive-method>
 

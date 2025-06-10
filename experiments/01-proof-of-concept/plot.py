@@ -17,7 +17,7 @@ for line in data.split("\n"):
     ys1.append(y1)
     ys2.append(y2)
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6, 3))
 
 # Total time per iteration
 ax1.set_xlabel("Number of workers")
@@ -54,4 +54,4 @@ ax2.plot(xs, ratio)
 ax2.scatter(xs, ratio)
 
 plt.tight_layout()
-plt.savefig("plot.png")
+plt.savefig("plot.svg")
