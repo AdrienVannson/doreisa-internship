@@ -187,6 +187,13 @@ In practice, to avoid useless network use, a good compromise is to place an acto
 
 == Decentralized scheduler
 
+=== Evaluation
+
+#figure(
+    image("resources/exp-02-total-time.svg"),
+    caption: [Time per iteration with the distributed scheduler (weak scaling, 40 chunks per node)],
+) <decentralized-scheduler-total-time>
+
 == Evaluation (TODO titre)
 
 As we saw in the previous section, the current system is able to scale well until about TODO nodes are added. Once this threeshold is reached, a new bottleneck appears and the execution time starts being proportionnal to the number of nodes in the Ray cluster.
