@@ -3,6 +3,7 @@
 #set page(numbering: "1", number-align: center)
 #set text(font: "New Computer Modern", lang: "en")
 #set par(leading: 0.55em, first-line-indent: 1.8em, justify: true)
+#set heading(numbering: "1.")
 #show heading: set block(above: 1.4em, below: 1em)
 
 #[
@@ -57,7 +58,13 @@ Jean Zay is . In November 2024, it was ranked \#27 in Top500, with an Rmax value
 
 Given the architecture of these supercomputers, Doreisa should be able to scale to systems having thousands of nodes, producing tens of thousands to potentially hundreds of thousands of chunks of data per iteration.
 
-= State of the art
+== Structure of this report
+
+@state-of-the-art goes through the main research projects related to the subject, as well as the some tools used by these projects that will be useful for Doreisa. The first section of @doreisa-design introduces a proof of concept of Doreisa, working correctly with limited performance. The following subsections details improvements made to this solution, until the most advanced version. @performance-evaluation evaluates the performance of the application in various scenarios, and compare them to existing solutions. @challenges mentions some challenges that were encountered during the creation of Doreisa.
+
+The Doreisa implementation is available on Github @doreisa-github. The experiments run on the various supercomputers are available on Github as well @doreisa-internship-github.
+
+= State of the art <state-of-the-art>
 
 == Tools
 
@@ -113,13 +120,17 @@ Deisa
 
 Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray instead of Dask. One of the main limitation of the approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define two callback functions:
 
-= Design of Doreisa
+= Doreisa: Dask-on-Ray Enabled In-Situ Analytics <doreisa-design>
 
 == First proof of concept
 
+This section describes a first proof of concept of Doreisa. This solution already made it possible to analyze data produced by HPC simulations easily. However, its design remains largely centralized, with one main actor quickly becoming the bottleneck of the analytics.
+
+This first proof of concept will be successively improved by the following sections.
+
 === Design
 
-The general design of the first proof of concept of Doreisa is shown in figure @doreisa-poc.
+The general design of the first version of Doreisa is shown in figure @doreisa-poc.
 
 #figure(
     image("resources/doreisa-poc.png", width: 105%),
@@ -200,21 +211,12 @@ First, we can notice that the distributed scheduler designed in the previous sec
 The high execution times for the bigger cluster sizes come from the first three tasks, which were negligible in smaller runs. To further optimize the system, we need to focus on them.
 
 
-= Scalability
-
-This project aims at being used in large scale high-performance computations. It needs to scale properly to simulations involving hundreds of thousands to millions of cores. This has a strong impact on the architectural choices.
-
-== Centralized approach
-
-A first approach consists of having a central node that gather the references to numpy arrays sent by all the workers. Once all the references have been received, it becomes possible to use them to build a Dask Array. This centralized approach is not scalable enough: gathering the references is a costly operation as it requires to communicate with the workers.
+= Performance evaluation <performance-evaluation>
 
 
-= Performance evaluation
+= Challenges <challenges>
 
-
-= Challenges
-
-= Technical issues
+== Technical issues
 
 During the development of Doreisa, I came across several problems that took me a lot of time to fully understand and solve. This section briefly describes some of them.
 
