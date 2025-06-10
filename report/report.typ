@@ -147,9 +147,18 @@ Each step of the analysis pipeline consists of the following steps:
 
 === Performance evaluation
 
-This first solution has the drawback of being really centralized: the head actor need to collect an ObjectRef for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks. The same node will be in charge of scheduling all these tasks, and retrieving their results.
+This first solution has the drawback of being really centralized: the head actor needs to collect an ObjectRef for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks. The same node will be in charge of scheduling all these tasks, and retrieving their results.
 
-For big simulations running on hundreds of nodes, the head node would have to process tens of thousands of references and tasks at each iteration, which is too costly, as shown on Figure XXX demonstrates this.
+For big simulations running on hundreds of nodes, the head node would have to process tens of thousands of references and tasks at each iteration, which is too costly. @performance-naive-method demonstrates this. In this experiment, Doreisa is asked to compute the mean of a distributed array. The total number of chunks of this array is equal to the number of cores available in the cluster, so it is directly proportionnal to the number of nodes. With a well-parallelised system, one would expect the execution time to only slightly increase with the number of nodes (weak scaling). However, this is not the case here: the execution time is proportionnal to the number of nodes. In this situation, the centralized actor is clearly the bottleneck. More precisely, the analysis is composed of the following main parts:
+  - Collection the `ObjectRefs` produced by the workers.
+  - Creating the Dask array as well as the task graph. For such small graphs, the time is negligible.
+  - Executing the task graph using the Dask-on-Ray scheduler.
+We can notice that both the gathering of the references and the execution of the task graph are slow tasks, one of them is not negligible compared to the other. Both aspects will need to be optimized in order to obtain a fast system.
+
+#figure(
+    image("resources/results-method-1.png", width: 107%),
+    caption: [Performance of the naive method (weak scaling with a simple analysis)],
+) <performance-naive-method>
 
 == Building the Dask Aray
 
@@ -175,11 +184,6 @@ First, we can notice that the measured values are higher when less than 8 proces
 With at least 8 processes, the total number of processes doesn't impact the time needed to send one reference. However, sending several references at each request greatly reduce the time needed to send one reference: it becomes possible to reduce the total time by around 20 times with this optimization.
 
 In practice, to avoid useless network use, a good compromise is to place an actor on each simulation node. This actor has the responsability to collect all the references to arrays produced by the node, and to send them all at once to the head node. The goal of this optimization is not to have something optimal since this part is not critical to obtain good performance. It is simply to optimize it enough so that it does not become a bottleneck and slow down the whole computation.
-
-#figure(
-    image("resources/results-method-1.png", width: 107%),
-    caption: [Performance of the first method],
-)
 
 == Decentralized scheduler
 
