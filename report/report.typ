@@ -47,16 +47,6 @@ Physical simulations such as Gysela @gysela or Parflow (TODO ref?).
 
 This Master thesis introduces a new way to process data coming from HPC simulations, easily and in a distributed and efficient manner. The proposed solution should be able to scale on supercomputers such as the Adastra and Jean Zay.
 
-== State of the art
-
-=== Deisa
-
-Deisa
-
-=== Reisa
-
-Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray instead of Dask. One of the main limitation of the approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define two callback functions: 
-
 == Performance requirements
 
 The proposed solution needs to scale well to some of the biggest supercomputers such as the french Adastra and Jean Zay.
@@ -69,10 +59,9 @@ Given the architecture of these supercomputers, Doreisa should be able to scale 
 
 = State of the art
 
-@dreher2014flexible explores a flexible solution to perfom _in situ_ and _in transit_ analytics by allowing the user to define a graph of tasks to be executed for the analytics. The model is simple (a task has some input, some output)
-
-
 == Tools
+
+The following tools are used in the . Some of the research projects related to the this Master project also rely on them.
 
 === Dask
 
@@ -102,13 +91,27 @@ See @exoshuffle
 
 Dask-on-Ray is a project aiming at bringing the best of Dask and Ray together. It allows executing a Dask task graph on a Ray cluster, allowing to use the simple Dask API while taking advantage of the good performance offered by Ray.
 
-Dask-on-Ray is designed as a special Dask scheduler. A Dask scheduler is a function taking two main parameters: a Dask graph and a list of the keys to compute. The scheduler is in charge of computing the value of the requested keys and returning them. The Dask-on-Ray scheduler goes through all the graph: for each computation in the graph, it performs the computation in a Ray remote function call.
+To use it, a Dask task graph should first be created, as with standard Dask. This task graph can be built using the high-level Dask abstractions such as Dask arrays. Then, Dask-on-Ray is called to execute the task graph. Dask-on-Ray is actually a Dask scheduler, that is a function taking two main parameters: a Dask task graph and a list of the keys to compute. The scheduler is in charge of computing the value of the requested keys and returning them. For each node of the task graph, the Dask-on-Ray scheduler performs a Ray `@remote` call to execute the computation on the Ray cluster.
+
+As the arguments to the functions in the graph are passed directly to the Ray remote function, it is possible to put Ray's `ObjectRefs` as values in the task graph. The compute function will receive the underlying value, as expected.
 
 === PDI
 
 PDI (the PDI Data Interface) is a project aiming at coupling C / C++ programs (typically MPI simulations) with plugins in charge of using the data for various tasks. Plugins make it possible to save the data to HDF5 files, export it to JSON, etc. The user needs to write a YAML file to choose how to use the data, without having to recompile the simulation code each time the usage changes.
 
 In this project, we will use the Pycall plugin, which allows making the data available to a Python script as a Numpy array without copying it.
+
+== Research projects
+
+@dreher2014flexible explores a flexible solution to perfom _in situ_ and _in transit_ analytics by allowing the user to define a graph of tasks to be executed for the analytics. The model is simple (a task has some input, some output).
+
+=== Deisa
+
+Deisa
+
+=== Reisa
+
+Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray instead of Dask. One of the main limitation of the approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define two callback functions:
 
 = Design of Doreisa
 
