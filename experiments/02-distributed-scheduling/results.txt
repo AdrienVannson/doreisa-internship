@@ -1,14 +1,21 @@
-217972999319573903656365754198236229347 1 40 do_computation=True long_warmup=False 159.42504048347473
-162720517622390972879425505896648417503 2 80 do_computation=True long_warmup=False 175.57791948318481
-181194002343939220035023471032960328459 4 160 do_computation=True long_warmup=False 190.45238971710205
-184541079025848441683426526548432419702 8 320 do_computation=True long_warmup=False 212.52898335456848
-229291958741702900212405528450118997205 16 640 do_computation=True long_warmup=False 227.09651589393616
-291292799412550473024988443967826456193 32 1280 do_computation=True long_warmup=False 252.02704548835754
-056373787885141229506939368404715315023 64 2560 do_computation=True long_warmup=False 346.91654682159424
-321903168479184789786374132643139526409 1 40 do_computation=False long_warmup=False 53.139193058013916
-226535832365995430605027455405931836546 2 80 do_computation=False long_warmup=False 53.48182678222656
-291274048014392597201962376929110899151 4 160 do_computation=False long_warmup=False 53.80112648010254
-318662182324695226920364404063520189568 8 320 do_computation=False long_warmup=False 53.88177990913391
-023851616954065604957992450417356232976 16 640 do_computation=False long_warmup=False 53.875473737716675
-267474470197697345307321181173664576678 32 1280 do_computation=False long_warmup=False 67.72971630096436
-088134950601756958025223441375740056039 64 2560 do_computation=False long_warmup=False 102.66593813896179
+1 40 do_computation=True long_warmup=False 159.42504048347473
+2 80 do_computation=True long_warmup=False 175.57791948318481
+4 160 do_computation=True long_warmup=False 190.45238971710205
+8 320 do_computation=True long_warmup=False 212.52898335456848
+16 640 do_computation=True long_warmup=False 227.09651589393616
+32 1280 do_computation=True long_warmup=False 252.02704548835754
+64 2560 do_computation=True long_warmup=False 346.91654682159424
+128 5120 do_computation=True long_warmup=False 696.40417            (*)
+255 10200 do_computation=True long_warmup=False 2.031429998252703   (*)
+
+1 40 do_computation=False long_warmup=False 53.139193058013916
+2 80 do_computation=False long_warmup=False 53.48182678222656
+4 160 do_computation=False long_warmup=False 53.80112648010254
+8 320 do_computation=False long_warmup=False 53.88177990913391
+16 640 do_computation=False long_warmup=False 53.875473737716675
+32 1280 do_computation=False long_warmup=False 67.72971630096436
+64 2560 do_computation=False long_warmup=False 102.66593813896179
+128 5120 do_computation=False long_warmup=False 190.79641580581665
+255 10200 do_computation=False long_warmup=False 381.1175913750371  (*)
+
+(*) computed manually from the timestep file (experiment terminated before its end)
