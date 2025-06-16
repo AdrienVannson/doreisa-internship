@@ -194,9 +194,9 @@ In practice, to avoid useless network use, a good compromise is to place an acto
     caption: [Time per iteration with the distributed scheduler (weak scaling, 40 chunks per node)],
 ) <decentralized-scheduler-total-time>
 
-== Evaluation (TODO titre)
+=== Finding the bottleneck
 
-As we saw in the previous section, the current system is able to scale well until about TODO nodes are added. Once this threeshold is reached, a new bottleneck appears and the execution time starts being proportionnal to the number of nodes in the Ray cluster.
+As we saw in the previous section, the current system is able to scale well until about 64 nodes are added. Once this threeshold is reached, a new bottleneck appears and the execution time starts being proportionnal to the number of nodes in the Ray cluster.
 
 To understand where this problem comes from, a more detailed analysis was realized. This experiment is named `03-TODO` in the `doreisa-internship` repository. The total execution time of a simple data analysis has been measured with a varying number of nodes: 10, 20, 40 and 80. This experiment has been realized on the `gros` cluster from `Grid5000`. The goal is to determine what are the parts of the process that take too much time, to identify the bottleneck. Four execution times are measured:
 
