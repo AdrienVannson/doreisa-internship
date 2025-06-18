@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=doreisa_test
 
-#SBATCH --time=00:05:00
+#SBATCH --time=00:10:00
 #SBATCH --output=job-%j.out
 #SBATCH --error=job-%j.err
 
