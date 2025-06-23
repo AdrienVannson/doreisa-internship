@@ -187,12 +187,20 @@ In practice, to avoid useless network use, a good compromise is to place an acto
 
 == Decentralized scheduler
 
+=== Design
+
+The issue with the previous approach is that the head node becomes the bottleneck of the whole system when too many nodes are added to the cluster. It has the responsability to communicate with all the workers to collect the references to the chunks, perform reference counting operations, build the Dask array, schedule all the tasks...
+
+To improve the performance of Doreisa, it is needed to reduce the load on the head node. A good approach consist of performing as much as possible the computations locally, on the other nodes. Due to Ray decentralized architecture, they are able to start and schedule tasks themselves.
+
 === Evaluation
 
+This new version of Doreisa was benchmarked on Jean Zay with up to 256 nodes in the cluster.
+
 #figure(
-    image("resources/exp-02-total-time.svg"),
+    image("resources/exp-02-total-time-v0.1.5.svg"),
     caption: [Time per iteration with the distributed scheduler (weak scaling, 40 chunks per node)],
-) <decentralized-scheduler-total-time>
+) <decentralized-scheduler-total-time-v0.1.5>
 
 === Finding the bottleneck
 
