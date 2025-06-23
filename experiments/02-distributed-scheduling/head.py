@@ -1,6 +1,5 @@
 import time
 import os
-import sys
 import random
 
 import dask.array as da
@@ -11,7 +10,6 @@ from doreisa.head_node import init
 from doreisa.window_api import ArrayDefinition, run_simulation
 
 exp_dir = os.path.dirname(os.path.realpath(__file__))
-do_computation = bool(int(sys.argv[1]))
 
 init()
 
@@ -24,9 +22,7 @@ def simulation_callback(arrays: list[da.Array], timestep: int):
     arr = arrays[0]
 
     dsk = arr.mean()
-
-    if do_computation:
-        dsk.compute(optimize_graph=False)
+    dsk.compute(doreisa_debug_logs=f"{exp_dir}/perfs/{uuid}.txt")
 
     global last_time
 
@@ -44,7 +40,7 @@ def simulation_callback(arrays: list[da.Array], timestep: int):
         end_time = time.time()
 
         with open(f"{exp_dir}/results.txt", "a") as f:
-            f.write(f"{uuid} {len(ray.nodes()) - 1} {np.prod(arr.numblocks)} do_computation={do_computation} long_warmup={timestep==1000} {1000 * (end_time - start_time) / 200}\n")
+            f.write(f"{uuid} {len(ray.nodes()) - 1} {np.prod(arr.numblocks)} long_warmup={timestep==1000} {1000 * (end_time - start_time) / 200}\n")
 
 
 run_simulation(

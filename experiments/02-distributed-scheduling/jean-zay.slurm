@@ -15,7 +15,7 @@ export PATH="/linkhome/rech/genlig01/ufw76xj/.local/bin:$PATH"
 export OPENBLAS_NUM_THREADS=1
 
 # Create directories for results
-mkdir -p timesteps
+mkdir -p timesteps perfs
 
 # Find the head and worker nodes
 scontrol show hostnames $SLURM_JOB_NODELIST > nodes.txt
@@ -35,7 +35,7 @@ srun --nodes=1 --nodelist=$headnode --ntasks=1 --cpus-per-task=40 bash -c "
     export OPENBLAS_NUM_THREADS=1
     ray start --head --node-ip-address=$head_node_ip --port=4242 --disable-usage-stats --include-dashboard=false
     sleep 10
-    python3 head.py 1
+    python3 head.py
 " &
 
 sleep 30
