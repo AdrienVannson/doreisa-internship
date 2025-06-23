@@ -23,7 +23,7 @@ head -n 1 nodes.txt > headnode.txt
 tail -n +2 nodes.txt > workernodes.txt
 
 headnode=$(cat headnode.txt)
-workernodes=$(cat workernodes.txt | tr '\n' ',' | sed 's/,$//')
+mapfile -t nodes < workernodes.txt
 
 # Find the IP of the head node. We use ib0 for the InfiniBand interface.
 head_node_ip=$(srun --nodes=1 --nodelist=$headnode --ntasks-per-node=1 bash -c 'ip -o -4 addr show ib0 | awk "{print \$4}" | cut -d/ -f1')
@@ -41,8 +41,6 @@ srun --nodes=1 --nodelist=$headnode --ntasks=1 --cpus-per-task=40 bash -c "
 sleep 30
 
 echo "Head node started"
-
-mapfile -t nodes < workernodes.txt
 
 iNode=0
 for node in "${nodes[@]}"; do
