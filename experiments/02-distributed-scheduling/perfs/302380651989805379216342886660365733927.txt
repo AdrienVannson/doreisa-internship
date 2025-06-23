@@ -1,0 +1,1380 @@
+1750673681.2015336 1. Begin Doreisa scheduler
+1750673681.2153878 2. Graph partitionning done
+1750673681.2265797 3. Graph put in object store
+1750673681.2869985 4. Partitionned graph sent
+1750673683.3726237 5. Graph scheduled
+1750673689.602676 6. End Doreisa scheduler
+1750673689.6782749 1. Begin Doreisa scheduler
+1750673689.687735 2. Graph partitionning done
+1750673689.6987207 3. Graph put in object store
+1750673689.7259333 4. Partitionned graph sent
+1750673689.8151257 5. Graph scheduled
+1750673689.8350575 6. End Doreisa scheduler
+1750673689.9144104 1. Begin Doreisa scheduler
+1750673689.9237053 2. Graph partitionning done
+1750673689.9345598 3. Graph put in object store
+1750673689.9576185 4. Partitionned graph sent
+1750673690.042728 5. Graph scheduled
+1750673690.0614994 6. End Doreisa scheduler
+1750673690.139701 1. Begin Doreisa scheduler
+1750673690.149003 2. Graph partitionning done
+1750673690.159707 3. Graph put in object store
+1750673690.1807015 4. Partitionned graph sent
+1750673690.269416 5. Graph scheduled
+1750673690.284564 6. End Doreisa scheduler
+1750673690.3642907 1. Begin Doreisa scheduler
+1750673690.3740904 2. Graph partitionning done
+1750673690.3857481 3. Graph put in object store
+1750673690.401775 4. Partitionned graph sent
+1750673690.4966977 5. Graph scheduled
+1750673690.5122762 6. End Doreisa scheduler
+1750673690.5906384 1. Begin Doreisa scheduler
+1750673690.600107 2. Graph partitionning done
+1750673690.610652 3. Graph put in object store
+1750673690.6305714 4. Partitionned graph sent
+1750673690.7136521 5. Graph scheduled
+1750673690.730495 6. End Doreisa scheduler
+1750673690.807125 1. Begin Doreisa scheduler
+1750673690.8164303 2. Graph partitionning done
+1750673690.827491 3. Graph put in object store
+1750673690.847629 4. Partitionned graph sent
+1750673690.930133 5. Graph scheduled
+1750673690.9499376 6. End Doreisa scheduler
+1750673691.0270963 1. Begin Doreisa scheduler
+1750673691.0369806 2. Graph partitionning done
+1750673691.0578322 3. Graph put in object store
+1750673691.1155488 4. Partitionned graph sent
+1750673691.1991937 5. Graph scheduled
+1750673691.2178192 6. End Doreisa scheduler
+1750673691.2938612 1. Begin Doreisa scheduler
+1750673691.3031073 2. Graph partitionning done
+1750673691.3138216 3. Graph put in object store
+1750673691.3341515 4. Partitionned graph sent
+1750673691.4172215 5. Graph scheduled
+1750673691.4379532 6. End Doreisa scheduler
+1750673691.5154874 1. Begin Doreisa scheduler
+1750673691.5247824 2. Graph partitionning done
+1750673691.5356193 3. Graph put in object store
+1750673691.5544026 4. Partitionned graph sent
+1750673691.639334 5. Graph scheduled
+1750673691.6585953 6. End Doreisa scheduler
+1750673691.7346442 1. Begin Doreisa scheduler
+1750673691.7441165 2. Graph partitionning done
+1750673691.755883 3. Graph put in object store
+1750673691.777161 4. Partitionned graph sent
+1750673691.8593693 5. Graph scheduled
+1750673691.8842504 6. End Doreisa scheduler
+1750673691.961007 1. Begin Doreisa scheduler
+1750673691.970197 2. Graph partitionning done
+1750673691.9812202 3. Graph put in object store
+1750673692.000308 4. Partitionned graph sent
+1750673692.0854208 5. Graph scheduled
+1750673692.1026022 6. End Doreisa scheduler
+1750673692.1802444 1. Begin Doreisa scheduler
+1750673692.189848 2. Graph partitionning done
+1750673692.2006328 3. Graph put in object store
+1750673692.219192 4. Partitionned graph sent
+1750673692.3250525 5. Graph scheduled
+1750673692.3377562 6. End Doreisa scheduler
+1750673692.4165585 1. Begin Doreisa scheduler
+1750673692.4257457 2. Graph partitionning done
+1750673692.4368398 3. Graph put in object store
+1750673692.457339 4. Partitionned graph sent
+1750673692.542469 5. Graph scheduled
+1750673692.564601 6. End Doreisa scheduler
+1750673692.6469293 1. Begin Doreisa scheduler
+1750673692.657142 2. Graph partitionning done
+1750673692.6678913 3. Graph put in object store
+1750673692.6861348 4. Partitionned graph sent
+1750673692.7693043 5. Graph scheduled
+1750673692.7908704 6. End Doreisa scheduler
+1750673692.868133 1. Begin Doreisa scheduler
+1750673692.8774474 2. Graph partitionning done
+1750673692.8882053 3. Graph put in object store
+1750673692.9079998 4. Partitionned graph sent
+1750673693.0096505 5. Graph scheduled
+1750673693.0264888 6. End Doreisa scheduler
+1750673693.1042204 1. Begin Doreisa scheduler
+1750673693.1137698 2. Graph partitionning done
+1750673693.1247008 3. Graph put in object store
+1750673693.144951 4. Partitionned graph sent
+1750673693.231234 5. Graph scheduled
+1750673693.2465856 6. End Doreisa scheduler
+1750673693.324273 1. Begin Doreisa scheduler
+1750673693.3339975 2. Graph partitionning done
+1750673693.34511 3. Graph put in object store
+1750673693.3677225 4. Partitionned graph sent
+1750673693.451728 5. Graph scheduled
+1750673693.4712098 6. End Doreisa scheduler
+1750673693.5503507 1. Begin Doreisa scheduler
+1750673693.5602822 2. Graph partitionning done
+1750673693.5709786 3. Graph put in object store
+1750673693.592529 4. Partitionned graph sent
+1750673693.6774921 5. Graph scheduled
+1750673693.692845 6. End Doreisa scheduler
+1750673693.7705193 1. Begin Doreisa scheduler
+1750673693.7799823 2. Graph partitionning done
+1750673693.790611 3. Graph put in object store
+1750673693.809674 4. Partitionned graph sent
+1750673693.8935747 5. Graph scheduled
+1750673693.9129338 6. End Doreisa scheduler
+1750673693.9892619 1. Begin Doreisa scheduler
+1750673693.9984643 2. Graph partitionning done
+1750673694.0097036 3. Graph put in object store
+1750673694.0277112 4. Partitionned graph sent
+1750673694.1048422 5. Graph scheduled
+1750673694.1281114 6. End Doreisa scheduler
+1750673694.2067907 1. Begin Doreisa scheduler
+1750673694.2163131 2. Graph partitionning done
+1750673694.2271807 3. Graph put in object store
+1750673694.2502425 4. Partitionned graph sent
+1750673694.3323433 5. Graph scheduled
+1750673694.3479366 6. End Doreisa scheduler
+1750673694.4289103 1. Begin Doreisa scheduler
+1750673694.438226 2. Graph partitionning done
+1750673694.4490285 3. Graph put in object store
+1750673694.467884 4. Partitionned graph sent
+1750673694.5528278 5. Graph scheduled
+1750673694.5671387 6. End Doreisa scheduler
+1750673694.6449845 1. Begin Doreisa scheduler
+1750673694.6539707 2. Graph partitionning done
+1750673694.6647878 3. Graph put in object store
+1750673694.6841817 4. Partitionned graph sent
+1750673694.7652767 5. Graph scheduled
+1750673694.7819266 6. End Doreisa scheduler
+1750673694.8605053 1. Begin Doreisa scheduler
+1750673694.8700657 2. Graph partitionning done
+1750673694.8814182 3. Graph put in object store
+1750673694.900268 4. Partitionned graph sent
+1750673694.9836001 5. Graph scheduled
+1750673695.0098438 6. End Doreisa scheduler
+1750673695.087905 1. Begin Doreisa scheduler
+1750673695.0971081 2. Graph partitionning done
+1750673695.1078675 3. Graph put in object store
+1750673695.127177 4. Partitionned graph sent
+1750673695.2181072 5. Graph scheduled
+1750673695.2325575 6. End Doreisa scheduler
+1750673695.3110816 1. Begin Doreisa scheduler
+1750673695.3206205 2. Graph partitionning done
+1750673695.3311672 3. Graph put in object store
+1750673695.3957245 4. Partitionned graph sent
+1750673695.4814904 5. Graph scheduled
+1750673695.4980848 6. End Doreisa scheduler
+1750673695.5774236 1. Begin Doreisa scheduler
+1750673695.587824 2. Graph partitionning done
+1750673695.5987387 3. Graph put in object store
+1750673695.662097 4. Partitionned graph sent
+1750673695.7443106 5. Graph scheduled
+1750673695.7648926 6. End Doreisa scheduler
+1750673695.8434672 1. Begin Doreisa scheduler
+1750673695.8528473 2. Graph partitionning done
+1750673695.8635237 3. Graph put in object store
+1750673695.8825219 4. Partitionned graph sent
+1750673695.9559383 5. Graph scheduled
+1750673695.9909842 6. End Doreisa scheduler
+1750673696.0699966 1. Begin Doreisa scheduler
+1750673696.0803654 2. Graph partitionning done
+1750673696.0970795 3. Graph put in object store
+1750673696.151124 4. Partitionned graph sent
+1750673696.233372 5. Graph scheduled
+1750673696.2606356 6. End Doreisa scheduler
+1750673696.3406124 1. Begin Doreisa scheduler
+1750673696.3498952 2. Graph partitionning done
+1750673696.3605986 3. Graph put in object store
+1750673696.3795059 4. Partitionned graph sent
+1750673696.45314 5. Graph scheduled
+1750673696.4788074 6. End Doreisa scheduler
+1750673696.5564318 1. Begin Doreisa scheduler
+1750673696.5657604 2. Graph partitionning done
+1750673696.5763655 3. Graph put in object store
+1750673696.6392019 4. Partitionned graph sent
+1750673696.71044 5. Graph scheduled
+1750673696.7288756 6. End Doreisa scheduler
+1750673696.8065662 1. Begin Doreisa scheduler
+1750673696.8157823 2. Graph partitionning done
+1750673696.8264296 3. Graph put in object store
+1750673696.84554 4. Partitionned graph sent
+1750673696.9271302 5. Graph scheduled
+1750673696.950288 6. End Doreisa scheduler
+1750673697.0272076 1. Begin Doreisa scheduler
+1750673697.0367937 2. Graph partitionning done
+1750673697.0474699 3. Graph put in object store
+1750673697.106477 4. Partitionned graph sent
+1750673697.188988 5. Graph scheduled
+1750673697.2042506 6. End Doreisa scheduler
+1750673697.2827997 1. Begin Doreisa scheduler
+1750673697.292326 2. Graph partitionning done
+1750673697.3033936 3. Graph put in object store
+1750673697.323405 4. Partitionned graph sent
+1750673697.4089918 5. Graph scheduled
+1750673697.4259856 6. End Doreisa scheduler
+1750673697.505337 1. Begin Doreisa scheduler
+1750673697.5145698 2. Graph partitionning done
+1750673697.5253286 3. Graph put in object store
+1750673697.5453837 4. Partitionned graph sent
+1750673697.6240482 5. Graph scheduled
+1750673697.6457717 6. End Doreisa scheduler
+1750673697.72362 1. Begin Doreisa scheduler
+1750673697.7335644 2. Graph partitionning done
+1750673697.744431 3. Graph put in object store
+1750673697.7636886 4. Partitionned graph sent
+1750673697.8430908 5. Graph scheduled
+1750673697.8710423 6. End Doreisa scheduler
+1750673697.9483032 1. Begin Doreisa scheduler
+1750673697.9575777 2. Graph partitionning done
+1750673697.968386 3. Graph put in object store
+1750673697.988745 4. Partitionned graph sent
+1750673698.069101 5. Graph scheduled
+1750673698.0831776 6. End Doreisa scheduler
+1750673698.1607654 1. Begin Doreisa scheduler
+1750673698.170186 2. Graph partitionning done
+1750673698.180866 3. Graph put in object store
+1750673698.2004187 4. Partitionned graph sent
+1750673698.2719586 5. Graph scheduled
+1750673698.2958198 6. End Doreisa scheduler
+1750673698.3737235 1. Begin Doreisa scheduler
+1750673698.3832312 2. Graph partitionning done
+1750673698.394436 3. Graph put in object store
+1750673698.4133577 4. Partitionned graph sent
+1750673698.4940176 5. Graph scheduled
+1750673698.5239005 6. End Doreisa scheduler
+1750673698.6008012 1. Begin Doreisa scheduler
+1750673698.6107485 2. Graph partitionning done
+1750673698.6214552 3. Graph put in object store
+1750673698.6400204 4. Partitionned graph sent
+1750673698.7107759 5. Graph scheduled
+1750673698.738239 6. End Doreisa scheduler
+1750673698.8156455 1. Begin Doreisa scheduler
+1750673698.825053 2. Graph partitionning done
+1750673698.8362167 3. Graph put in object store
+1750673698.8550987 4. Partitionned graph sent
+1750673698.927081 5. Graph scheduled
+1750673698.9530013 6. End Doreisa scheduler
+1750673699.031217 1. Begin Doreisa scheduler
+1750673699.0411427 2. Graph partitionning done
+1750673699.0526154 3. Graph put in object store
+1750673699.0705247 4. Partitionned graph sent
+1750673699.1411014 5. Graph scheduled
+1750673699.1715395 6. End Doreisa scheduler
+1750673699.2493813 1. Begin Doreisa scheduler
+1750673699.2588012 2. Graph partitionning done
+1750673699.2700846 3. Graph put in object store
+1750673699.288421 4. Partitionned graph sent
+1750673699.365194 5. Graph scheduled
+1750673699.3828475 6. End Doreisa scheduler
+1750673699.461476 1. Begin Doreisa scheduler
+1750673699.4710224 2. Graph partitionning done
+1750673699.4823494 3. Graph put in object store
+1750673699.5017407 4. Partitionned graph sent
+1750673699.575435 5. Graph scheduled
+1750673699.6057427 6. End Doreisa scheduler
+1750673699.686104 1. Begin Doreisa scheduler
+1750673699.6957595 2. Graph partitionning done
+1750673699.7064202 3. Graph put in object store
+1750673699.725044 4. Partitionned graph sent
+1750673699.8087287 5. Graph scheduled
+1750673699.8276803 6. End Doreisa scheduler
+1750673699.9062304 1. Begin Doreisa scheduler
+1750673699.9163365 2. Graph partitionning done
+1750673699.9271903 3. Graph put in object store
+1750673699.9480336 4. Partitionned graph sent
+1750673700.0203967 5. Graph scheduled
+1750673700.0412035 6. End Doreisa scheduler
+1750673700.119449 1. Begin Doreisa scheduler
+1750673700.1286879 2. Graph partitionning done
+1750673700.139292 3. Graph put in object store
+1750673700.202516 4. Partitionned graph sent
+1750673700.2827191 5. Graph scheduled
+1750673700.2949955 6. End Doreisa scheduler
+1750673700.373447 1. Begin Doreisa scheduler
+1750673700.3829978 2. Graph partitionning done
+1750673700.3941407 3. Graph put in object store
+1750673700.459748 4. Partitionned graph sent
+1750673700.5340664 5. Graph scheduled
+1750673700.5545893 6. End Doreisa scheduler
+1750673700.632439 1. Begin Doreisa scheduler
+1750673700.6422431 2. Graph partitionning done
+1750673700.6535006 3. Graph put in object store
+1750673700.7160213 4. Partitionned graph sent
+1750673700.7899978 5. Graph scheduled
+1750673700.810423 6. End Doreisa scheduler
+1750673700.889796 1. Begin Doreisa scheduler
+1750673700.8990645 2. Graph partitionning done
+1750673700.9102101 3. Graph put in object store
+1750673700.938083 4. Partitionned graph sent
+1750673701.0088208 5. Graph scheduled
+1750673701.029905 6. End Doreisa scheduler
+1750673701.1079497 1. Begin Doreisa scheduler
+1750673701.1174645 2. Graph partitionning done
+1750673701.1285112 3. Graph put in object store
+1750673701.1937392 4. Partitionned graph sent
+1750673701.2763422 5. Graph scheduled
+1750673701.2925177 6. End Doreisa scheduler
+1750673701.3713546 1. Begin Doreisa scheduler
+1750673701.3811831 2. Graph partitionning done
+1750673701.3926356 3. Graph put in object store
+1750673701.4204793 4. Partitionned graph sent
+1750673701.4929326 5. Graph scheduled
+1750673701.5161138 6. End Doreisa scheduler
+1750673701.5953047 1. Begin Doreisa scheduler
+1750673701.6045456 2. Graph partitionning done
+1750673701.6152277 3. Graph put in object store
+1750673701.6749165 4. Partitionned graph sent
+1750673701.7474573 5. Graph scheduled
+1750673701.7691147 6. End Doreisa scheduler
+1750673701.8457625 1. Begin Doreisa scheduler
+1750673701.8550556 2. Graph partitionning done
+1750673701.8659081 3. Graph put in object store
+1750673701.8868222 4. Partitionned graph sent
+1750673701.9593894 5. Graph scheduled
+1750673701.980624 6. End Doreisa scheduler
+1750673702.0578878 1. Begin Doreisa scheduler
+1750673702.0674472 2. Graph partitionning done
+1750673702.0783281 3. Graph put in object store
+1750673702.099513 4. Partitionned graph sent
+1750673702.1865351 5. Graph scheduled
+1750673702.1953874 6. End Doreisa scheduler
+1750673702.2732568 1. Begin Doreisa scheduler
+1750673702.2828636 2. Graph partitionning done
+1750673702.2937381 3. Graph put in object store
+1750673702.315676 4. Partitionned graph sent
+1750673702.3982608 5. Graph scheduled
+1750673702.4297335 6. End Doreisa scheduler
+1750673702.509401 1. Begin Doreisa scheduler
+1750673702.5192382 2. Graph partitionning done
+1750673702.5307915 3. Graph put in object store
+1750673702.5500495 4. Partitionned graph sent
+1750673702.6222513 5. Graph scheduled
+1750673702.638711 6. End Doreisa scheduler
+1750673702.7176163 1. Begin Doreisa scheduler
+1750673702.727219 2. Graph partitionning done
+1750673702.7381923 3. Graph put in object store
+1750673702.760966 4. Partitionned graph sent
+1750673702.8471572 5. Graph scheduled
+1750673702.8545403 6. End Doreisa scheduler
+1750673702.9364088 1. Begin Doreisa scheduler
+1750673702.9459684 2. Graph partitionning done
+1750673702.9570498 3. Graph put in object store
+1750673702.9744363 4. Partitionned graph sent
+1750673703.0573022 5. Graph scheduled
+1750673703.079682 6. End Doreisa scheduler
+1750673703.1577578 1. Begin Doreisa scheduler
+1750673703.1670697 2. Graph partitionning done
+1750673703.1779778 3. Graph put in object store
+1750673703.1966476 4. Partitionned graph sent
+1750673703.2724652 5. Graph scheduled
+1750673703.2996805 6. End Doreisa scheduler
+1750673703.3785448 1. Begin Doreisa scheduler
+1750673703.3880224 2. Graph partitionning done
+1750673703.398933 3. Graph put in object store
+1750673703.4172142 4. Partitionned graph sent
+1750673703.490286 5. Graph scheduled
+1750673703.5105324 6. End Doreisa scheduler
+1750673703.5904949 1. Begin Doreisa scheduler
+1750673703.5999007 2. Graph partitionning done
+1750673703.6106625 3. Graph put in object store
+1750673703.63572 4. Partitionned graph sent
+1750673703.708012 5. Graph scheduled
+1750673703.7282903 6. End Doreisa scheduler
+1750673703.8074064 1. Begin Doreisa scheduler
+1750673703.8169174 2. Graph partitionning done
+1750673703.8277054 3. Graph put in object store
+1750673703.848634 4. Partitionned graph sent
+1750673703.927486 5. Graph scheduled
+1750673703.9509845 6. End Doreisa scheduler
+1750673704.0292711 1. Begin Doreisa scheduler
+1750673704.038787 2. Graph partitionning done
+1750673704.0496044 3. Graph put in object store
+1750673704.0707352 4. Partitionned graph sent
+1750673704.1408992 5. Graph scheduled
+1750673704.17036 6. End Doreisa scheduler
+1750673704.2480974 1. Begin Doreisa scheduler
+1750673704.2573223 2. Graph partitionning done
+1750673704.268045 3. Graph put in object store
+1750673704.2877746 4. Partitionned graph sent
+1750673704.3695743 5. Graph scheduled
+1750673704.386863 6. End Doreisa scheduler
+1750673704.4660525 1. Begin Doreisa scheduler
+1750673704.4754953 2. Graph partitionning done
+1750673704.4874496 3. Graph put in object store
+1750673704.5080023 4. Partitionned graph sent
+1750673704.580125 5. Graph scheduled
+1750673704.6066248 6. End Doreisa scheduler
+1750673704.6849256 1. Begin Doreisa scheduler
+1750673704.6942775 2. Graph partitionning done
+1750673704.7053766 3. Graph put in object store
+1750673704.7247267 4. Partitionned graph sent
+1750673704.7965212 5. Graph scheduled
+1750673704.8251998 6. End Doreisa scheduler
+1750673704.9055092 1. Begin Doreisa scheduler
+1750673704.9149165 2. Graph partitionning done
+1750673704.925706 3. Graph put in object store
+1750673704.987951 4. Partitionned graph sent
+1750673705.061977 5. Graph scheduled
+1750673705.0758939 6. End Doreisa scheduler
+1750673705.1555114 1. Begin Doreisa scheduler
+1750673705.1647842 2. Graph partitionning done
+1750673705.1756234 3. Graph put in object store
+1750673705.2368429 4. Partitionned graph sent
+1750673705.3187046 5. Graph scheduled
+1750673705.3297539 6. End Doreisa scheduler
+1750673705.4086113 1. Begin Doreisa scheduler
+1750673705.4179788 2. Graph partitionning done
+1750673705.428934 3. Graph put in object store
+1750673705.4927385 4. Partitionned graph sent
+1750673705.5661592 5. Graph scheduled
+1750673705.5921698 6. End Doreisa scheduler
+1750673705.671717 1. Begin Doreisa scheduler
+1750673705.68139 2. Graph partitionning done
+1750673705.6921937 3. Graph put in object store
+1750673705.7542434 4. Partitionned graph sent
+1750673705.8354416 5. Graph scheduled
+1750673705.8606396 6. End Doreisa scheduler
+1750673705.9393744 1. Begin Doreisa scheduler
+1750673705.9489954 2. Graph partitionning done
+1750673705.960286 3. Graph put in object store
+1750673706.0198703 4. Partitionned graph sent
+1750673706.1005821 5. Graph scheduled
+1750673706.12621 6. End Doreisa scheduler
+1750673706.2064736 1. Begin Doreisa scheduler
+1750673706.2159393 2. Graph partitionning done
+1750673706.2270763 3. Graph put in object store
+1750673706.248751 4. Partitionned graph sent
+1750673706.3282855 5. Graph scheduled
+1750673706.3469896 6. End Doreisa scheduler
+1750673706.4283383 1. Begin Doreisa scheduler
+1750673706.43817 2. Graph partitionning done
+1750673706.4491348 3. Graph put in object store
+1750673706.4672742 4. Partitionned graph sent
+1750673706.5398295 5. Graph scheduled
+1750673706.5536993 6. End Doreisa scheduler
+1750673706.6329832 1. Begin Doreisa scheduler
+1750673706.6425216 2. Graph partitionning done
+1750673706.653398 3. Graph put in object store
+1750673706.7135231 4. Partitionned graph sent
+1750673706.796008 5. Graph scheduled
+1750673706.820533 6. End Doreisa scheduler
+1750673706.9011343 1. Begin Doreisa scheduler
+1750673706.9105735 2. Graph partitionning done
+1750673706.9213257 3. Graph put in object store
+1750673706.9398744 4. Partitionned graph sent
+1750673707.0139294 5. Graph scheduled
+1750673707.0427809 6. End Doreisa scheduler
+1750673707.1198156 1. Begin Doreisa scheduler
+1750673707.129035 2. Graph partitionning done
+1750673707.1400452 3. Graph put in object store
+1750673707.1611497 4. Partitionned graph sent
+1750673707.2329304 5. Graph scheduled
+1750673707.2662637 6. End Doreisa scheduler
+1750673707.3461015 1. Begin Doreisa scheduler
+1750673707.3557582 2. Graph partitionning done
+1750673707.3667672 3. Graph put in object store
+1750673707.3872628 4. Partitionned graph sent
+1750673707.4675338 5. Graph scheduled
+1750673707.4800272 6. End Doreisa scheduler
+1750673707.561238 1. Begin Doreisa scheduler
+1750673707.57092 2. Graph partitionning done
+1750673707.581686 3. Graph put in object store
+1750673707.597604 4. Partitionned graph sent
+1750673707.6678963 5. Graph scheduled
+1750673707.6964319 6. End Doreisa scheduler
+1750673707.7732105 1. Begin Doreisa scheduler
+1750673707.782557 2. Graph partitionning done
+1750673707.794296 3. Graph put in object store
+1750673707.8145604 4. Partitionned graph sent
+1750673707.8881173 5. Graph scheduled
+1750673707.9188669 6. End Doreisa scheduler
+1750673707.9971426 1. Begin Doreisa scheduler
+1750673708.006475 2. Graph partitionning done
+1750673708.0173578 3. Graph put in object store
+1750673708.0389822 4. Partitionned graph sent
+1750673708.1303926 5. Graph scheduled
+1750673708.1592886 6. End Doreisa scheduler
+1750673708.2392218 1. Begin Doreisa scheduler
+1750673708.2488177 2. Graph partitionning done
+1750673708.259583 3. Graph put in object store
+1750673708.2821627 4. Partitionned graph sent
+1750673708.354195 5. Graph scheduled
+1750673708.3786845 6. End Doreisa scheduler
+1750673708.4582253 1. Begin Doreisa scheduler
+1750673708.467809 2. Graph partitionning done
+1750673708.4784408 3. Graph put in object store
+1750673708.4970872 4. Partitionned graph sent
+1750673708.5738492 5. Graph scheduled
+1750673708.6006875 6. End Doreisa scheduler
+1750673708.6791737 1. Begin Doreisa scheduler
+1750673708.6888273 2. Graph partitionning done
+1750673708.6996303 3. Graph put in object store
+1750673708.7182412 4. Partitionned graph sent
+1750673708.7927914 5. Graph scheduled
+1750673708.8172715 6. End Doreisa scheduler
+1750673708.8994052 1. Begin Doreisa scheduler
+1750673708.9087772 2. Graph partitionning done
+1750673708.9196184 3. Graph put in object store
+1750673708.9404066 4. Partitionned graph sent
+1750673709.0128741 5. Graph scheduled
+1750673709.0275676 6. End Doreisa scheduler
+1750673709.1056435 1. Begin Doreisa scheduler
+1750673709.1157677 2. Graph partitionning done
+1750673709.1263816 3. Graph put in object store
+1750673709.1459765 4. Partitionned graph sent
+1750673709.2195818 5. Graph scheduled
+1750673709.2409987 6. End Doreisa scheduler
+1750673709.318368 1. Begin Doreisa scheduler
+1750673709.3278828 2. Graph partitionning done
+1750673709.3386977 3. Graph put in object store
+1750673709.357285 4. Partitionned graph sent
+1750673709.4282725 5. Graph scheduled
+1750673709.4466588 6. End Doreisa scheduler
+1750673709.5256135 1. Begin Doreisa scheduler
+1750673709.5350707 2. Graph partitionning done
+1750673709.5457509 3. Graph put in object store
+1750673709.566978 4. Partitionned graph sent
+1750673709.6460595 5. Graph scheduled
+1750673709.6615064 6. End Doreisa scheduler
+1750673709.7400625 1. Begin Doreisa scheduler
+1750673709.7496157 2. Graph partitionning done
+1750673709.7604053 3. Graph put in object store
+1750673709.8211763 4. Partitionned graph sent
+1750673709.8978014 5. Graph scheduled
+1750673709.9121957 6. End Doreisa scheduler
+1750673709.9919872 1. Begin Doreisa scheduler
+1750673710.0015683 2. Graph partitionning done
+1750673710.0144126 3. Graph put in object store
+1750673710.0742123 4. Partitionned graph sent
+1750673710.1565306 5. Graph scheduled
+1750673710.1718657 6. End Doreisa scheduler
+1750673710.2509167 1. Begin Doreisa scheduler
+1750673710.2604015 2. Graph partitionning done
+1750673710.2729812 3. Graph put in object store
+1750673710.3321323 4. Partitionned graph sent
+1750673710.404192 5. Graph scheduled
+1750673710.4291756 6. End Doreisa scheduler
+1750673710.5080357 1. Begin Doreisa scheduler
+1750673710.517472 2. Graph partitionning done
+1750673710.5281773 3. Graph put in object store
+1750673710.5906065 4. Partitionned graph sent
+1750673710.66179 5. Graph scheduled
+1750673710.6984398 6. End Doreisa scheduler
+1750673710.7774086 1. Begin Doreisa scheduler
+1750673710.786897 2. Graph partitionning done
+1750673710.7977092 3. Graph put in object store
+1750673710.8591638 4. Partitionned graph sent
+1750673710.948243 5. Graph scheduled
+1750673710.9697843 6. End Doreisa scheduler
+1750673711.0489035 1. Begin Doreisa scheduler
+1750673711.0588784 2. Graph partitionning done
+1750673711.0699108 3. Graph put in object store
+1750673711.1341448 4. Partitionned graph sent
+1750673711.2042043 5. Graph scheduled
+1750673711.230279 6. End Doreisa scheduler
+1750673711.3094735 1. Begin Doreisa scheduler
+1750673711.3191612 2. Graph partitionning done
+1750673711.330011 3. Graph put in object store
+1750673711.3897939 4. Partitionned graph sent
+1750673711.4738972 5. Graph scheduled
+1750673711.4979415 6. End Doreisa scheduler
+1750673711.5766232 1. Begin Doreisa scheduler
+1750673711.5860906 2. Graph partitionning done
+1750673711.5971503 3. Graph put in object store
+1750673711.6603026 4. Partitionned graph sent
+1750673711.7326794 5. Graph scheduled
+1750673711.7492461 6. End Doreisa scheduler
+1750673711.8280795 1. Begin Doreisa scheduler
+1750673711.8373387 2. Graph partitionning done
+1750673711.8481908 3. Graph put in object store
+1750673711.8694508 4. Partitionned graph sent
+1750673711.9400847 5. Graph scheduled
+1750673711.96206 6. End Doreisa scheduler
+1750673712.0413122 1. Begin Doreisa scheduler
+1750673712.0505836 2. Graph partitionning done
+1750673712.0613449 3. Graph put in object store
+1750673712.080752 4. Partitionned graph sent
+1750673712.1525052 5. Graph scheduled
+1750673712.1819487 6. End Doreisa scheduler
+1750673712.2609205 1. Begin Doreisa scheduler
+1750673712.2706103 2. Graph partitionning done
+1750673712.2816734 3. Graph put in object store
+1750673712.3012662 4. Partitionned graph sent
+1750673712.3727207 5. Graph scheduled
+1750673712.3987093 6. End Doreisa scheduler
+1750673712.4772413 1. Begin Doreisa scheduler
+1750673712.486541 2. Graph partitionning done
+1750673712.4975 3. Graph put in object store
+1750673712.5188 4. Partitionned graph sent
+1750673712.5990899 5. Graph scheduled
+1750673712.612227 6. End Doreisa scheduler
+1750673712.6912377 1. Begin Doreisa scheduler
+1750673712.7010179 2. Graph partitionning done
+1750673712.7117102 3. Graph put in object store
+1750673712.733069 4. Partitionned graph sent
+1750673712.8072612 5. Graph scheduled
+1750673712.84772 6. End Doreisa scheduler
+1750673712.9365299 1. Begin Doreisa scheduler
+1750673712.9460766 2. Graph partitionning done
+1750673712.957212 3. Graph put in object store
+1750673712.9768322 4. Partitionned graph sent
+1750673713.0480509 5. Graph scheduled
+1750673713.0687156 6. End Doreisa scheduler
+1750673713.1460776 1. Begin Doreisa scheduler
+1750673713.155842 2. Graph partitionning done
+1750673713.1666539 3. Graph put in object store
+1750673713.1860926 4. Partitionned graph sent
+1750673713.2568045 5. Graph scheduled
+1750673713.2878811 6. End Doreisa scheduler
+1750673713.365981 1. Begin Doreisa scheduler
+1750673713.375443 2. Graph partitionning done
+1750673713.3862755 3. Graph put in object store
+1750673713.4112499 4. Partitionned graph sent
+1750673713.482041 5. Graph scheduled
+1750673713.4980388 6. End Doreisa scheduler
+1750673713.5761597 1. Begin Doreisa scheduler
+1750673713.5854075 2. Graph partitionning done
+1750673713.5964532 3. Graph put in object store
+1750673713.6202233 4. Partitionned graph sent
+1750673713.691874 5. Graph scheduled
+1750673713.710833 6. End Doreisa scheduler
+1750673713.7898633 1. Begin Doreisa scheduler
+1750673713.7991705 2. Graph partitionning done
+1750673713.811433 3. Graph put in object store
+1750673713.8292477 4. Partitionned graph sent
+1750673713.9124985 5. Graph scheduled
+1750673713.9497159 6. End Doreisa scheduler
+1750673714.0269108 1. Begin Doreisa scheduler
+1750673714.0366518 2. Graph partitionning done
+1750673714.0491078 3. Graph put in object store
+1750673714.065914 4. Partitionned graph sent
+1750673714.180721 5. Graph scheduled
+1750673714.1894474 6. End Doreisa scheduler
+1750673714.2667892 1. Begin Doreisa scheduler
+1750673714.2769225 2. Graph partitionning done
+1750673714.2874386 3. Graph put in object store
+1750673714.3070352 4. Partitionned graph sent
+1750673714.388201 5. Graph scheduled
+1750673714.4048727 6. End Doreisa scheduler
+1750673714.4825003 1. Begin Doreisa scheduler
+1750673714.4918706 2. Graph partitionning done
+1750673714.5024993 3. Graph put in object store
+1750673714.523449 4. Partitionned graph sent
+1750673714.6090531 5. Graph scheduled
+1750673714.6286771 6. End Doreisa scheduler
+1750673714.7062812 1. Begin Doreisa scheduler
+1750673714.71554 2. Graph partitionning done
+1750673714.7259715 3. Graph put in object store
+1750673714.7908416 4. Partitionned graph sent
+1750673714.8657708 5. Graph scheduled
+1750673714.898369 6. End Doreisa scheduler
+1750673714.976234 1. Begin Doreisa scheduler
+1750673714.9856963 2. Graph partitionning done
+1750673714.9968462 3. Graph put in object store
+1750673715.0596323 4. Partitionned graph sent
+1750673715.1332576 5. Graph scheduled
+1750673715.1774776 6. End Doreisa scheduler
+1750673715.2585258 1. Begin Doreisa scheduler
+1750673715.268015 2. Graph partitionning done
+1750673715.2791548 3. Graph put in object store
+1750673715.3429255 4. Partitionned graph sent
+1750673715.4542782 5. Graph scheduled
+1750673715.4754505 6. End Doreisa scheduler
+1750673715.5552747 1. Begin Doreisa scheduler
+1750673715.565235 2. Graph partitionning done
+1750673715.5764985 3. Graph put in object store
+1750673715.6383624 4. Partitionned graph sent
+1750673715.712284 5. Graph scheduled
+1750673715.7316203 6. End Doreisa scheduler
+1750673715.8111963 1. Begin Doreisa scheduler
+1750673715.8206644 2. Graph partitionning done
+1750673715.8310719 3. Graph put in object store
+1750673715.893243 4. Partitionned graph sent
+1750673716.0094686 5. Graph scheduled
+1750673716.0233583 6. End Doreisa scheduler
+1750673716.103126 1. Begin Doreisa scheduler
+1750673716.112488 2. Graph partitionning done
+1750673716.123302 3. Graph put in object store
+1750673716.1875718 4. Partitionned graph sent
+1750673716.2590432 5. Graph scheduled
+1750673716.2828865 6. End Doreisa scheduler
+1750673716.3624506 1. Begin Doreisa scheduler
+1750673716.371801 2. Graph partitionning done
+1750673716.3826957 3. Graph put in object store
+1750673716.4439166 4. Partitionned graph sent
+1750673716.5185866 5. Graph scheduled
+1750673716.5345142 6. End Doreisa scheduler
+1750673716.613072 1. Begin Doreisa scheduler
+1750673716.6226435 2. Graph partitionning done
+1750673716.6332252 3. Graph put in object store
+1750673716.6964176 4. Partitionned graph sent
+1750673716.8064134 5. Graph scheduled
+1750673716.8244376 6. End Doreisa scheduler
+1750673716.9031973 1. Begin Doreisa scheduler
+1750673716.9126725 2. Graph partitionning done
+1750673716.9232862 3. Graph put in object store
+1750673716.9852443 4. Partitionned graph sent
+1750673717.0585423 5. Graph scheduled
+1750673717.0814292 6. End Doreisa scheduler
+1750673717.1637907 1. Begin Doreisa scheduler
+1750673717.17438 2. Graph partitionning done
+1750673717.1850615 3. Graph put in object store
+1750673717.2042532 4. Partitionned graph sent
+1750673717.2754982 5. Graph scheduled
+1750673717.3016546 6. End Doreisa scheduler
+1750673717.381053 1. Begin Doreisa scheduler
+1750673717.390814 2. Graph partitionning done
+1750673717.402078 3. Graph put in object store
+1750673717.4217432 4. Partitionned graph sent
+1750673717.538545 5. Graph scheduled
+1750673717.5537379 6. End Doreisa scheduler
+1750673717.6339624 1. Begin Doreisa scheduler
+1750673717.643291 2. Graph partitionning done
+1750673717.6538706 3. Graph put in object store
+1750673717.7121918 4. Partitionned graph sent
+1750673717.7855818 5. Graph scheduled
+1750673717.798545 6. End Doreisa scheduler
+1750673717.8771954 1. Begin Doreisa scheduler
+1750673717.8863103 2. Graph partitionning done
+1750673717.8968322 3. Graph put in object store
+1750673717.9175174 4. Partitionned graph sent
+1750673718.0320914 5. Graph scheduled
+1750673718.051967 6. End Doreisa scheduler
+1750673718.1302502 1. Begin Doreisa scheduler
+1750673718.1397023 2. Graph partitionning done
+1750673718.1502192 3. Graph put in object store
+1750673718.1734304 4. Partitionned graph sent
+1750673718.2464647 5. Graph scheduled
+1750673718.267736 6. End Doreisa scheduler
+1750673718.3468964 1. Begin Doreisa scheduler
+1750673718.3561828 2. Graph partitionning done
+1750673718.366986 3. Graph put in object store
+1750673718.3870316 4. Partitionned graph sent
+1750673718.457717 5. Graph scheduled
+1750673718.4757478 6. End Doreisa scheduler
+1750673718.5547318 1. Begin Doreisa scheduler
+1750673718.5641296 2. Graph partitionning done
+1750673718.5756176 3. Graph put in object store
+1750673718.5950832 4. Partitionned graph sent
+1750673718.7103834 5. Graph scheduled
+1750673718.7291772 6. End Doreisa scheduler
+1750673718.8064406 1. Begin Doreisa scheduler
+1750673718.8157902 2. Graph partitionning done
+1750673718.8266375 3. Graph put in object store
+1750673718.8468146 4. Partitionned graph sent
+1750673718.918492 5. Graph scheduled
+1750673718.934721 6. End Doreisa scheduler
+1750673719.0131066 1. Begin Doreisa scheduler
+1750673719.0231698 2. Graph partitionning done
+1750673719.0341911 3. Graph put in object store
+1750673719.0589018 4. Partitionned graph sent
+1750673719.1716347 5. Graph scheduled
+1750673719.2224908 6. End Doreisa scheduler
+1750673719.3003821 1. Begin Doreisa scheduler
+1750673719.3099904 2. Graph partitionning done
+1750673719.3212693 3. Graph put in object store
+1750673719.342012 4. Partitionned graph sent
+1750673719.4530475 5. Graph scheduled
+1750673719.469024 6. End Doreisa scheduler
+1750673719.5477765 1. Begin Doreisa scheduler
+1750673719.5576456 2. Graph partitionning done
+1750673719.5684278 3. Graph put in object store
+1750673719.587771 4. Partitionned graph sent
+1750673719.6596313 5. Graph scheduled
+1750673719.6765804 6. End Doreisa scheduler
+1750673719.755614 1. Begin Doreisa scheduler
+1750673719.7651262 2. Graph partitionning done
+1750673719.7759566 3. Graph put in object store
+1750673719.7963278 4. Partitionned graph sent
+1750673719.8691795 5. Graph scheduled
+1750673719.887707 6. End Doreisa scheduler
+1750673719.9665823 1. Begin Doreisa scheduler
+1750673719.976444 2. Graph partitionning done
+1750673719.9877334 3. Graph put in object store
+1750673720.0518618 4. Partitionned graph sent
+1750673720.132353 5. Graph scheduled
+1750673720.1506321 6. End Doreisa scheduler
+1750673720.2302215 1. Begin Doreisa scheduler
+1750673720.2403233 2. Graph partitionning done
+1750673720.251769 3. Graph put in object store
+1750673720.3129756 4. Partitionned graph sent
+1750673720.3844259 5. Graph scheduled
+1750673720.4003541 6. End Doreisa scheduler
+1750673720.4809139 1. Begin Doreisa scheduler
+1750673720.490112 2. Graph partitionning done
+1750673720.5007424 3. Graph put in object store
+1750673720.5636656 4. Partitionned graph sent
+1750673720.6459115 5. Graph scheduled
+1750673720.663269 6. End Doreisa scheduler
+1750673720.7416 1. Begin Doreisa scheduler
+1750673720.7510378 2. Graph partitionning done
+1750673720.7617059 3. Graph put in object store
+1750673720.8221085 4. Partitionned graph sent
+1750673720.9352124 5. Graph scheduled
+1750673720.9648397 6. End Doreisa scheduler
+1750673721.0426393 1. Begin Doreisa scheduler
+1750673721.052393 2. Graph partitionning done
+1750673721.0632699 3. Graph put in object store
+1750673721.083075 4. Partitionned graph sent
+1750673721.1905665 5. Graph scheduled
+1750673721.2056217 6. End Doreisa scheduler
+1750673721.2839515 1. Begin Doreisa scheduler
+1750673721.293224 2. Graph partitionning done
+1750673721.3039615 3. Graph put in object store
+1750673721.369368 4. Partitionned graph sent
+1750673721.4822416 5. Graph scheduled
+1750673721.4951122 6. End Doreisa scheduler
+1750673721.573816 1. Begin Doreisa scheduler
+1750673721.5834022 2. Graph partitionning done
+1750673721.594613 3. Graph put in object store
+1750673721.6564047 4. Partitionned graph sent
+1750673721.7281399 5. Graph scheduled
+1750673721.744952 6. End Doreisa scheduler
+1750673721.8227854 1. Begin Doreisa scheduler
+1750673721.832116 2. Graph partitionning done
+1750673721.842889 3. Graph put in object store
+1750673721.8626099 4. Partitionned graph sent
+1750673721.9432251 5. Graph scheduled
+1750673721.9607227 6. End Doreisa scheduler
+1750673722.0383074 1. Begin Doreisa scheduler
+1750673722.0477064 2. Graph partitionning done
+1750673722.05851 3. Graph put in object store
+1750673722.120792 4. Partitionned graph sent
+1750673722.2365901 5. Graph scheduled
+1750673722.2508771 6. End Doreisa scheduler
+1750673722.3296072 1. Begin Doreisa scheduler
+1750673722.3397858 2. Graph partitionning done
+1750673722.3506923 3. Graph put in object store
+1750673722.3793828 4. Partitionned graph sent
+1750673722.4516578 5. Graph scheduled
+1750673722.4990902 6. End Doreisa scheduler
+1750673722.5778778 1. Begin Doreisa scheduler
+1750673722.5905302 2. Graph partitionning done
+1750673722.601428 3. Graph put in object store
+1750673722.6644611 4. Partitionned graph sent
+1750673722.7789373 5. Graph scheduled
+1750673722.7946677 6. End Doreisa scheduler
+1750673722.8718126 1. Begin Doreisa scheduler
+1750673722.881835 2. Graph partitionning done
+1750673722.8923573 3. Graph put in object store
+1750673722.9136205 4. Partitionned graph sent
+1750673723.0213814 5. Graph scheduled
+1750673723.0420926 6. End Doreisa scheduler
+1750673723.1192923 1. Begin Doreisa scheduler
+1750673723.1288478 2. Graph partitionning done
+1750673723.1399643 3. Graph put in object store
+1750673723.1607137 4. Partitionned graph sent
+1750673723.23739 5. Graph scheduled
+1750673723.2530556 6. End Doreisa scheduler
+1750673723.330636 1. Begin Doreisa scheduler
+1750673723.3409493 2. Graph partitionning done
+1750673723.3519073 3. Graph put in object store
+1750673723.3719287 4. Partitionned graph sent
+1750673723.448355 5. Graph scheduled
+1750673723.465334 6. End Doreisa scheduler
+1750673723.5436761 1. Begin Doreisa scheduler
+1750673723.5527604 2. Graph partitionning done
+1750673723.5633862 3. Graph put in object store
+1750673723.5885332 4. Partitionned graph sent
+1750673723.7090883 5. Graph scheduled
+1750673723.7318306 6. End Doreisa scheduler
+1750673723.8103166 1. Begin Doreisa scheduler
+1750673723.8197825 2. Graph partitionning done
+1750673723.83071 3. Graph put in object store
+1750673723.851771 4. Partitionned graph sent
+1750673723.9240222 5. Graph scheduled
+1750673723.9413707 6. End Doreisa scheduler
+1750673724.0188172 1. Begin Doreisa scheduler
+1750673724.028149 2. Graph partitionning done
+1750673724.038735 3. Graph put in object store
+1750673724.05867 4. Partitionned graph sent
+1750673724.1301463 5. Graph scheduled
+1750673724.1464365 6. End Doreisa scheduler
+1750673724.225357 1. Begin Doreisa scheduler
+1750673724.235172 2. Graph partitionning done
+1750673724.2462866 3. Graph put in object store
+1750673724.2649086 4. Partitionned graph sent
+1750673724.3715067 5. Graph scheduled
+1750673724.3890574 6. End Doreisa scheduler
+1750673724.468332 1. Begin Doreisa scheduler
+1750673724.478107 2. Graph partitionning done
+1750673724.48911 3. Graph put in object store
+1750673724.5091934 4. Partitionned graph sent
+1750673724.617572 5. Graph scheduled
+1750673724.6358132 6. End Doreisa scheduler
+1750673724.7142785 1. Begin Doreisa scheduler
+1750673724.7240193 2. Graph partitionning done
+1750673724.7348459 3. Graph put in object store
+1750673724.7565637 4. Partitionned graph sent
+1750673724.8282752 5. Graph scheduled
+1750673724.8606555 6. End Doreisa scheduler
+1750673724.9402049 1. Begin Doreisa scheduler
+1750673724.9502935 2. Graph partitionning done
+1750673724.9611855 3. Graph put in object store
+1750673724.9792047 4. Partitionned graph sent
+1750673725.0552058 5. Graph scheduled
+1750673725.0661914 6. End Doreisa scheduler
+1750673725.1445012 1. Begin Doreisa scheduler
+1750673725.1545124 2. Graph partitionning done
+1750673725.165333 3. Graph put in object store
+1750673725.232889 4. Partitionned graph sent
+1750673725.3533354 5. Graph scheduled
+1750673725.3694518 6. End Doreisa scheduler
+1750673725.4491186 1. Begin Doreisa scheduler
+1750673725.4586298 2. Graph partitionning done
+1750673725.4694846 3. Graph put in object store
+1750673725.5435517 4. Partitionned graph sent
+1750673725.6545374 5. Graph scheduled
+1750673725.6741645 6. End Doreisa scheduler
+1750673725.7565143 1. Begin Doreisa scheduler
+1750673725.7659342 2. Graph partitionning done
+1750673725.7765558 3. Graph put in object store
+1750673725.8415933 4. Partitionned graph sent
+1750673725.915957 5. Graph scheduled
+1750673725.9352388 6. End Doreisa scheduler
+1750673726.013727 1. Begin Doreisa scheduler
+1750673726.0230672 2. Graph partitionning done
+1750673726.0336504 3. Graph put in object store
+1750673726.0532637 4. Partitionned graph sent
+1750673726.1648147 5. Graph scheduled
+1750673726.1816542 6. End Doreisa scheduler
+1750673726.2609649 1. Begin Doreisa scheduler
+1750673726.2705455 2. Graph partitionning done
+1750673726.2813385 3. Graph put in object store
+1750673726.3441017 4. Partitionned graph sent
+1750673726.4560418 5. Graph scheduled
+1750673726.4753869 6. End Doreisa scheduler
+1750673726.554496 1. Begin Doreisa scheduler
+1750673726.5637863 2. Graph partitionning done
+1750673726.5743365 3. Graph put in object store
+1750673726.6404366 4. Partitionned graph sent
+1750673726.7515013 5. Graph scheduled
+1750673726.7631612 6. End Doreisa scheduler
+1750673726.840958 1. Begin Doreisa scheduler
+1750673726.8508203 2. Graph partitionning done
+1750673726.8619175 3. Graph put in object store
+1750673726.9260066 4. Partitionned graph sent
+1750673727.0382564 5. Graph scheduled
+1750673727.0584333 6. End Doreisa scheduler
+1750673727.1372936 1. Begin Doreisa scheduler
+1750673727.146707 2. Graph partitionning done
+1750673727.1578684 3. Graph put in object store
+1750673727.2201898 4. Partitionned graph sent
+1750673727.3274043 5. Graph scheduled
+1750673727.348542 6. End Doreisa scheduler
+1750673727.429454 1. Begin Doreisa scheduler
+1750673727.438882 2. Graph partitionning done
+1750673727.4496894 3. Graph put in object store
+1750673727.4700463 4. Partitionned graph sent
+1750673727.5864182 5. Graph scheduled
+1750673727.6036131 6. End Doreisa scheduler
+1750673727.6819797 1. Begin Doreisa scheduler
+1750673727.6915166 2. Graph partitionning done
+1750673727.7026296 3. Graph put in object store
+1750673727.7211697 4. Partitionned graph sent
+1750673727.8331764 5. Graph scheduled
+1750673727.8545794 6. End Doreisa scheduler
+1750673727.9376009 1. Begin Doreisa scheduler
+1750673727.9470782 2. Graph partitionning done
+1750673727.957891 3. Graph put in object store
+1750673728.0223162 4. Partitionned graph sent
+1750673728.138485 5. Graph scheduled
+1750673728.152555 6. End Doreisa scheduler
+1750673728.2304235 1. Begin Doreisa scheduler
+1750673728.2403965 2. Graph partitionning done
+1750673728.2511814 3. Graph put in object store
+1750673728.272567 4. Partitionned graph sent
+1750673728.3468354 5. Graph scheduled
+1750673728.3704684 6. End Doreisa scheduler
+1750673728.4499083 1. Begin Doreisa scheduler
+1750673728.4595652 2. Graph partitionning done
+1750673728.4709036 3. Graph put in object store
+1750673728.4893253 4. Partitionned graph sent
+1750673728.5721025 5. Graph scheduled
+1750673728.6021671 6. End Doreisa scheduler
+1750673728.6806738 1. Begin Doreisa scheduler
+1750673728.6904619 2. Graph partitionning done
+1750673728.701851 3. Graph put in object store
+1750673728.720665 4. Partitionned graph sent
+1750673728.7910483 5. Graph scheduled
+1750673728.8084302 6. End Doreisa scheduler
+1750673728.886658 1. Begin Doreisa scheduler
+1750673728.8962283 2. Graph partitionning done
+1750673728.907271 3. Graph put in object store
+1750673728.9264438 4. Partitionned graph sent
+1750673729.0429463 5. Graph scheduled
+1750673729.0600476 6. End Doreisa scheduler
+1750673729.1383064 1. Begin Doreisa scheduler
+1750673729.1481075 2. Graph partitionning done
+1750673729.1589017 3. Graph put in object store
+1750673729.1775022 4. Partitionned graph sent
+1750673729.2871246 5. Graph scheduled
+1750673729.3092573 6. End Doreisa scheduler
+1750673729.3869696 1. Begin Doreisa scheduler
+1750673729.3972251 2. Graph partitionning done
+1750673729.4077692 3. Graph put in object store
+1750673729.4292884 4. Partitionned graph sent
+1750673729.5581841 5. Graph scheduled
+1750673729.5811772 6. End Doreisa scheduler
+1750673729.6626406 1. Begin Doreisa scheduler
+1750673729.6719909 2. Graph partitionning done
+1750673729.6825986 3. Graph put in object store
+1750673729.703507 4. Partitionned graph sent
+1750673729.7757814 5. Graph scheduled
+1750673729.817517 6. End Doreisa scheduler
+1750673729.897064 1. Begin Doreisa scheduler
+1750673729.9074013 2. Graph partitionning done
+1750673729.9181216 3. Graph put in object store
+1750673729.9415367 4. Partitionned graph sent
+1750673730.013297 5. Graph scheduled
+1750673730.0300148 6. End Doreisa scheduler
+1750673730.1167355 1. Begin Doreisa scheduler
+1750673730.1263304 2. Graph partitionning done
+1750673730.137246 3. Graph put in object store
+1750673730.1565402 4. Partitionned graph sent
+1750673730.2655656 5. Graph scheduled
+1750673730.2817209 6. End Doreisa scheduler
+1750673730.3592708 1. Begin Doreisa scheduler
+1750673730.368602 2. Graph partitionning done
+1750673730.379605 3. Graph put in object store
+1750673730.4432447 4. Partitionned graph sent
+1750673730.5599446 5. Graph scheduled
+1750673730.5832424 6. End Doreisa scheduler
+1750673730.66201 1. Begin Doreisa scheduler
+1750673730.671436 2. Graph partitionning done
+1750673730.6842937 3. Graph put in object store
+1750673730.74326 4. Partitionned graph sent
+1750673730.8253386 5. Graph scheduled
+1750673730.8426385 6. End Doreisa scheduler
+1750673730.9233987 1. Begin Doreisa scheduler
+1750673730.9329286 2. Graph partitionning done
+1750673730.943618 3. Graph put in object store
+1750673730.965643 4. Partitionned graph sent
+1750673731.07509 5. Graph scheduled
+1750673731.0946748 6. End Doreisa scheduler
+1750673731.172272 1. Begin Doreisa scheduler
+1750673731.181764 2. Graph partitionning done
+1750673731.1932204 3. Graph put in object store
+1750673731.255162 4. Partitionned graph sent
+1750673731.3633623 5. Graph scheduled
+1750673731.385837 6. End Doreisa scheduler
+1750673731.464956 1. Begin Doreisa scheduler
+1750673731.474304 2. Graph partitionning done
+1750673731.4850407 3. Graph put in object store
+1750673731.549525 4. Partitionned graph sent
+1750673731.622428 5. Graph scheduled
+1750673731.6397562 6. End Doreisa scheduler
+1750673731.7175896 1. Begin Doreisa scheduler
+1750673731.7270682 2. Graph partitionning done
+1750673731.7374952 3. Graph put in object store
+1750673731.801883 4. Partitionned graph sent
+1750673731.875463 5. Graph scheduled
+1750673731.8891442 6. End Doreisa scheduler
+1750673731.967986 1. Begin Doreisa scheduler
+1750673731.9784577 2. Graph partitionning done
+1750673731.9897132 3. Graph put in object store
+1750673732.0505552 4. Partitionned graph sent
+1750673732.1240315 5. Graph scheduled
+1750673732.171363 6. End Doreisa scheduler
+1750673732.2493532 1. Begin Doreisa scheduler
+1750673732.2594647 2. Graph partitionning done
+1750673732.2707644 3. Graph put in object store
+1750673732.332935 4. Partitionned graph sent
+1750673732.4439409 5. Graph scheduled
+1750673732.4604356 6. End Doreisa scheduler
+1750673732.5409963 1. Begin Doreisa scheduler
+1750673732.5506 2. Graph partitionning done
+1750673732.561665 3. Graph put in object store
+1750673732.6263058 4. Partitionned graph sent
+1750673732.7095428 5. Graph scheduled
+1750673732.7271442 6. End Doreisa scheduler
+1750673732.804941 1. Begin Doreisa scheduler
+1750673732.8142889 2. Graph partitionning done
+1750673732.8249812 3. Graph put in object store
+1750673732.8452647 4. Partitionned graph sent
+1750673732.9607723 5. Graph scheduled
+1750673732.9730318 6. End Doreisa scheduler
+1750673733.0524542 1. Begin Doreisa scheduler
+1750673733.0619802 2. Graph partitionning done
+1750673733.0724754 3. Graph put in object store
+1750673733.1335294 4. Partitionned graph sent
+1750673733.2083259 5. Graph scheduled
+1750673733.223975 6. End Doreisa scheduler
+1750673733.3013892 1. Begin Doreisa scheduler
+1750673733.3108292 2. Graph partitionning done
+1750673733.3212981 3. Graph put in object store
+1750673733.3433702 4. Partitionned graph sent
+1750673733.4154537 5. Graph scheduled
+1750673733.4333007 6. End Doreisa scheduler
+1750673733.5113409 1. Begin Doreisa scheduler
+1750673733.5207198 2. Graph partitionning done
+1750673733.5316784 3. Graph put in object store
+1750673733.5948153 4. Partitionned graph sent
+1750673733.6823587 5. Graph scheduled
+1750673733.6912432 6. End Doreisa scheduler
+1750673733.7704701 1. Begin Doreisa scheduler
+1750673733.7796276 2. Graph partitionning done
+1750673733.7902572 3. Graph put in object store
+1750673733.8109903 4. Partitionned graph sent
+1750673733.8835087 5. Graph scheduled
+1750673733.922647 6. End Doreisa scheduler
+1750673734.0017505 1. Begin Doreisa scheduler
+1750673734.0113063 2. Graph partitionning done
+1750673734.021923 3. Graph put in object store
+1750673734.0431335 4. Partitionned graph sent
+1750673734.1593158 5. Graph scheduled
+1750673734.2110627 6. End Doreisa scheduler
+1750673734.289921 1. Begin Doreisa scheduler
+1750673734.2991812 2. Graph partitionning done
+1750673734.3103812 3. Graph put in object store
+1750673734.372935 4. Partitionned graph sent
+1750673734.4453866 5. Graph scheduled
+1750673734.4747746 6. End Doreisa scheduler
+1750673734.5537143 1. Begin Doreisa scheduler
+1750673734.563924 2. Graph partitionning done
+1750673734.574452 3. Graph put in object store
+1750673734.59434 4. Partitionned graph sent
+1750673734.7027938 5. Graph scheduled
+1750673734.7238107 6. End Doreisa scheduler
+1750673734.8020282 1. Begin Doreisa scheduler
+1750673734.8112738 2. Graph partitionning done
+1750673734.8219218 3. Graph put in object store
+1750673734.8408952 4. Partitionned graph sent
+1750673734.9191477 5. Graph scheduled
+1750673734.9390283 6. End Doreisa scheduler
+1750673735.0155454 1. Begin Doreisa scheduler
+1750673735.0248415 2. Graph partitionning done
+1750673735.0354161 3. Graph put in object store
+1750673735.0571964 4. Partitionned graph sent
+1750673735.1681452 5. Graph scheduled
+1750673735.1854217 6. End Doreisa scheduler
+1750673735.2632825 1. Begin Doreisa scheduler
+1750673735.3022947 2. Graph partitionning done
+1750673735.3168197 3. Graph put in object store
+1750673735.342621 4. Partitionned graph sent
+1750673735.4497035 5. Graph scheduled
+1750673735.5000443 6. End Doreisa scheduler
+1750673735.5799067 1. Begin Doreisa scheduler
+1750673735.589873 2. Graph partitionning done
+1750673735.6027653 3. Graph put in object store
+1750673735.6211753 4. Partitionned graph sent
+1750673735.7303064 5. Graph scheduled
+1750673735.750319 6. End Doreisa scheduler
+1750673735.8285973 1. Begin Doreisa scheduler
+1750673735.837763 2. Graph partitionning done
+1750673735.848189 3. Graph put in object store
+1750673735.91015 4. Partitionned graph sent
+1750673736.0221086 5. Graph scheduled
+1750673736.0403776 6. End Doreisa scheduler
+1750673736.1225817 1. Begin Doreisa scheduler
+1750673736.1320229 2. Graph partitionning done
+1750673736.143157 3. Graph put in object store
+1750673736.1623244 4. Partitionned graph sent
+1750673736.2755804 5. Graph scheduled
+1750673736.2965987 6. End Doreisa scheduler
+1750673736.3752775 1. Begin Doreisa scheduler
+1750673736.3847992 2. Graph partitionning done
+1750673736.3972633 3. Graph put in object store
+1750673736.417026 4. Partitionned graph sent
+1750673736.5326924 5. Graph scheduled
+1750673736.5460083 6. End Doreisa scheduler
+1750673736.6242936 1. Begin Doreisa scheduler
+1750673736.6341374 2. Graph partitionning done
+1750673736.6447225 3. Graph put in object store
+1750673736.7086506 4. Partitionned graph sent
+1750673736.822229 5. Graph scheduled
+1750673736.8405259 6. End Doreisa scheduler
+1750673736.9205055 1. Begin Doreisa scheduler
+1750673736.9302907 2. Graph partitionning done
+1750673736.9430115 3. Graph put in object store
+1750673737.0050282 4. Partitionned graph sent
+1750673737.1105235 5. Graph scheduled
+1750673737.1298947 6. End Doreisa scheduler
+1750673737.2099812 1. Begin Doreisa scheduler
+1750673737.2203898 2. Graph partitionning done
+1750673737.2311509 3. Graph put in object store
+1750673737.2932005 4. Partitionned graph sent
+1750673737.405367 5. Graph scheduled
+1750673737.4227045 6. End Doreisa scheduler
+1750673737.5023274 1. Begin Doreisa scheduler
+1750673737.5116723 2. Graph partitionning done
+1750673737.5228903 3. Graph put in object store
+1750673737.543703 4. Partitionned graph sent
+1750673737.6154287 5. Graph scheduled
+1750673737.6540322 6. End Doreisa scheduler
+1750673737.7418947 1. Begin Doreisa scheduler
+1750673737.7516859 2. Graph partitionning done
+1750673737.7629318 3. Graph put in object store
+1750673737.826066 4. Partitionned graph sent
+1750673737.8997562 5. Graph scheduled
+1750673737.9132533 6. End Doreisa scheduler
+1750673737.9937887 1. Begin Doreisa scheduler
+1750673738.0031793 2. Graph partitionning done
+1750673738.0135846 3. Graph put in object store
+1750673738.0332022 4. Partitionned graph sent
+1750673738.1462088 5. Graph scheduled
+1750673738.168808 6. End Doreisa scheduler
+1750673738.2474012 1. Begin Doreisa scheduler
+1750673738.256654 2. Graph partitionning done
+1750673738.2674112 3. Graph put in object store
+1750673738.3302848 4. Partitionned graph sent
+1750673738.4018075 5. Graph scheduled
+1750673738.4384754 6. End Doreisa scheduler
+1750673738.5172544 1. Begin Doreisa scheduler
+1750673738.527165 2. Graph partitionning done
+1750673738.5385368 3. Graph put in object store
+1750673738.602107 4. Partitionned graph sent
+1750673738.7168093 5. Graph scheduled
+1750673738.7752886 6. End Doreisa scheduler
+1750673738.8543944 1. Begin Doreisa scheduler
+1750673738.8638122 2. Graph partitionning done
+1750673738.8746893 3. Graph put in object store
+1750673738.8968897 4. Partitionned graph sent
+1750673739.0132449 5. Graph scheduled
+1750673739.0285795 6. End Doreisa scheduler
+1750673739.106889 1. Begin Doreisa scheduler
+1750673739.1165323 2. Graph partitionning done
+1750673739.127054 3. Graph put in object store
+1750673739.1934245 4. Partitionned graph sent
+1750673739.2658973 5. Graph scheduled
+1750673739.2817757 6. End Doreisa scheduler
+1750673739.3599367 1. Begin Doreisa scheduler
+1750673739.369461 2. Graph partitionning done
+1750673739.3806076 3. Graph put in object store
+1750673739.4425488 4. Partitionned graph sent
+1750673739.5138645 5. Graph scheduled
+1750673739.534751 6. End Doreisa scheduler
+1750673739.6134412 1. Begin Doreisa scheduler
+1750673739.6227803 2. Graph partitionning done
+1750673739.6339118 3. Graph put in object store
+1750673739.6550536 4. Partitionned graph sent
+1750673739.76445 5. Graph scheduled
+1750673739.804396 6. End Doreisa scheduler
+1750673739.8835104 1. Begin Doreisa scheduler
+1750673739.8933067 2. Graph partitionning done
+1750673739.904143 3. Graph put in object store
+1750673739.927114 4. Partitionned graph sent
+1750673740.0443525 5. Graph scheduled
+1750673740.0598972 6. End Doreisa scheduler
+1750673740.1515152 1. Begin Doreisa scheduler
+1750673740.160836 2. Graph partitionning done
+1750673740.1714225 3. Graph put in object store
+1750673740.1968822 4. Partitionned graph sent
+1750673740.307566 5. Graph scheduled
+1750673740.322685 6. End Doreisa scheduler
+1750673740.4027371 1. Begin Doreisa scheduler
+1750673740.4125016 2. Graph partitionning done
+1750673740.4239616 3. Graph put in object store
+1750673740.4821033 4. Partitionned graph sent
+1750673740.5947092 5. Graph scheduled
+1750673740.610473 6. End Doreisa scheduler
+1750673740.6891394 1. Begin Doreisa scheduler
+1750673740.698817 2. Graph partitionning done
+1750673740.7102597 3. Graph put in object store
+1750673740.7712998 4. Partitionned graph sent
+1750673740.8430746 5. Graph scheduled
+1750673740.8595443 6. End Doreisa scheduler
+1750673740.9387465 1. Begin Doreisa scheduler
+1750673740.9482229 2. Graph partitionning done
+1750673740.9597049 3. Graph put in object store
+1750673740.9781182 4. Partitionned graph sent
+1750673741.0858762 5. Graph scheduled
+1750673741.104018 6. End Doreisa scheduler
+1750673741.182428 1. Begin Doreisa scheduler
+1750673741.191941 2. Graph partitionning done
+1750673741.2030046 3. Graph put in object store
+1750673741.2249181 4. Partitionned graph sent
+1750673741.334986 5. Graph scheduled
+1750673741.3523831 6. End Doreisa scheduler
+1750673741.434007 1. Begin Doreisa scheduler
+1750673741.4435377 2. Graph partitionning done
+1750673741.4541152 3. Graph put in object store
+1750673741.5159671 4. Partitionned graph sent
+1750673741.5894027 5. Graph scheduled
+1750673741.6192296 6. End Doreisa scheduler
+1750673741.6973093 1. Begin Doreisa scheduler
+1750673741.7067475 2. Graph partitionning done
+1750673741.7175648 3. Graph put in object store
+1750673741.7390814 4. Partitionned graph sent
+1750673741.8091748 5. Graph scheduled
+1750673741.8275225 6. End Doreisa scheduler
+1750673741.9069505 1. Begin Doreisa scheduler
+1750673741.9163325 2. Graph partitionning done
+1750673741.9269629 3. Graph put in object store
+1750673741.946433 4. Partitionned graph sent
+1750673742.01951 5. Graph scheduled
+1750673742.035591 6. End Doreisa scheduler
+1750673742.1145976 1. Begin Doreisa scheduler
+1750673742.1239827 2. Graph partitionning done
+1750673742.1350763 3. Graph put in object store
+1750673742.1964428 4. Partitionned graph sent
+1750673742.2822702 5. Graph scheduled
+1750673742.3027961 6. End Doreisa scheduler
+1750673742.381882 1. Begin Doreisa scheduler
+1750673742.3913503 2. Graph partitionning done
+1750673742.402243 3. Graph put in object store
+1750673742.4663677 4. Partitionned graph sent
+1750673742.5399415 5. Graph scheduled
+1750673742.5574272 6. End Doreisa scheduler
+1750673742.6362543 1. Begin Doreisa scheduler
+1750673742.6454873 2. Graph partitionning done
+1750673742.656511 3. Graph put in object store
+1750673742.6785362 4. Partitionned graph sent
+1750673742.7532072 5. Graph scheduled
+1750673742.7832868 6. End Doreisa scheduler
+1750673742.863641 1. Begin Doreisa scheduler
+1750673742.8734705 2. Graph partitionning done
+1750673742.884587 3. Graph put in object store
+1750673742.9041417 4. Partitionned graph sent
+1750673742.9768965 5. Graph scheduled
+1750673742.9927535 6. End Doreisa scheduler
+1750673743.0739422 1. Begin Doreisa scheduler
+1750673743.0831792 2. Graph partitionning done
+1750673743.0939925 3. Graph put in object store
+1750673743.1572068 4. Partitionned graph sent
+1750673743.2665606 5. Graph scheduled
+1750673743.2810438 6. End Doreisa scheduler
+1750673743.359614 1. Begin Doreisa scheduler
+1750673743.3689926 2. Graph partitionning done
+1750673743.3795776 3. Graph put in object store
+1750673743.4562967 4. Partitionned graph sent
+1750673743.54155 5. Graph scheduled
+1750673743.5534372 6. End Doreisa scheduler
+1750673743.632232 1. Begin Doreisa scheduler
+1750673743.6415498 2. Graph partitionning done
+1750673743.6519856 3. Graph put in object store
+1750673743.6723924 4. Partitionned graph sent
+1750673743.803693 5. Graph scheduled
+1750673743.813081 6. End Doreisa scheduler
+1750673743.8914583 1. Begin Doreisa scheduler
+1750673743.9012973 2. Graph partitionning done
+1750673743.9126055 3. Graph put in object store
+1750673743.9320817 4. Partitionned graph sent
+1750673744.0037725 5. Graph scheduled
+1750673744.0276139 6. End Doreisa scheduler
+1750673744.1055822 1. Begin Doreisa scheduler
+1750673744.1147828 2. Graph partitionning done
+1750673744.1253386 3. Graph put in object store
+1750673744.189163 4. Partitionned graph sent
+1750673744.298287 5. Graph scheduled
+1750673744.318355 6. End Doreisa scheduler
+1750673744.3978255 1. Begin Doreisa scheduler
+1750673744.4072614 2. Graph partitionning done
+1750673744.4179814 3. Graph put in object store
+1750673744.438649 4. Partitionned graph sent
+1750673744.5526416 5. Graph scheduled
+1750673744.5720274 6. End Doreisa scheduler
+1750673744.6492603 1. Begin Doreisa scheduler
+1750673744.6583707 2. Graph partitionning done
+1750673744.6689687 3. Graph put in object store
+1750673744.684543 4. Partitionned graph sent
+1750673744.777341 5. Graph scheduled
+1750673744.7944512 6. End Doreisa scheduler
+1750673744.869387 1. Begin Doreisa scheduler
+1750673744.8788366 2. Graph partitionning done
+1750673744.8895447 3. Graph put in object store
+1750673744.9032192 4. Partitionned graph sent
+1750673744.986094 5. Graph scheduled
+1750673745.0061643 6. End Doreisa scheduler
+1750673745.0815911 1. Begin Doreisa scheduler
+1750673745.0907836 2. Graph partitionning done
+1750673745.1012042 3. Graph put in object store
+1750673745.1592276 4. Partitionned graph sent
+1750673745.2825036 5. Graph scheduled
+1750673745.305602 6. End Doreisa scheduler
