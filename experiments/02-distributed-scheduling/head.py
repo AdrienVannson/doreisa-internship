@@ -19,12 +19,12 @@ start_time, last_time = None, None
 uuid = str(random.randint(0, 2**128 - 1)).zfill(39)
 
 def simulation_callback(arrays: list[da.Array], timestep: int):
+    arr = arrays[0]
+
     # Used to find the parameters of the simulation if killed before the end
     if timestep == 0:
         with open(f"{exp_dir}/results.txt", "a") as f:
             f.write(f"Starting {uuid} {len(ray.nodes()) - 1} {np.prod(arr.numblocks)}\n")
-
-    arr = arrays[0]
 
     dsk = arr.mean()
     dsk.compute(doreisa_debug_logs=f"{exp_dir}/perfs/{uuid}.txt")
