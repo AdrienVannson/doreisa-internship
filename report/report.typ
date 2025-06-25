@@ -185,13 +185,13 @@ With at least 8 processes, the total number of processes doesn't impact the time
 
 In practice, to avoid useless network use, a good compromise is to place an actor on each simulation node. This actor has the responsability to collect all the references to arrays produced by the node, and to send them all at once to the head node. The goal of this optimization is not to have something optimal since this part is not critical to obtain good performance. It is simply to optimize it enough so that it does not become a bottleneck and slow down the whole computation.
 
-== Decentralized scheduler
+== Distributed scheduler
 
 === Design
 
 The issue with the previous approach is that the head node becomes the bottleneck of the whole system when too many nodes are added to the cluster. It has the responsability to communicate with all the workers to collect the references to the chunks, perform reference counting operations, build the Dask array, schedule all the tasks...
 
-To improve the performance of Doreisa, it is needed to reduce the load on the head node. A good approach consist of performing as much as possible the computations locally, on the other nodes. Due to Ray decentralized architecture, they are able to start and schedule tasks themselves.
+To improve the performance of Doreisa, it is needed to reduce the load on the head node. A good approach consist of performing as much as possible the computations locally, on the other nodes. Due to Ray distributed architecture, they are able to start and schedule tasks themselves.
 
 === Evaluation
 
@@ -200,7 +200,7 @@ This new version of Doreisa was benchmarked on Jean Zay with up to 256 nodes in 
 #figure(
     image("resources/exp-02-total-time-v0.1.5.svg"),
     caption: [Time per iteration with the distributed scheduler (weak scaling, 40 chunks per node)],
-) <decentralized-scheduler-total-time-v0.1.5>
+) <distributed-scheduler-total-time-v0.1.5>
 
 === Finding the bottleneck
 
