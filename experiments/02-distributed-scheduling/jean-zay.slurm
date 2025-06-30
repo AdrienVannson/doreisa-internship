@@ -29,16 +29,25 @@ mapfile -t nodes < workernodes.txt
 head_node_ip=$(srun --nodes=1 --nodelist=$headnode --ntasks-per-node=1 bash -c 'ip -o -4 addr show ib0 | awk "{print \$4}" | cut -d/ -f1')
 echo "Head node IP: $head_node_ip"
 
+# Generate a random ID
+file_ready="head-node-ready-$RANDOM-$RANDOM-$RANDOM"
+
 # Start the head node
 srun --nodes=1 --nodelist=$headnode --ntasks=1 --cpus-per-task=40 bash -c "
     ulimit -n 65535
     export OPENBLAS_NUM_THREADS=1
+    export RAY_worker_register_timeout_seconds=240
     ray start --head --node-ip-address=$head_node_ip --port=4242 --disable-usage-stats --include-dashboard=false
     sleep 10
+    touch $file_ready
     python3 head.py
 " &
 
-sleep 30
+while [ ! -f $file_ready ]; do
+    sleep 1
+done
+
+sleep 10
 
 echo "Head node started"
 
@@ -52,6 +61,7 @@ for node in "${nodes[@]}"; do
     srun --nodes=1 --nodelist=$node --ntasks=1 --cpus-per-task=40 bash -c "
         ulimit -n 65535
         export OPENBLAS_NUM_THREADS=1
+        export RAY_worker_register_timeout_seconds=240
         node_ip=\$(ip -o -4 addr show ib0 | awk \"{print \\\$4}\" | cut -d/ -f1)
         echo \"Node IP: \$node_ip\"
         ray start --address=$head_node_ip:4242 --node-ip-address=\$node_ip
