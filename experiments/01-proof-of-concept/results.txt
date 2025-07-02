@@ -1,0 +1,14 @@
+On Jean Zay:
+    1 40 do_computation=True 59.4044303894043
+    2 80 do_computation=True 114.3592357635498
+    4 160 do_computation=True 223.9240312576294
+    8 320 do_computation=True 440.4931426048279
+    16 640 do_computation=True 893.9356851577759
+    32 1280 do_computation=True 1841.4704251289368
+    
+    1 40 do_computation=False 21.683921813964844
+    2 80 do_computation=False 42.2997522354126
+    4 160 do_computation=False 85.89776039123535
+    8 320 do_computation=False 178.43984127044678
+    16 640 do_computation=False 358.98892879486084
+    32 1280 do_computation=False 751.2908339500427

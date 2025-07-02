@@ -1,12 +1,12 @@
 import matplotlib.ticker
 from matplotlib import pyplot as plt
 
-data = """36 19.1283917427063 54.62046146392822
-72 37.082438468933105 107.1160101890564
-144 71.81367874145508 205.5645251274109
-288 146.49715900421143 405.048725605011
-576 300.103862285614 820.530059337616
-1152 625.9033441543579 1676.0836482048035"""
+data = """1 21.683921813964844 59.4044303894043
+2 42.2997522354126 114.3592357635498
+4 85.89776039123535 223.9240312576294
+8 178.43984127044678 440.4931426048279
+16 358.98892879486084 893.9356851577759
+32 751.2908339500427 1841.4704251289368"""
 
 xs, ys1, ys2 = [], [], []
 
@@ -20,7 +20,7 @@ for line in data.split("\n"):
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6, 3))
 
 # Total time per iteration
-ax1.set_xlabel("Number of workers")
+ax1.set_xlabel("Number of simulation nodes")
 ax1.set_ylabel("Time per iteration (ms)")
 
 ax1.set_xscale("log")
@@ -34,7 +34,7 @@ ax1.plot(xs, ys2)
 ax1.scatter(xs, ys2)
 
 # Proportions
-ax2.set_xlabel("Number of workers")
+ax2.set_xlabel("Number of simulation nodes")
 ax2.set_ylabel("Proportion of the total time (%)")
 
 ax2.set_xscale("log")
