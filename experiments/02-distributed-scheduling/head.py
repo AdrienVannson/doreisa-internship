@@ -27,7 +27,7 @@ def simulation_callback(arrays: list[da.Array], timestep: int):
             f.write(f"Starting {uuid} {len(ray.nodes()) - 1} {np.prod(arr.numblocks)}\n")
 
     dsk = arr.mean()
-    dsk.compute(doreisa_debug_logs=f"{exp_dir}/perfs/{uuid}.txt")
+    dsk.compute(doreisa_debug_logs=f"{exp_dir}/perfs/{uuid}.txt")  # Add optimize_graph=False if useful
 
     global last_time
 
