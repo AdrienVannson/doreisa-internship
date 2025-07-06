@@ -46,6 +46,7 @@ srun --nodes=1 --nodelist=$headnode --ntasks=1 --cpus-per-task=40 bash -c "
 while [ ! -f $file_ready ]; do
     sleep 1
 done
+rm $file_ready
 
 sleep 10
 
