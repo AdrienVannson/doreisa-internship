@@ -9,6 +9,8 @@ module purge
 
 module load python/3.12.7
 
+CHUNKS_PER_NODE=40
+
 # Add Ray to the PATH
 export PATH="/linkhome/rech/genlig01/ufw76xj/.local/bin:$PATH"
 
@@ -68,8 +70,8 @@ for node in "${nodes[@]}"; do
         ray start --address=$head_node_ip:4242 --node-ip-address=\$node_ip
         sleep 10
         ray status
-        for i in \$(seq $((40 * iNode)) $((40 * (iNode+1) - 1))); do
-            python3 worker.py \$i $((40 * (SLURM_NNODES-1))) 40 &
+        for i in \$(seq $((CHUNKS_PER_NODE * iNode)) $((CHUNKS_PER_NODE * (iNode+1) - 1))); do
+            python3 worker.py \$i $((CHUNKS_PER_NODE * (SLURM_NNODES-1))) $CHUNKS_PER_NODE &
         done
         wait
     " &
