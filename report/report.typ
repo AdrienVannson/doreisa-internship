@@ -233,6 +233,17 @@ The high execution times for the bigger cluster sizes come from the first three 
 = Performance evaluation <performance-evaluation>
 
 
+= Technical details
+
+== Software Engineering practices
+
+This project follows :
+
+  - All the aspects of the implementation are tested. The tests are executed automatically on Github at each pull-request and on the main branch.
+  - 
+  - Releases are published regularly on PyPI.
+
+
 = Challenges <challenges>
 
 == Technical issues
