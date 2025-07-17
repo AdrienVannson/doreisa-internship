@@ -229,6 +229,15 @@ First, we can notice that the distributed scheduler designed in the previous sec
 
 The high execution times for the bigger cluster sizes come from the first three tasks, which were negligible in smaller runs. To further optimize the system, we need to focus on them.
 
+== Iteration preparation
+
+Thanks to the previous improvements, we managed to make the performance of Doreisa acceptable in most situations. Even with a large number of nodes in the cluster, an iteration takes less than one second to be executed. However, we might want to further reduce this latency to make the system work well with even more chunks per node, even faster.
+
+Since the tasks that need to be performed (task graph partitionning, scheduling, etc) are already quite optimized, the idea is now to hide the time taken to execute these tasks by executing them in advance, before the data is available.
+
+We will let the user define the tasks that will need to be performed a few iterations before the data is actually available by letting them define an optionnal callback, called a few iterations before the data is actually available. The Doreisa scheduler is then able to immediately start shipping the task graphs to the scheduling actors, without having to wait for the data to be ready. The user can prepare several iterations in parallel, so that the preparation of iterations is never be a bottleneck. The tasks will start being executed as soon as the data is available, and the user will be able retrieve and use the results from the standard callback.
+
+More precisely, figure TODO shows what the iteration preparation interface looks from a user perspective.
 
 = Performance evaluation <performance-evaluation>
 
