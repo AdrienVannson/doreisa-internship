@@ -237,7 +237,36 @@ Since the tasks that need to be performed (task graph partitionning, scheduling,
 
 We will let the user define the tasks that will need to be performed a few iterations before the data is actually available by letting them define an optionnal callback, called a few iterations before the data is actually available. The Doreisa scheduler is then able to immediately start shipping the task graphs to the scheduling actors, without having to wait for the data to be ready. The user can prepare several iterations in parallel, so that the preparation of iterations is never be a bottleneck. The tasks will start being executed as soon as the data is available, and the user will be able retrieve and use the results from the standard callback.
 
-More precisely, figure TODO shows what the iteration preparation interface looks from a user perspective.
+More precisely, @prepare-iteration-listing shows what the iteration preparation interface looks like from a user perspective: the user defines a standard callback as well as a preparation callback. The return value of the preparation callback is passed as an argument to the simulation callback.
+
+#place(
+  auto,
+  scope: "parent",
+  float: true,
+  [#figure(
+    text(0.8em)[
+      ```python
+      def prepare_iteration(array: da.Array, *, timestep: int) -> da.Array:
+          # We can't use compute here since the data is not available yet
+          return array.sum().persist()
+
+      def simulation_callback(array: da.Array, *, timestep: int, preparation_result: da.Array):
+          print(preparation_result.compute())
+
+      run_simulation(
+          simulation_callback,
+          [ArrayDefinition("array")],
+          max_iterations=NB_ITERATIONS,
+          prepare_iteration=prepare_iteration,
+          preparation_advance=10,
+      )
+      ```
+    ],
+    caption: [Iteration preparation example],
+  ) <prepare-iteration-listing>]
+)
+
+
 
 = Performance evaluation <performance-evaluation>
 
