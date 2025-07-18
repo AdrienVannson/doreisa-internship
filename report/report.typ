@@ -46,7 +46,7 @@
 
 Physical simulations such as Gysela @gysela or Parflow (TODO ref?).
 
-This Master thesis introduces a new way to process data coming from HPC simulations, easily and in a distributed and efficient manner. The proposed solution should be able to scale on supercomputers such as the Adastra and Jean Zay.
+This Master thesis introduces #smallcaps[Doreisa] -- Dask-on-Ray Enabled In Situ Analytics --, a new way to process data coming from HPC simulations, easily and in a distributed and efficient manner. This system is able to scale on supercomputers such as the Adastra and Jean Zay, 
 
 == Performance requirements
 
@@ -124,7 +124,7 @@ Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray i
 
 == First proof of concept
 
-This section describes a first proof of concept of Doreisa. This solution already made it possible to analyze data produced by HPC simulations easily. However, its design remains largely centralized, with one main actor quickly becoming the bottleneck of the analytics.
+This section describes the first proof of concept of Doreisa. This solution already made it possible to analyze data produced by HPC simulations easily. However, its design remains largely centralized, with one main actor quickly becoming the bottleneck of the analytics.
 
 This first proof of concept will be successively improved by the following sections.
 
@@ -132,24 +132,31 @@ This first proof of concept will be successively improved by the following secti
 
 The general design of the first version of Doreisa is shown in figure @doreisa-poc.
 
-#figure(
-    image("resources/doreisa-poc.png", width: 105%),
-    caption: [Architecture of the first Doreisa proof of concept],
-) <doreisa-poc>
+#place(
+  auto,
+  scope: "parent",
+  float: true,
+  [
+    #figure(
+      image("resources/doreisa-poc.png", width: 80%),
+      caption: [Architecture of the first Doreisa proof of concept],
+    ) <doreisa-poc>
+  ],
+)
 
 Each step of the analysis pipeline consists of the following steps:
 
-  1. The MPI processes terminate their simulation. The data is ready for analytics. It is made available to Doreisa using PDI, which serves here as an interface between Doreisa and the simulation code.
-  2. The data produced by the simulation is placed in the Ray object store. An ObjectRef is produced: this reference to the data is sent to a main actor running on the head node.
-  3. The head actor collects the references of all the processes. Once it has received all of them, it builds a Dask array from it.
-  4. The user script receives the Dask array. The array can be used as a standard Dask array, to perform any kind of analysis. Performing operations on the Dask array produces a task graph.
+  1. The MPI processes terminate one iteration of the simulation. The data is ready for analytics. It is made available to Doreisa using PDI, which serves as an interface between Doreisa and the simulation code.
+  2. The data produced by the simulation is placed in the Ray object store. An `ObjectRef` is produced: this reference to the data is sent to a main actor running on the head node.
+  3. The head actor collects the references of all the processes. Once it has received all of them, it builds a Dask array from them.
+  4. The user script receives the Dask array. It can be used as a standard Dask array, to perform any kind of analysis. Performing operations on the Dask array produces a task graph.
   5. The task graph is passed to the Dask-on-Ray scheduler that is in charge of executing it. Each Dask task is converted to a Ray task, and scheduled by Ray. Ray takes into account data locality when scheduling tasks, so unnecessary data movements should be avoided.
 
 === Performance evaluation
 
-This first solution has the drawback of being really centralized: the head actor needs to collect an ObjectRef for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks. The same node will be in charge of scheduling all these tasks, and retrieving their results.
+This first solution has the drawback of being really centralized: the head actor needs to collect an `ObjectRef` for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks. The same node will be in charge of scheduling all these tasks, and retrieving their results.
 
-For big simulations running on hundreds of nodes, the head node would have to process tens of thousands of references and tasks at each iteration, which is too costly. @performance-naive-method demonstrates this. In this experiment, Doreisa is asked to compute the mean of a distributed array. The total number of chunks of this array is equal to the number of cores available in the cluster, so it is directly proportionnal to the number of nodes. With a well-parallelised system, one would expect the execution time to only slightly increase with the number of nodes (weak scaling). However, this is not the case here: the execution time is proportionnal to the number of nodes. In this situation, the centralized actor is clearly the bottleneck. More precisely, the analysis is composed of the following main parts:
+For big simulations running on hundreds of nodes, the head node would have to process tens of thousands of references and tasks at each iteration, which is too costly. @performance-naive-method demonstrates this. In this experiment, Doreisa is asked to compute the mean of a distributed array. The total number of chunks in this array is equal to the number of cores available in the cluster, so it is directly proportional to the number of nodes. With a well-parallelised system, one would expect the execution time to only slightly increase with the number of nodes (weak scaling). However, this is not the case here: the execution time is proportional to the number of nodes. In this situation, the centralized actor is clearly the bottleneck. More precisely, the analysis is composed of the following main parts:
   - Collection the `ObjectRefs` produced by the workers.
   - Creating the Dask array as well as the task graph. For such small graphs, the time is negligible.
   - Executing the task graph using the Dask-on-Ray scheduler.
@@ -204,7 +211,7 @@ This new version of Doreisa was benchmarked on Jean Zay with up to 256 nodes in 
 
 === Finding the bottleneck
 
-As we saw in the previous section, the current system is able to scale well until about 64 nodes are added. Once this threeshold is reached, a new bottleneck appears and the execution time starts being proportionnal to the number of nodes in the Ray cluster.
+As we saw in the previous section, the current system is able to scale well until about 64 nodes are added. Once this threeshold is reached, a new bottleneck appears and the execution time starts being proportional to the number of nodes in the Ray cluster.
 
 To understand where this problem comes from, a more detailed analysis was realized. This experiment is named `03-TODO` in the `doreisa-internship` repository. The total execution time of a simple data analysis has been measured with a varying number of nodes: 10, 20, 40 and 80. This experiment has been realized on the `gros` cluster from `Grid5000`. The goal is to determine what are the parts of the process that take too much time, to identify the bottleneck. Four execution times are measured:
 
