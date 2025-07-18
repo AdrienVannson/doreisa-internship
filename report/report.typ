@@ -167,11 +167,10 @@ We can notice that both the gathering of the references and the execution of the
     caption: [Performance of the naive method (weak scaling with a simple analysis)],
 ) <performance-naive-method>
 
-== Building the Dask Aray
-
+== Building the Dask Aray <collecting-references>
 At each iteration of the simulation, MPI processes produce data stored in numpy arrays. These chunks of data are placed in Ray's object store, and references to them must be sent to the head node to allow it to build a full Dask array. A first approach simply consists of having all the MPI processes send their reference to the head node directly. However, this centralized approach is not scalable enough: gathering tens of thousands of references is a costly operation that can't be performed by a single process in a resonable time, as a lot of communications are involved. Indeed, as shown in @ref-collecting-bench (explained bellow), when many processes send their references one-by-one, at most around one thousand references can be collected each second. The exact value will of course depend on the hardware, but it is one order of magnitude bellow the target scale.
 
-To solve this problem, a simple idea consists of sending first the references to intermediate actors, that will have the responsability to collect a few of them, and send later to the head node in a single message. The following experiment measure the time needed to collect all the references, either naively or with this optimization.
+To solve this problem, a simple idea consists of sending first the references to intermediate actors, that will have the responsibility to collect a few of them, and send later to the head node in a single message. The following experiment measure the time needed to collect all the references, either naively or with this optimization.
 
 To verify this and see how well sending the references by group helps improving the performance, a simple setup is used. Some "simulation" processes generate numpy arrays and send references to them to the head node. The arrays are generated randomly, no simulation code is actually used in this simple setup. The process is repeated with a varying number of processes from 1 to 512, as well as a number of references sent by each process at each iteration varying from 1 to 256. During each measurement, 200 iterations of the process are performed.
 
@@ -190,15 +189,53 @@ First, we can notice that the measured values are higher when less than 8 proces
 
 With at least 8 processes, the total number of processes doesn't impact the time needed to send one reference. However, sending several references at each request greatly reduce the time needed to send one reference: it becomes possible to reduce the total time by around 20 times with this optimization.
 
-In practice, to avoid useless network use, a good compromise is to place an actor on each simulation node. This actor has the responsability to collect all the references to arrays produced by the node, and to send them all at once to the head node. The goal of this optimization is not to have something optimal since this part is not critical to obtain good performance. It is simply to optimize it enough so that it does not become a bottleneck and slow down the whole computation.
+In practice, to avoid useless network use, a good compromise is to place an actor on each simulation node. This actor has the responsibility to collect all the references to arrays produced by the node, and to send them all at once to the head node. The goal of this optimization is not to have something optimal since this part is not critical to obtain good performance. It is simply to optimize it enough so that it does not become a bottleneck and slow down the whole computation.
 
 == Distributed scheduler
 
 === Design
 
-The issue with the previous approach is that the head node becomes the bottleneck of the whole system when too many nodes are added to the cluster. It has the responsability to communicate with all the workers to collect the references to the chunks, perform reference counting operations, build the Dask array, schedule all the tasks...
+The issue with the proof of concept of Doreisa is that the head node becomes the bottleneck of the whole system when too many nodes are added to the cluster. It has the responsibility to communicate with all the workers to collect the references to the chunks, build the Dask array, schedule all the tasks...
 
-To improve the performance of Doreisa, it is needed to reduce the load on the head node. A good approach consist of performing as much as possible the computations locally, on the other nodes. Due to Ray distributed architecture, they are able to start and schedule tasks themselves.
+As shown in @collecting-references, it is possible to reduce the time taken to collect all the references from the worker processes. Unfortunately, it doesn't solve the problem of executing the tasks: the head node still needs to create all the Ray tasks, which is costly for large task graphs.
+
+This section describes a method to distribute the scheduling of the tasks; taking advantage of Ray's distributed scheduler. The goal is to avoid forcing the head node to communicate with all the data-producing processes as well as the worker processes, but instead limit the communication to lightweight messages with an actor running on each simulation node.
+
+#place(
+  auto,
+  scope: "parent",
+  float: true,
+  [
+    #figure(
+      image("resources/doreisa-distributed-scheduler.png", width: 80%),
+      caption: [Architecture of the Doreisa distributed scheduler],
+    ) <doreisa-distributed-scheduler>
+  ],
+)
+
+@doreisa-distributed-scheduler shows the architecture of the Doreisa distributed scheduler. The main difference with the proof-of-concept version is that an additional actor -- that we will call a `SchedulingActor` -- is started on each simulation node. The head actor will only communicate with the simulation nodes using this actor. This actor has the responsibility to collect all the `ObjectRefs` produced by the simulation nodes, and schedule the tasks sent by the head node.
+
+The steps of one iteration of the analysis are as follow:
+  1. As before, the simulation processes make some chunks of data available to Doreisa using PDI.
+  2. The chunks are put in the Ray object store, and the `ObjectRefs` are collected. 
+  3. When all the chunks of the node are ready, the head actor is notified.
+  4. Once all the simulation nodes are ready, a Dask array is built and made available to the user. This array doesn't contain the `ObjectRefs` pointing to the data directly: for performance reasons, they are replaced by a small object indicating which object reference should be used.
+  5. The user performs some computations on the Dask array, which produces a task graph. The task graph is passed to the Doreisa scheduler.
+  6. The Doreisa scheduler finds a partition the graph, creating one partition for each simulation node. The partitions are sent to the actors.
+  7. After receiving the partitioned task graphs, the scheduling actors prepare its execution. They send messages to one another to collect the `ObjectRefs` that they are missing (these `ObjectRefs` correspond to tasks scheduled by another scheduling actor). The references are placed in the task graph directly, replacing the placeholder object.
+  8. The scheduling actor sent their task graphs to the Dask-on-Ray scheduler for execution. The Dask-on-Ray scheduler will schedule the tasks using the local node's Ray scheduler.
+
+With this approach, all the simulation nodes are in charge of scheduling a part of the task graph, effectively distributing the scheduling.
+
+=== An implementation detail
+
+From an implementation perspective, there is one major difference compared to the proof-of-concept version: it is no longer possible to simply put `ObjectRefs` pointing to the data directly in the task graph that will be executed by the Dask-on-Ray scheduler. Indeed, as the scheduling is now distributed, a scheduling actor doesn't own all the `ObjectRefs` that are needed to perform the computation: it may need to ask other scheduling actors to send `ObjectRefs` corresponding to results of tasks that they scheduled. When asking another scheduling actor for an `ObjectRef`, it is not possible to directly get the actual `ObjectRef`, since it may not be ready at that time (all the actors are scheduling their tasks at the same time), and trying to get it anyway results in deadlocks.
+
+For this reason, we actually need to use futures that will return the desired `ObjectRef`, that is... an `ObjectRef` of an `ObjectRef` of the actual data. However, the Dask-on-Ray scheduler doesn't work well with nested `ObjectRefs`: it expects the references to directly contain the data.
+
+To solve this issue, it was necessary to:
+  - Maintain the invariant that all the references are nested `ObjectRefs`, which sometimes requires artificially wrapping an `ObjectRef` inside another one.
+  - Patch a small part of the Dask-on-Ray scheduler to make it work with nest `ObjectRefs`.
 
 === Evaluation
 
