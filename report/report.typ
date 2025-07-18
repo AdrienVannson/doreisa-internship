@@ -3,7 +3,7 @@
 #set page(numbering: "1", number-align: center)
 #set text(font: "New Computer Modern", lang: "en")
 #set par(leading: 0.55em, first-line-indent: 1.8em, justify: true)
-#set heading(numbering: "1.")
+#set heading(numbering: "I 1.1.a")
 #show heading: set block(above: 1.4em, below: 1em)
 
 #[
@@ -231,13 +231,19 @@ The high execution times for the bigger cluster sizes come from the first three 
 
 == Iteration preparation
 
+=== Presentation
+
 Thanks to the previous improvements, we managed to make the performance of Doreisa acceptable in most situations. Even with a large number of nodes in the cluster, an iteration takes less than one second to be executed. However, we might want to further reduce this latency to make the system work well with even more chunks per node, even faster.
 
-Since the tasks that need to be performed (task graph partitionning, scheduling, etc) are already quite optimized, the idea is now to hide the time taken to execute these tasks by executing them in advance, before the data is available.
+Since the tasks that need to be performed (task graph partitioning, scheduling, etc) are already quite optimized, the idea is now to hide the time taken to execute these tasks by executing them in advance, before the data is available.
 
-We will let the user define the tasks that will need to be performed a few iterations before the data is actually available by letting them define an optionnal callback, called a few iterations before the data is actually available. The Doreisa scheduler is then able to immediately start shipping the task graphs to the scheduling actors, without having to wait for the data to be ready. The user can prepare several iterations in parallel, so that the preparation of iterations is never be a bottleneck. The tasks will start being executed as soon as the data is available, and the user will be able retrieve and use the results from the standard callback.
+We will let the user define the tasks that will need to be performed a few iterations before the data is actually available by letting them define an optional callback, called a few iterations before the data is actually available. The Doreisa scheduler is then able to immediately start shipping the task graphs to the scheduling actors, without having to wait for the data to be ready. The user can prepare several iterations in parallel, so that the preparation of iterations is never a bottleneck. The tasks will start being executed as soon as the data is available, and the user will be able retrieve and use the results from the standard callback.
 
-More precisely, @prepare-iteration-listing shows what the iteration preparation interface looks like from a user perspective: the user defines a standard callback as well as a preparation callback. The return value of the preparation callback is passed as an argument to the simulation callback.
+This mechanism relies on Dask's persist API: instead of calling the `compute` method that executes the computation and returns its result, the `persist` method starts the computation in the background and returns a Dask array containing a futures to the final result. The Doreisa scheduler needed to be updated to support this feature: if the scheduler is called from a `persist` call, it directly returns `ObjectRefs` to the final result, without getting their value.
+
+=== User API
+
+@prepare-iteration-listing shows what the iteration preparation interface looks like from a user perspective: the user defines a standard callback as well as a preparation callback. The return value of the preparation callback is passed as an argument to the simulation callback.
 
 #place(
   auto,
@@ -266,10 +272,38 @@ More precisely, @prepare-iteration-listing shows what the iteration preparation 
   ) <prepare-iteration-listing>]
 )
 
+=== Performance evaluation
 
+==== Varying the number of nodes
+
+The performance improvement of the iteration preparation mechanism is evaluated with the same protocol as before: the number of nodes varies with a constant number of chunks per node, and the mean time per iteration is measured. The experiment is repeated five time, with a number of iterations prepared in advance varying from 0 to 8.
+
+#figure(
+    image("resources/exp-03-results.svg", width: 105%),
+    caption: [Performance improvement of iteration preparation: varying number of iterations prepared in advance],
+) <perfs-iteration-preparation>
+
+@perfs-iteration-preparation shows the results obtained with this experiment. When no iterations are prepared in advance (which approximately corresponds to not using the preparation mechanism), the execution time ultimately starts increasing linearly with the number of nodes.
+
+As we increase the number of iterations prepared in advance, we notice that the execution time becomes smaller. When enough iterations are prepared, the expensive scheduling tasks stop being a bottleneck and the performance stops improving.
+
+==== Varying the number of chunks per node
+
+More importantly, if enough iterations are prepared in advance, the execution time no longer depends on the number of chunks per node.
+
+== Conclusion
+
+Thanks to the various improvements presented in the previous sections, Doreisa became a system able to execute task graphs containing tens of thousands of tasks on clusters composed of hundreds of nodes, with very good performance.
+
+In this section, we focused on improving the number of tasks scheduled per second, as this is probably the most important limitation of previous approaches.
+
+The following section will evaluate the performance of Doreisa in more various scenarios, closer to real-life applications.
 
 = Performance evaluation <performance-evaluation>
 
+== Integration with Parflow
+
+The integration with Parflow was realized by Andrès Bermeo Marinelli, engineer in the team.
 
 = Technical details
 
