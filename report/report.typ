@@ -92,7 +92,90 @@ Unfortunately, Dask suffer from several limitations that have an impact on perfo
 
 === Ray
 
-See @exoshuffle
+Ray is a Python framework. One of its building blocks, Ray Core, offers a low level API for distributed computing. Ray also provides modules for AI training, model serving, reinforcement learning, etc. In the rest of this report, Ray will only stand for Ray Core.
+
+As it is a simple and efficient system to define distributed computations, it was notably successfully used to create a state-of-the-art distributed shuffling system @exoshuffle.
+
+The following sections will briefly introduce the main abstractions provided by Ray: object references, tasks and actors. Ray also provides advanced options to choose how tasks are scheduled, the lifetime of actors, support asynchronous code with `asyncio`, etc, but introducing them is out of the scope of this report. Ray doesn't include any API similar to Dask arrays.
+
+==== Ray `ObjectRefs`
+
+A Ray `ObjectRef` is a small Python object that points to some data. The data can be retrieved using the `ray.get` function.
+
+An `ObjectRef` can be created by placing data directly in the Ray object store using the `ray.put` function. It can also point to the result of a call to a remote function or method, possibly before the function execution terminates.
+
+`ObjectRefs` can be freely shared across the nodes of the Ray cluster: thanks to a distributed reference counting system, the memory is freed automatically when no `ObjectRef` pointing to it exists anymore.
+
+#figure(
+  [
+    #set text(0.9em)
+
+    ```python
+    import ray
+
+    object_ref = ray.put([1, 2, 3])
+    assert isinstance(object_ref, ray.ObjectRef)
+    assert ray.get(object_ref) == [1, 2, 3]
+    ```
+  ],
+  caption: [Ray's `ObjectRefs`]
+) <ray-refs>
+
+==== Ray tasks
+
+In Ray, a remote function is a function that can be executed remotely, on any available machine in the cluster. Calling a remote function will create a remote task whose result is represented by an `ObjectRef`. Calling `ray.get` on this reference will wait for the task to finish and return the result of the task.
+
+Contrary to Dask, Ray is very flexible: a Ray task can create other tasks thanks to the distributed scheduler.
+
+#figure(
+  [
+    #set text(0.9em)
+
+    ```python
+    import ray
+
+    @ray.remote
+    def f(n):
+      # Some expensive computation
+      return ...
+
+    object_ref = f.remote(12)
+    assert isinstance(object_ref, ray.ObjectRef)
+
+    print(ray.get(object_ref))
+    ```
+  ],
+  caption: [Execution of a Ray remote task]
+) <ray-task>
+
+==== Ray actors
+
+Ray actors are instances of classes defined with the `ray.remote` decorator. They allow stateful computations.
+
+#figure(
+  [
+    #set text(0.9em)
+
+    ```python
+    import ray
+
+    @ray.remote
+    class Actor:
+      def __init__(self) -> None:
+        self.n = 0
+
+      def increase_counter(self) -> int:
+        self.n += 1
+        return self.n
+
+    actor = Actor.remote()
+    ray.get(actor.increase_counter.remote())  # 1
+    ray.get(actor.increase_counter.remote())  # 2
+    ray.get(actor.increase_counter.remote())  # 3
+    ```
+  ],
+  caption: [Example of a Ray actor]
+) <ray-actors>
 
 === Dask-on-Ray
 
@@ -207,7 +290,7 @@ This section describes a method to distribute the scheduling of the tasks; takin
   float: true,
   [
     #figure(
-      image("resources/doreisa-distributed-scheduler.png", width: 80%),
+      image("resources/doreisa-distributed-scheduler.png", width: 90%),
       caption: [Architecture of the Doreisa distributed scheduler],
     ) <doreisa-distributed-scheduler>
   ],
