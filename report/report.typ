@@ -329,6 +329,42 @@ This new version of Doreisa was benchmarked on Jean Zay with up to 256 nodes in 
     caption: [Time per iteration with the distributed scheduler (weak scaling, 40 chunks per node)],
 ) <distributed-scheduler-total-time-v0.1.5>
 
+=== Graph partitioning strategy
+
+The Doreisa distributed scheduler needs to partition the task graph in different subsets and send these subsets to the scheduling actors in the cluster.
+
+The partitioning strategy has an impact on the performance of the application: if one scheduling actor has too many tasks to schedule, it can become a bottleneck similarly to what happened with the proof-of-concept version of Doreisa. If many directly dependent tasks are not put in the same partition, many messages will need to be exchanged between the scheduling actors to schedule the tasks. A good strategy needs to:
+  - Produce a partition with subsets of a comparable size.
+  - Minimize the number of dependencies between two tasks that are part of different subsets.
+
+This section will determine the impact of the scheduling strategy on the performance of the system by comparing two partitioning strategies.
+
+Note that the partitioning of the task graph only has an impact on which scheduling actor will have the responsibility to schedule each task. It is still the Ray scheduler of the node on which the scheduling actor runs will eventually be in charge of scheduling the task on any node of the cluster.
+
+Since the partitioning does not determine the nodes executing each task, since the communication cost between the actors is small and since all the communications happen in parallel, one can expect the choice of the graph partitioning strategy to have a very small impact on the performance as long as the subsets of the partition have comparable sizes.
+
+==== Considered strategies
+
+Two partitioning strategies have been considered:
+
+ - *Random partitioning.* Each task is randomly assigned to a scheduling actor, subject to the constraint that the resulting partition is balanced: the sizes of the subsets differ by at most one. This strategy doesn't try to minimize the number of dependencies from tasks in different subsets.
+  #figure(
+    image("resources/random-partitioning.png", width: 60%),
+    caption: [Random task graph partitioning],
+  ) <random-partitioning>
+
+ - *Greedy partitioning.* A task $T$ is assigned to the scheduling actor that schedules the greatest number of tasks on which $T$ directly depends. This strategy is optimal on trees.
+ #figure(
+    image("resources/greedy-partitioning.png", width: 60%),
+    caption: [Greedy task graph partitioning],
+  ) <greedy-partitioning>
+
+==== Evaluation
+
+We evaluate the two strategies on a cluster composed of 32 simulation nodes and one head node. Each simulation node generates 80 (TODO check) chunks of data per iteration. The task consists of computing the mean of the Dask array.
+
+The task graph is a tree: leaf nodes are tasks computing the mean of each chunk, and inner nodes are tasks merging partial means together to compute the mean of a bigger block of the array (see @random-partitioning and @greedy-partitioning, squares correspond to chunks and circles to tasks).
+
 === Finding the bottleneck
 
 As we saw in the previous section, the current system is able to scale well until about 64 nodes are added. Once this threeshold is reached, a new bottleneck appears and the execution time starts being proportional to the number of nodes in the Ray cluster.
