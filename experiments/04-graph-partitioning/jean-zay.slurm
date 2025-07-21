@@ -17,7 +17,7 @@ export PATH="/linkhome/rech/genlig01/ufw76xj/.local/bin:$PATH"
 export OPENBLAS_NUM_THREADS=1
 
 # Create directories for results
-mkdir -p timesteps perfs
+mkdir -p perfs
 
 # Find the head and worker nodes
 scontrol show hostnames $SLURM_JOB_NODELIST > nodes.txt
