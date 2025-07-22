@@ -203,6 +203,23 @@ Deisa
 
 Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray instead of Dask. One of the main limitation of the approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define two callback functions:
 
+== Supercomputers
+
+=== Jean-Zay
+
+The Jean-Zay supercomputer (see @jean-zay) is a powerful supercomputer located in Saclay, France. Following its extension in 2024, it has a peak computing power of 125.9 PFlop/s @jean-zay-presentation, which places it among the most powerful supercomputers on this planet.
+
+#figure(
+  image("resources/jean-zay.png", width: 100%),
+  caption: [The Jean-Zay supercomputer],
+) <jean-zay>
+
+The experiments presented in this report were carried out using the CPU partition of Jean-Zay. This partition is composed of 720 nodes (at most 256 bookable at the same time), each having:
+  - 2 Intel Cascade Lake 6248 processors (2 x 20 cores)
+  - 192 Go of RAM
+
+The tasks are submitted using SLURM.
+
 = Doreisa: Dask-on-Ray Enabled In-Situ Analytics <doreisa-design>
 
 == First proof of concept
