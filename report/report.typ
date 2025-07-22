@@ -226,8 +226,6 @@ The tasks are submitted using SLURM.
 
 This section describes the first proof of concept of Doreisa. This solution already made it possible to analyze data produced by HPC simulations easily. However, its design remains largely centralized, with one main actor quickly becoming the bottleneck of the analytics.
 
-This first proof of concept will be successively improved by the following sections.
-
 === Design
 
 The general design of the first version of Doreisa is shown in figure @doreisa-poc.
@@ -244,7 +242,7 @@ The general design of the first version of Doreisa is shown in figure @doreisa-p
   ],
 )
 
-Each step of the analysis pipeline consists of the following steps:
+Each iteration of the analysis pipeline consists of the following steps:
 
   1. The MPI processes terminate one iteration of the simulation. The data is ready for analytics. It is made available to Doreisa using PDI, which serves as an interface between Doreisa and the simulation code.
   2. The data produced by the simulation is placed in the Ray object store. An `ObjectRef` is produced: this reference to the data is sent to a main actor running on the head node.
@@ -257,10 +255,10 @@ Each step of the analysis pipeline consists of the following steps:
 This first solution has the drawback of being really centralized: the head actor needs to collect an `ObjectRef` for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks. The same node will be in charge of scheduling all these tasks, and retrieving their results.
 
 For big simulations running on hundreds of nodes, the head node would have to process tens of thousands of references and tasks at each iteration, which is too costly. @performance-naive-method demonstrates this. In this experiment, Doreisa is asked to compute the mean of a distributed array. The total number of chunks in this array is equal to the number of cores available in the cluster, so it is directly proportional to the number of nodes. With a well-parallelised system, one would expect the execution time to only slightly increase with the number of nodes (weak scaling). However, this is not the case here: the execution time is proportional to the number of nodes. In this situation, the centralized actor is clearly the bottleneck. More precisely, the analysis is composed of the following main parts:
-  - Collection the `ObjectRefs` produced by the workers.
+  - Collecting the `ObjectRefs` produced by the workers.
   - Creating the Dask array as well as the task graph. For such small graphs, the time is negligible.
   - Executing the task graph using the Dask-on-Ray scheduler.
-We can notice that both the gathering of the references and the execution of the task graph are slow tasks, one of them is not negligible compared to the other. Both aspects will need to be optimized in order to obtain a fast system.
+Both the reference gathering and the task graph execution are time-consuming processes, with neither being negligible relative to the other. To achieve a high-performance system, it is essential to optimize both aspects.
 
 #figure(
     image("resources/exp-01.svg", width: 105%),
@@ -268,15 +266,14 @@ We can notice that both the gathering of the references and the execution of the
 ) <performance-naive-method>
 
 == Building the Dask Aray <collecting-references>
-At each iteration of the simulation, MPI processes produce data stored in numpy arrays. These chunks of data are placed in Ray's object store, and references to them must be sent to the head node to allow it to build a full Dask array. A first approach simply consists of having all the MPI processes send their reference to the head node directly. However, this centralized approach is not scalable enough: gathering tens of thousands of references is a costly operation that can't be performed by a single process in a resonable time, as a lot of communications are involved. Indeed, as shown in @ref-collecting-bench (explained bellow), when many processes send their references one-by-one, at most around one thousand references can be collected each second. The exact value will of course depend on the hardware, but it is one order of magnitude bellow the target scale.
 
-To solve this problem, a simple idea consists of sending first the references to intermediate actors, that will have the responsibility to collect a few of them, and send later to the head node in a single message. The following experiment measure the time needed to collect all the references, either naively or with this optimization.
+At each iteration of the simulation, MPI processes produce data stored in numpy arrays. These chunks of data are placed in Ray's object store, and references to them must be sent to the head node to allow it to build a full Dask array. A first approach simply consists of having all the MPI processes send their reference to the head node directly. However, this centralized approach is not scalable enough: gathering tens of thousands of references is a costly operation that can't be performed by a single process in a reasonable time, as a lot of communications are involved. Indeed, as shown in @ref-collecting-bench (explained below), when many processes send their references one-by-one, at most around one thousand references can be collected each second. The exact value will depend on many factors, but it is not enough for our applications.
 
-To verify this and see how well sending the references by group helps improving the performance, a simple setup is used. Some "simulation" processes generate numpy arrays and send references to them to the head node. The arrays are generated randomly, no simulation code is actually used in this simple setup. The process is repeated with a varying number of processes from 1 to 512, as well as a number of references sent by each process at each iteration varying from 1 to 256. During each measurement, 200 iterations of the process are performed.
+To solve this problem, a simple idea consists of sending first the references to intermediate actors that will have the responsibility to collect a few of them, and send them to the head node in a single message. To see how well sending the references by group helps improving the performance, a simple setup is used. Some "simulation" processes generate numpy arrays and send references to them to the head node. The arrays are generated randomly, no simulation code is actually used. The process is repeated with a varying number of processes from 1 to 512, as well as a number of references sent by each process at each iteration varying from 1 to 256. During each measurement, 200 iterations are performed.
 
 To avoid having to deploy the experiment on a very large cluster, several simulation scripts were started on each core. The measurement is repeated two times: one time with two simulation nodes, the other with four simulation nodes. The goal of this step is to make sure that the bottleneck actually comes from the head node and not the simulation node: it is the case if the results in these two configurations are similar. This is indeed the case: the total execution time of each scenario varies by less than 10% in the two cases. As having twice more nodes for the same task doesn't reduce the execution time, the bottleneck is indeed the head node, as expected.
 
-This experiment was perform on the _gros_ cluster of the Nancy site of Grid5000. The exact specifications are available online at #link("https://www.grid5000.fr/w/Nancy:Hardware#gros").
+This experiment was performed on the _gros_ cluster of the Nancy site of Grid5000. The exact specifications are available online at #link("https://www.grid5000.fr/w/Nancy:Hardware#gros").
 
 #figure(
     image("resources/ref-collecting-bench.png", width: 105%),
@@ -285,11 +282,13 @@ This experiment was perform on the _gros_ cluster of the Nancy site of Grid5000.
 
 @ref-collecting-bench shows, for various number of processes and references sent by process, the time needed to send one reference.
 
-First, we can notice that the measured values are higher when less than 8 processes are used. This is expected: with a small number of processes, the measured time includes some time where, for instance, the head node is idle, waiting for data. This measurements do not corespond to a realistic use case, as simulations HPC simulations involve a much higher number of processes. When more processes are sending data to the head node, their number doesn't matter anymore and the measured values stabilize. In the next paragraph, we will focus on the results obtained with at least 8 processes.
+First, we can notice that the measured values are higher when less than 8 processes are used. This is expected: with a small number of processes, the measured time includes some time where, for instance, the head node is idle, waiting for data. These measurements do not correspond to a realistic use case, as HPC simulations involve a much higher number of processes. When more processes are sending data to the head node, their number doesn't matter anymore and the measured values stabilize. In the next paragraph, we will focus on the results obtained with at least 8 processes.
 
-With at least 8 processes, the total number of processes doesn't impact the time needed to send one reference. However, sending several references at each request greatly reduce the time needed to send one reference: it becomes possible to reduce the total time by around 20 times with this optimization.
+With at least 8 processes, the total number of processes doesn't impact the time needed to send one reference. However, sending several references at each request greatly reduces the time needed to send one reference: it becomes possible to reduce the total time by around 20 times with this optimization.
 
 In practice, to avoid useless network use, a good compromise is to place an actor on each simulation node. This actor has the responsibility to collect all the references to arrays produced by the node, and to send them all at once to the head node. The goal of this optimization is not to have something optimal since this part is not critical to obtain good performance. It is simply to optimize it enough so that it does not become a bottleneck and slow down the whole computation.
+
+To conclude, to reduce the time taken to collect all the `ObjectRef`, it is possible to use intermediate actors on each node to collect the references first, and send them in batches to the head node. However, in the end, this optimization wasn't integrated to Doreisa: the optimization presented in the following section adopted a different approach that makes sending all the `ObjectRefs` to the head node useless.
 
 == Distributed scheduler
 
@@ -358,8 +357,6 @@ This section will determine the impact of the scheduling strategy on the perform
 
 Note that the partitioning of the task graph only has an impact on which scheduling actor will have the responsibility to schedule each task. It is still the Ray scheduler of the node on which the scheduling actor runs will eventually be in charge of scheduling the task on any node of the cluster.
 
-Since the partitioning does not determine the nodes executing each task, since the communication cost between the actors is small and since all the communications happen in parallel, one can expect the choice of the graph partitioning strategy to have a very small impact on the performance as long as the subsets of the partition have comparable sizes.
-
 ==== Considered strategies
 
 Two partitioning strategies have been considered:
@@ -378,9 +375,22 @@ Two partitioning strategies have been considered:
 
 ==== Evaluation
 
-We evaluate the two strategies on a cluster composed of 32 simulation nodes and one head node. Each simulation node generates 80 (TODO check) chunks of data per iteration. The task consists of computing the mean of the Dask array.
+We evaluate the two strategies on a cluster composed of 32 simulation nodes and one head node. Each simulation node generates 40 very small chunks of data per iteration. The task consists of computing the mean of the Dask array.
 
-The task graph is a tree: leaf nodes are tasks computing the mean of each chunk, and inner nodes are tasks merging partial means together to compute the mean of a bigger block of the array (see @random-partitioning and @greedy-partitioning, squares correspond to chunks and circles to tasks).
+In this situation, the task graph is a tree: leaf nodes are tasks computing the mean of each chunk, and inner nodes are tasks merging partial means together to compute the mean of a bigger block of the array (see @random-partitioning and @greedy-partitioning, squares correspond to chunks and circles to tasks).
+
+#figure(
+    image("resources/exp-04-graph-partitioning.svg", width: 100%),
+    caption: [Performance impact of task graph partitioning],
+  ) <graph-partitioning>
+
+@graph-partitioning shows the time taken to complete the analytics using each graph partitioning strategy.
+
+TODO analysis
+
+Since the partitioning does not determine the nodes executing each task, since the communication cost between the actors is small and since all the communications happen in parallel, one could have expected the choice of the graph partitioning strategy to have a relatively small impact on the performance as long as the subsets of the partition have comparable sizes.
+
+It is not completely clear why . Since the greedy partitioning algorithm works very well in real-life situations
 
 === Finding the bottleneck
 
