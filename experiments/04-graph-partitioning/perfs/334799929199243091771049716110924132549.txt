@@ -1,0 +1,1150 @@
+1753137308.1235735 1. Begin Doreisa scheduler
+1753137308.1330466 2. Graph partitioning done
+1753137308.135665 3. Partitioned graphs created
+1753137308.1471453 4. Graph scheduled
+1753137317.8423557 5. End Doreisa scheduler
+1753137317.9058883 1. Begin Doreisa scheduler
+1753137317.9099185 2. Graph partitioning done
+1753137317.9123988 3. Partitioned graphs created
+1753137317.9230664 4. Graph scheduled
+1753137318.1250288 5. End Doreisa scheduler
+1753137318.1874225 1. Begin Doreisa scheduler
+1753137318.1917095 2. Graph partitioning done
+1753137318.19423 3. Partitioned graphs created
+1753137318.2053823 4. Graph scheduled
+1753137321.0186522 5. End Doreisa scheduler
+1753137321.0874002 1. Begin Doreisa scheduler
+1753137321.09207 2. Graph partitioning done
+1753137321.0944948 3. Partitioned graphs created
+1753137321.1055682 4. Graph scheduled
+1753137323.150357 5. End Doreisa scheduler
+1753137323.214003 1. Begin Doreisa scheduler
+1753137323.217964 2. Graph partitioning done
+1753137323.2208023 3. Partitioned graphs created
+1753137323.2315032 4. Graph scheduled
+1753137325.3197837 5. End Doreisa scheduler
+1753137325.385649 1. Begin Doreisa scheduler
+1753137325.389553 2. Graph partitioning done
+1753137325.391792 3. Partitioned graphs created
+1753137325.4026341 4. Graph scheduled
+1753137325.6390915 5. End Doreisa scheduler
+1753137325.7027228 1. Begin Doreisa scheduler
+1753137325.7068079 2. Graph partitioning done
+1753137325.70905 3. Partitioned graphs created
+1753137325.719765 4. Graph scheduled
+1753137325.923958 5. End Doreisa scheduler
+1753137325.9897301 1. Begin Doreisa scheduler
+1753137325.993717 2. Graph partitioning done
+1753137325.9959707 3. Partitioned graphs created
+1753137326.0066757 4. Graph scheduled
+1753137326.2146766 5. End Doreisa scheduler
+1753137326.279542 1. Begin Doreisa scheduler
+1753137326.2834737 2. Graph partitioning done
+1753137326.2858589 3. Partitioned graphs created
+1753137326.2966032 4. Graph scheduled
+1753137326.5080225 5. End Doreisa scheduler
+1753137326.5711348 1. Begin Doreisa scheduler
+1753137326.5757103 2. Graph partitioning done
+1753137326.5784724 3. Partitioned graphs created
+1753137326.5892365 4. Graph scheduled
+1753137328.59226 5. End Doreisa scheduler
+1753137328.6564448 1. Begin Doreisa scheduler
+1753137328.6606176 2. Graph partitioning done
+1753137328.6629703 3. Partitioned graphs created
+1753137328.6735094 4. Graph scheduled
+1753137330.4380856 5. End Doreisa scheduler
+1753137330.5039077 1. Begin Doreisa scheduler
+1753137330.5080295 2. Graph partitioning done
+1753137330.510314 3. Partitioned graphs created
+1753137330.5211763 4. Graph scheduled
+1753137332.5160427 5. End Doreisa scheduler
+1753137332.5829728 1. Begin Doreisa scheduler
+1753137332.5871582 2. Graph partitioning done
+1753137332.5893152 3. Partitioned graphs created
+1753137332.5998356 4. Graph scheduled
+1753137332.8594944 5. End Doreisa scheduler
+1753137332.9224312 1. Begin Doreisa scheduler
+1753137332.9268248 2. Graph partitioning done
+1753137332.9290557 3. Partitioned graphs created
+1753137332.9396715 4. Graph scheduled
+1753137333.1810787 5. End Doreisa scheduler
+1753137333.2452276 1. Begin Doreisa scheduler
+1753137333.2496119 2. Graph partitioning done
+1753137333.2521894 3. Partitioned graphs created
+1753137333.2627401 4. Graph scheduled
+1753137333.4728 5. End Doreisa scheduler
+1753137333.5391114 1. Begin Doreisa scheduler
+1753137333.542972 2. Graph partitioning done
+1753137333.5459194 3. Partitioned graphs created
+1753137333.5565875 4. Graph scheduled
+1753137335.572734 5. End Doreisa scheduler
+1753137335.640004 1. Begin Doreisa scheduler
+1753137335.64406 2. Graph partitioning done
+1753137335.646833 3. Partitioned graphs created
+1753137335.6573899 4. Graph scheduled
+1753137335.8669252 5. End Doreisa scheduler
+1753137335.9300115 1. Begin Doreisa scheduler
+1753137335.934005 2. Graph partitioning done
+1753137335.9362805 3. Partitioned graphs created
+1753137335.9469018 4. Graph scheduled
+1753137336.1324058 5. End Doreisa scheduler
+1753137336.1959188 1. Begin Doreisa scheduler
+1753137336.200003 2. Graph partitioning done
+1753137336.202299 3. Partitioned graphs created
+1753137336.2128003 4. Graph scheduled
+1753137336.409377 5. End Doreisa scheduler
+1753137336.4729397 1. Begin Doreisa scheduler
+1753137336.4770284 2. Graph partitioning done
+1753137336.4793346 3. Partitioned graphs created
+1753137336.4898884 4. Graph scheduled
+1753137336.6790235 5. End Doreisa scheduler
+1753137336.7416887 1. Begin Doreisa scheduler
+1753137336.7459953 2. Graph partitioning done
+1753137336.748269 3. Partitioned graphs created
+1753137336.7591965 4. Graph scheduled
+1753137336.953596 5. End Doreisa scheduler
+1753137337.015765 1. Begin Doreisa scheduler
+1753137337.0198436 2. Graph partitioning done
+1753137337.0220003 3. Partitioned graphs created
+1753137337.032551 4. Graph scheduled
+1753137337.2306395 5. End Doreisa scheduler
+1753137337.2961993 1. Begin Doreisa scheduler
+1753137337.3010743 2. Graph partitioning done
+1753137337.3037238 3. Partitioned graphs created
+1753137337.3173628 4. Graph scheduled
+1753137337.557579 5. End Doreisa scheduler
+1753137337.6202197 1. Begin Doreisa scheduler
+1753137337.6241958 2. Graph partitioning done
+1753137337.6267636 3. Partitioned graphs created
+1753137337.637941 4. Graph scheduled
+1753137337.8320127 5. End Doreisa scheduler
+1753137337.8953648 1. Begin Doreisa scheduler
+1753137337.899512 2. Graph partitioning done
+1753137337.9019027 3. Partitioned graphs created
+1753137337.9128754 4. Graph scheduled
+1753137338.1029215 5. End Doreisa scheduler
+1753137338.1645482 1. Begin Doreisa scheduler
+1753137338.1689198 2. Graph partitioning done
+1753137338.171544 3. Partitioned graphs created
+1753137338.1821945 4. Graph scheduled
+1753137338.3800402 5. End Doreisa scheduler
+1753137338.4423938 1. Begin Doreisa scheduler
+1753137338.4464386 2. Graph partitioning done
+1753137338.4487557 3. Partitioned graphs created
+1753137338.459894 4. Graph scheduled
+1753137338.6617024 5. End Doreisa scheduler
+1753137338.7251248 1. Begin Doreisa scheduler
+1753137338.7292793 2. Graph partitioning done
+1753137338.7320495 3. Partitioned graphs created
+1753137338.742962 4. Graph scheduled
+1753137338.9335434 5. End Doreisa scheduler
+1753137338.9956605 1. Begin Doreisa scheduler
+1753137338.999566 2. Graph partitioning done
+1753137339.0018706 3. Partitioned graphs created
+1753137339.0123832 4. Graph scheduled
+1753137341.0975285 5. End Doreisa scheduler
+1753137341.163445 1. Begin Doreisa scheduler
+1753137341.167742 2. Graph partitioning done
+1753137341.1703718 3. Partitioned graphs created
+1753137341.180776 4. Graph scheduled
+1753137341.371881 5. End Doreisa scheduler
+1753137341.434624 1. Begin Doreisa scheduler
+1753137341.4383798 2. Graph partitioning done
+1753137341.4411473 3. Partitioned graphs created
+1753137341.451951 4. Graph scheduled
+1753137341.6495864 5. End Doreisa scheduler
+1753137341.7125616 1. Begin Doreisa scheduler
+1753137341.716995 2. Graph partitioning done
+1753137341.7195904 3. Partitioned graphs created
+1753137341.7303965 4. Graph scheduled
+1753137341.9859529 5. End Doreisa scheduler
+1753137342.049955 1. Begin Doreisa scheduler
+1753137342.0539598 2. Graph partitioning done
+1753137342.0561864 3. Partitioned graphs created
+1753137342.0669768 4. Graph scheduled
+1753137342.2921562 5. End Doreisa scheduler
+1753137342.3551605 1. Begin Doreisa scheduler
+1753137342.3593304 2. Graph partitioning done
+1753137342.3615386 3. Partitioned graphs created
+1753137342.3722286 4. Graph scheduled
+1753137342.5605266 5. End Doreisa scheduler
+1753137342.6234193 1. Begin Doreisa scheduler
+1753137342.6275175 2. Graph partitioning done
+1753137342.6297214 3. Partitioned graphs created
+1753137342.6403832 4. Graph scheduled
+1753137342.8331516 5. End Doreisa scheduler
+1753137342.8967462 1. Begin Doreisa scheduler
+1753137342.9006753 2. Graph partitioning done
+1753137342.9028838 3. Partitioned graphs created
+1753137342.9134498 4. Graph scheduled
+1753137343.0937276 5. End Doreisa scheduler
+1753137343.1552134 1. Begin Doreisa scheduler
+1753137343.1594133 2. Graph partitioning done
+1753137343.161988 3. Partitioned graphs created
+1753137343.173251 4. Graph scheduled
+1753137343.3650074 5. End Doreisa scheduler
+1753137343.427186 1. Begin Doreisa scheduler
+1753137343.4311013 2. Graph partitioning done
+1753137343.43368 3. Partitioned graphs created
+1753137343.444568 4. Graph scheduled
+1753137343.6198077 5. End Doreisa scheduler
+1753137343.6817944 1. Begin Doreisa scheduler
+1753137343.6856515 2. Graph partitioning done
+1753137343.6878211 3. Partitioned graphs created
+1753137343.698261 4. Graph scheduled
+1753137343.9022152 5. End Doreisa scheduler
+1753137343.965383 1. Begin Doreisa scheduler
+1753137343.9692543 2. Graph partitioning done
+1753137343.9713848 3. Partitioned graphs created
+1753137343.9823039 4. Graph scheduled
+1753137344.1842296 5. End Doreisa scheduler
+1753137344.2469804 1. Begin Doreisa scheduler
+1753137344.250896 2. Graph partitioning done
+1753137344.253104 3. Partitioned graphs created
+1753137344.264577 4. Graph scheduled
+1753137344.4386194 5. End Doreisa scheduler
+1753137344.5011477 1. Begin Doreisa scheduler
+1753137344.5051463 2. Graph partitioning done
+1753137344.507211 3. Partitioned graphs created
+1753137344.5185952 4. Graph scheduled
+1753137344.7182252 5. End Doreisa scheduler
+1753137344.7829883 1. Begin Doreisa scheduler
+1753137344.7870731 2. Graph partitioning done
+1753137344.7898624 3. Partitioned graphs created
+1753137344.8009043 4. Graph scheduled
+1753137345.0267246 5. End Doreisa scheduler
+1753137345.0914235 1. Begin Doreisa scheduler
+1753137345.0954256 2. Graph partitioning done
+1753137345.0977342 3. Partitioned graphs created
+1753137345.1083384 4. Graph scheduled
+1753137345.2809656 5. End Doreisa scheduler
+1753137345.34346 1. Begin Doreisa scheduler
+1753137345.3477366 2. Graph partitioning done
+1753137345.3501503 3. Partitioned graphs created
+1753137345.3611555 4. Graph scheduled
+1753137345.5544007 5. End Doreisa scheduler
+1753137345.6172597 1. Begin Doreisa scheduler
+1753137345.6212916 2. Graph partitioning done
+1753137345.6236343 3. Partitioned graphs created
+1753137345.6343884 4. Graph scheduled
+1753137345.8224673 5. End Doreisa scheduler
+1753137345.8856225 1. Begin Doreisa scheduler
+1753137345.8896134 2. Graph partitioning done
+1753137345.8924434 3. Partitioned graphs created
+1753137345.9029667 4. Graph scheduled
+1753137346.0978785 5. End Doreisa scheduler
+1753137346.1593125 1. Begin Doreisa scheduler
+1753137346.1633897 2. Graph partitioning done
+1753137346.1659167 3. Partitioned graphs created
+1753137346.1763594 4. Graph scheduled
+1753137346.3612912 5. End Doreisa scheduler
+1753137346.4230227 1. Begin Doreisa scheduler
+1753137346.4269724 2. Graph partitioning done
+1753137346.4291615 3. Partitioned graphs created
+1753137346.4398868 4. Graph scheduled
+1753137346.6147585 5. End Doreisa scheduler
+1753137346.6769855 1. Begin Doreisa scheduler
+1753137346.6814902 2. Graph partitioning done
+1753137346.6837606 3. Partitioned graphs created
+1753137346.6952057 4. Graph scheduled
+1753137346.8745182 5. End Doreisa scheduler
+1753137346.9382918 1. Begin Doreisa scheduler
+1753137346.9429898 2. Graph partitioning done
+1753137346.945842 3. Partitioned graphs created
+1753137346.9564152 4. Graph scheduled
+1753137347.1389165 5. End Doreisa scheduler
+1753137347.200772 1. Begin Doreisa scheduler
+1753137347.2050817 2. Graph partitioning done
+1753137347.2077484 3. Partitioned graphs created
+1753137347.2180748 4. Graph scheduled
+1753137347.442543 5. End Doreisa scheduler
+1753137347.5057704 1. Begin Doreisa scheduler
+1753137347.5096664 2. Graph partitioning done
+1753137347.5119276 3. Partitioned graphs created
+1753137347.5224743 4. Graph scheduled
+1753137347.708318 5. End Doreisa scheduler
+1753137347.7706075 1. Begin Doreisa scheduler
+1753137347.7745256 2. Graph partitioning done
+1753137347.7765512 3. Partitioned graphs created
+1753137347.7870831 4. Graph scheduled
+1753137349.847102 5. End Doreisa scheduler
+1753137349.9113445 1. Begin Doreisa scheduler
+1753137349.9155862 2. Graph partitioning done
+1753137349.9179175 3. Partitioned graphs created
+1753137349.9290264 4. Graph scheduled
+1753137350.1241457 5. End Doreisa scheduler
+1753137350.186029 1. Begin Doreisa scheduler
+1753137350.1901772 2. Graph partitioning done
+1753137350.192928 3. Partitioned graphs created
+1753137350.2035139 4. Graph scheduled
+1753137350.388262 5. End Doreisa scheduler
+1753137350.496359 1. Begin Doreisa scheduler
+1753137350.5005233 2. Graph partitioning done
+1753137350.5037167 3. Partitioned graphs created
+1753137350.5142465 4. Graph scheduled
+1753137350.7094045 5. End Doreisa scheduler
+1753137350.774127 1. Begin Doreisa scheduler
+1753137350.778977 2. Graph partitioning done
+1753137350.7811725 3. Partitioned graphs created
+1753137350.7972193 4. Graph scheduled
+1753137350.9715228 5. End Doreisa scheduler
+1753137351.0328863 1. Begin Doreisa scheduler
+1753137351.0376441 2. Graph partitioning done
+1753137351.0401368 3. Partitioned graphs created
+1753137351.0510752 4. Graph scheduled
+1753137351.2302608 5. End Doreisa scheduler
+1753137351.292553 1. Begin Doreisa scheduler
+1753137351.2972746 2. Graph partitioning done
+1753137351.299479 3. Partitioned graphs created
+1753137351.3101504 4. Graph scheduled
+1753137351.502985 5. End Doreisa scheduler
+1753137351.5650458 1. Begin Doreisa scheduler
+1753137351.5692093 2. Graph partitioning done
+1753137351.5716612 3. Partitioned graphs created
+1753137351.5826125 4. Graph scheduled
+1753137353.3719487 5. End Doreisa scheduler
+1753137353.4350445 1. Begin Doreisa scheduler
+1753137353.439109 2. Graph partitioning done
+1753137353.4419007 3. Partitioned graphs created
+1753137353.4523878 4. Graph scheduled
+1753137353.6857133 5. End Doreisa scheduler
+1753137353.748881 1. Begin Doreisa scheduler
+1753137353.75324 2. Graph partitioning done
+1753137353.7555604 3. Partitioned graphs created
+1753137353.7662923 4. Graph scheduled
+1753137353.95242 5. End Doreisa scheduler
+1753137354.0154731 1. Begin Doreisa scheduler
+1753137354.0194607 2. Graph partitioning done
+1753137354.0220032 3. Partitioned graphs created
+1753137354.032832 4. Graph scheduled
+1753137354.2279737 5. End Doreisa scheduler
+1753137354.2933173 1. Begin Doreisa scheduler
+1753137354.2973423 2. Graph partitioning done
+1753137354.2996578 3. Partitioned graphs created
+1753137354.310195 4. Graph scheduled
+1753137354.4852724 5. End Doreisa scheduler
+1753137354.5498068 1. Begin Doreisa scheduler
+1753137354.5539029 2. Graph partitioning done
+1753137354.55609 3. Partitioned graphs created
+1753137354.5672653 4. Graph scheduled
+1753137354.7516656 5. End Doreisa scheduler
+1753137354.815182 1. Begin Doreisa scheduler
+1753137354.8190367 2. Graph partitioning done
+1753137354.82177 3. Partitioned graphs created
+1753137354.8324873 4. Graph scheduled
+1753137355.0086849 5. End Doreisa scheduler
+1753137355.0717614 1. Begin Doreisa scheduler
+1753137355.0758827 2. Graph partitioning done
+1753137355.0789428 3. Partitioned graphs created
+1753137355.089803 4. Graph scheduled
+1753137355.2811978 5. End Doreisa scheduler
+1753137355.3448992 1. Begin Doreisa scheduler
+1753137355.349055 2. Graph partitioning done
+1753137355.35134 3. Partitioned graphs created
+1753137355.36253 4. Graph scheduled
+1753137355.5337858 5. End Doreisa scheduler
+1753137355.5965521 1. Begin Doreisa scheduler
+1753137355.600538 2. Graph partitioning done
+1753137355.6026802 3. Partitioned graphs created
+1753137355.6138873 4. Graph scheduled
+1753137355.7884119 5. End Doreisa scheduler
+1753137355.851018 1. Begin Doreisa scheduler
+1753137355.8551693 2. Graph partitioning done
+1753137355.8573043 3. Partitioned graphs created
+1753137355.8679333 4. Graph scheduled
+1753137356.0769231 5. End Doreisa scheduler
+1753137356.1386762 1. Begin Doreisa scheduler
+1753137356.1427703 2. Graph partitioning done
+1753137356.1453552 3. Partitioned graphs created
+1753137356.1560295 4. Graph scheduled
+1753137356.36988 5. End Doreisa scheduler
+1753137356.434352 1. Begin Doreisa scheduler
+1753137356.4389904 2. Graph partitioning done
+1753137356.4416833 3. Partitioned graphs created
+1753137356.452243 4. Graph scheduled
+1753137356.6412709 5. End Doreisa scheduler
+1753137356.704975 1. Begin Doreisa scheduler
+1753137356.709546 2. Graph partitioning done
+1753137356.7119782 3. Partitioned graphs created
+1753137356.722656 4. Graph scheduled
+1753137356.8980954 5. End Doreisa scheduler
+1753137356.9610658 1. Begin Doreisa scheduler
+1753137356.9652596 2. Graph partitioning done
+1753137356.967711 3. Partitioned graphs created
+1753137356.978268 4. Graph scheduled
+1753137357.1692111 5. End Doreisa scheduler
+1753137357.2327552 1. Begin Doreisa scheduler
+1753137357.236789 2. Graph partitioning done
+1753137357.238997 3. Partitioned graphs created
+1753137357.24954 4. Graph scheduled
+1753137357.4320176 5. End Doreisa scheduler
+1753137357.4958138 1. Begin Doreisa scheduler
+1753137357.499922 2. Graph partitioning done
+1753137357.502259 3. Partitioned graphs created
+1753137357.5130136 4. Graph scheduled
+1753137359.2072895 5. End Doreisa scheduler
+1753137359.2755928 1. Begin Doreisa scheduler
+1753137359.2796042 2. Graph partitioning done
+1753137359.2818382 3. Partitioned graphs created
+1753137359.2927504 4. Graph scheduled
+1753137359.4803545 5. End Doreisa scheduler
+1753137359.5450215 1. Begin Doreisa scheduler
+1753137359.5492127 2. Graph partitioning done
+1753137359.5513518 3. Partitioned graphs created
+1753137359.5619469 4. Graph scheduled
+1753137359.7346697 5. End Doreisa scheduler
+1753137359.798577 1. Begin Doreisa scheduler
+1753137359.8033848 2. Graph partitioning done
+1753137359.8056417 3. Partitioned graphs created
+1753137359.8162458 4. Graph scheduled
+1753137360.0032148 5. End Doreisa scheduler
+1753137360.066164 1. Begin Doreisa scheduler
+1753137360.070194 2. Graph partitioning done
+1753137360.0728946 3. Partitioned graphs created
+1753137360.083467 4. Graph scheduled
+1753137360.3018048 5. End Doreisa scheduler
+1753137360.3636014 1. Begin Doreisa scheduler
+1753137360.3676436 2. Graph partitioning done
+1753137360.3699412 3. Partitioned graphs created
+1753137360.3811057 4. Graph scheduled
+1753137360.5877686 5. End Doreisa scheduler
+1753137360.6511455 1. Begin Doreisa scheduler
+1753137360.6550505 2. Graph partitioning done
+1753137360.6572793 3. Partitioned graphs created
+1753137360.6683993 4. Graph scheduled
+1753137360.845421 5. End Doreisa scheduler
+1753137360.908837 1. Begin Doreisa scheduler
+1753137360.9135983 2. Graph partitioning done
+1753137360.916072 3. Partitioned graphs created
+1753137360.926941 4. Graph scheduled
+1753137361.1046605 5. End Doreisa scheduler
+1753137361.1671298 1. Begin Doreisa scheduler
+1753137361.171611 2. Graph partitioning done
+1753137361.174157 3. Partitioned graphs created
+1753137361.1847234 4. Graph scheduled
+1753137361.3698406 5. End Doreisa scheduler
+1753137361.4339998 1. Begin Doreisa scheduler
+1753137361.4385164 2. Graph partitioning done
+1753137361.4410117 3. Partitioned graphs created
+1753137361.4518266 4. Graph scheduled
+1753137361.6378448 5. End Doreisa scheduler
+1753137361.700658 1. Begin Doreisa scheduler
+1753137361.7053733 2. Graph partitioning done
+1753137361.7079363 3. Partitioned graphs created
+1753137361.718751 4. Graph scheduled
+1753137361.8987112 5. End Doreisa scheduler
+1753137361.9619467 1. Begin Doreisa scheduler
+1753137361.965961 2. Graph partitioning done
+1753137361.968848 3. Partitioned graphs created
+1753137361.9792252 4. Graph scheduled
+1753137362.1526148 5. End Doreisa scheduler
+1753137362.2158284 1. Begin Doreisa scheduler
+1753137362.220504 2. Graph partitioning done
+1753137362.2228973 3. Partitioned graphs created
+1753137362.2335024 4. Graph scheduled
+1753137364.1870105 5. End Doreisa scheduler
+1753137364.2499166 1. Begin Doreisa scheduler
+1753137364.254509 2. Graph partitioning done
+1753137364.256636 3. Partitioned graphs created
+1753137364.2670403 4. Graph scheduled
+1753137364.4994857 5. End Doreisa scheduler
+1753137364.562774 1. Begin Doreisa scheduler
+1753137364.5675166 2. Graph partitioning done
+1753137364.5697484 3. Partitioned graphs created
+1753137364.5804386 4. Graph scheduled
+1753137364.7603786 5. End Doreisa scheduler
+1753137364.8264217 1. Begin Doreisa scheduler
+1753137364.830496 2. Graph partitioning done
+1753137364.832583 3. Partitioned graphs created
+1753137364.8430414 4. Graph scheduled
+1753137365.0221834 5. End Doreisa scheduler
+1753137365.0849836 1. Begin Doreisa scheduler
+1753137365.0893018 2. Graph partitioning done
+1753137365.091468 3. Partitioned graphs created
+1753137365.101687 4. Graph scheduled
+1753137365.2772462 5. End Doreisa scheduler
+1753137365.3388302 1. Begin Doreisa scheduler
+1753137365.3429842 2. Graph partitioning done
+1753137365.3453074 3. Partitioned graphs created
+1753137365.3563075 4. Graph scheduled
+1753137365.5356698 5. End Doreisa scheduler
+1753137365.598479 1. Begin Doreisa scheduler
+1753137365.6030402 2. Graph partitioning done
+1753137365.6051648 3. Partitioned graphs created
+1753137365.616085 4. Graph scheduled
+1753137365.7868419 5. End Doreisa scheduler
+1753137365.848519 1. Begin Doreisa scheduler
+1753137365.852503 2. Graph partitioning done
+1753137365.8550518 3. Partitioned graphs created
+1753137365.8656063 4. Graph scheduled
+1753137366.0625346 5. End Doreisa scheduler
+1753137366.1248157 1. Begin Doreisa scheduler
+1753137366.1293018 2. Graph partitioning done
+1753137366.1314795 3. Partitioned graphs created
+1753137366.142098 4. Graph scheduled
+1753137366.3181694 5. End Doreisa scheduler
+1753137366.3830655 1. Begin Doreisa scheduler
+1753137366.3870301 2. Graph partitioning done
+1753137366.3897455 3. Partitioned graphs created
+1753137366.4003277 4. Graph scheduled
+1753137366.5714982 5. End Doreisa scheduler
+1753137366.6361737 1. Begin Doreisa scheduler
+1753137366.6407056 2. Graph partitioning done
+1753137366.6430404 3. Partitioned graphs created
+1753137366.6540022 4. Graph scheduled
+1753137366.8330848 5. End Doreisa scheduler
+1753137366.8973336 1. Begin Doreisa scheduler
+1753137366.9014425 2. Graph partitioning done
+1753137366.9039106 3. Partitioned graphs created
+1753137366.9146798 4. Graph scheduled
+1753137367.12068 5. End Doreisa scheduler
+1753137367.1831918 1. Begin Doreisa scheduler
+1753137367.1878848 2. Graph partitioning done
+1753137367.1908953 3. Partitioned graphs created
+1753137367.2021666 4. Graph scheduled
+1753137367.3871543 5. End Doreisa scheduler
+1753137367.4499884 1. Begin Doreisa scheduler
+1753137367.4546638 2. Graph partitioning done
+1753137367.4573529 3. Partitioned graphs created
+1753137367.4679651 4. Graph scheduled
+1753137367.6542 5. End Doreisa scheduler
+1753137367.7175708 1. Begin Doreisa scheduler
+1753137367.7217555 2. Graph partitioning done
+1753137367.7240562 3. Partitioned graphs created
+1753137367.7352037 4. Graph scheduled
+1753137369.5296795 5. End Doreisa scheduler
+1753137369.599677 1. Begin Doreisa scheduler
+1753137369.6038277 2. Graph partitioning done
+1753137369.6061506 3. Partitioned graphs created
+1753137369.6172166 4. Graph scheduled
+1753137369.7960362 5. End Doreisa scheduler
+1753137369.8618875 1. Begin Doreisa scheduler
+1753137369.865949 2. Graph partitioning done
+1753137369.8682787 3. Partitioned graphs created
+1753137369.8788779 4. Graph scheduled
+1753137371.9040794 5. End Doreisa scheduler
+1753137371.9711742 1. Begin Doreisa scheduler
+1753137371.97528 2. Graph partitioning done
+1753137371.9776 3. Partitioned graphs created
+1753137371.9884057 4. Graph scheduled
+1753137372.1834357 5. End Doreisa scheduler
+1753137372.2473223 1. Begin Doreisa scheduler
+1753137372.2517538 2. Graph partitioning done
+1753137372.2539294 3. Partitioned graphs created
+1753137372.2650778 4. Graph scheduled
+1753137372.4387028 5. End Doreisa scheduler
+1753137372.5014706 1. Begin Doreisa scheduler
+1753137372.505422 2. Graph partitioning done
+1753137372.5076077 3. Partitioned graphs created
+1753137372.5182462 4. Graph scheduled
+1753137372.700763 5. End Doreisa scheduler
+1753137372.7654634 1. Begin Doreisa scheduler
+1753137372.7693737 2. Graph partitioning done
+1753137372.7715905 3. Partitioned graphs created
+1753137372.782257 4. Graph scheduled
+1753137372.9864066 5. End Doreisa scheduler
+1753137373.0489979 1. Begin Doreisa scheduler
+1753137373.0530431 2. Graph partitioning done
+1753137373.0554097 3. Partitioned graphs created
+1753137373.0657444 4. Graph scheduled
+1753137373.2748551 5. End Doreisa scheduler
+1753137373.337351 1. Begin Doreisa scheduler
+1753137373.3416317 2. Graph partitioning done
+1753137373.3439236 3. Partitioned graphs created
+1753137373.3549383 4. Graph scheduled
+1753137373.5761983 5. End Doreisa scheduler
+1753137373.6385095 1. Begin Doreisa scheduler
+1753137373.6427732 2. Graph partitioning done
+1753137373.6449811 3. Partitioned graphs created
+1753137373.6556096 4. Graph scheduled
+1753137373.8438423 5. End Doreisa scheduler
+1753137373.9070773 1. Begin Doreisa scheduler
+1753137373.9112246 2. Graph partitioning done
+1753137373.9136322 3. Partitioned graphs created
+1753137373.9242597 4. Graph scheduled
+1753137374.1028981 5. End Doreisa scheduler
+1753137374.1662648 1. Begin Doreisa scheduler
+1753137374.1703596 2. Graph partitioning done
+1753137374.1731074 3. Partitioned graphs created
+1753137374.183667 4. Graph scheduled
+1753137374.3675992 5. End Doreisa scheduler
+1753137374.4310086 1. Begin Doreisa scheduler
+1753137374.4351559 2. Graph partitioning done
+1753137374.4380903 3. Partitioned graphs created
+1753137374.449075 4. Graph scheduled
+1753137374.6484632 5. End Doreisa scheduler
+1753137374.7136059 1. Begin Doreisa scheduler
+1753137374.7178068 2. Graph partitioning done
+1753137374.7200656 3. Partitioned graphs created
+1753137374.730673 4. Graph scheduled
+1753137374.9089952 5. End Doreisa scheduler
+1753137374.9710867 1. Begin Doreisa scheduler
+1753137374.975692 2. Graph partitioning done
+1753137374.9780784 3. Partitioned graphs created
+1753137374.988953 4. Graph scheduled
+1753137375.1670458 5. End Doreisa scheduler
+1753137375.232149 1. Begin Doreisa scheduler
+1753137375.2362025 2. Graph partitioning done
+1753137375.2383637 3. Partitioned graphs created
+1753137375.2488968 4. Graph scheduled
+1753137375.4267077 5. End Doreisa scheduler
+1753137375.4906487 1. Begin Doreisa scheduler
+1753137375.494549 2. Graph partitioning done
+1753137375.4967437 3. Partitioned graphs created
+1753137375.5074825 4. Graph scheduled
+1753137375.7113335 5. End Doreisa scheduler
+1753137375.7747095 1. Begin Doreisa scheduler
+1753137375.7786698 2. Graph partitioning done
+1753137375.7808359 3. Partitioned graphs created
+1753137375.7921474 4. Graph scheduled
+1753137376.0089958 5. End Doreisa scheduler
+1753137376.071946 1. Begin Doreisa scheduler
+1753137376.075913 2. Graph partitioning done
+1753137376.078141 3. Partitioned graphs created
+1753137376.0890744 4. Graph scheduled
+1753137376.2574208 5. End Doreisa scheduler
+1753137376.3211293 1. Begin Doreisa scheduler
+1753137376.3251688 2. Graph partitioning done
+1753137376.3279188 3. Partitioned graphs created
+1753137376.3391838 4. Graph scheduled
+1753137376.523294 5. End Doreisa scheduler
+1753137376.587314 1. Begin Doreisa scheduler
+1753137376.591423 2. Graph partitioning done
+1753137376.593989 3. Partitioned graphs created
+1753137376.6046567 4. Graph scheduled
+1753137376.780559 5. End Doreisa scheduler
+1753137376.8431094 1. Begin Doreisa scheduler
+1753137376.8476937 2. Graph partitioning done
+1753137376.8506777 3. Partitioned graphs created
+1753137376.8618226 4. Graph scheduled
+1753137377.0400908 5. End Doreisa scheduler
+1753137377.1032608 1. Begin Doreisa scheduler
+1753137377.107549 2. Graph partitioning done
+1753137377.1099665 3. Partitioned graphs created
+1753137377.1205719 4. Graph scheduled
+1753137377.2966657 5. End Doreisa scheduler
+1753137377.3589752 1. Begin Doreisa scheduler
+1753137377.3631551 2. Graph partitioning done
+1753137377.3658597 3. Partitioned graphs created
+1753137377.3763855 4. Graph scheduled
+1753137377.5495129 5. End Doreisa scheduler
+1753137377.6121986 1. Begin Doreisa scheduler
+1753137377.6162481 2. Graph partitioning done
+1753137377.6184447 3. Partitioned graphs created
+1753137377.629011 4. Graph scheduled
+1753137377.8044865 5. End Doreisa scheduler
+1753137377.8667998 1. Begin Doreisa scheduler
+1753137377.8707013 2. Graph partitioning done
+1753137377.8729103 3. Partitioned graphs created
+1753137377.8833334 4. Graph scheduled
+1753137378.0883474 5. End Doreisa scheduler
+1753137378.151734 1. Begin Doreisa scheduler
+1753137378.155889 2. Graph partitioning done
+1753137378.1580968 3. Partitioned graphs created
+1753137378.168686 4. Graph scheduled
+1753137378.3898468 5. End Doreisa scheduler
+1753137378.4530895 1. Begin Doreisa scheduler
+1753137378.4570613 2. Graph partitioning done
+1753137378.4593418 3. Partitioned graphs created
+1753137378.4700563 4. Graph scheduled
+1753137378.6745288 5. End Doreisa scheduler
+1753137378.7380571 1. Begin Doreisa scheduler
+1753137378.742201 2. Graph partitioning done
+1753137378.744454 3. Partitioned graphs created
+1753137378.755117 4. Graph scheduled
+1753137380.7585833 5. End Doreisa scheduler
+1753137380.8228457 1. Begin Doreisa scheduler
+1753137380.8277123 2. Graph partitioning done
+1753137380.830167 3. Partitioned graphs created
+1753137380.8412313 4. Graph scheduled
+1753137382.9167278 5. End Doreisa scheduler
+1753137382.9852293 1. Begin Doreisa scheduler
+1753137382.9892616 2. Graph partitioning done
+1753137382.9916377 3. Partitioned graphs created
+1753137383.0026858 4. Graph scheduled
+1753137383.1864984 5. End Doreisa scheduler
+1753137383.248543 1. Begin Doreisa scheduler
+1753137383.2525501 2. Graph partitioning done
+1753137383.2549467 3. Partitioned graphs created
+1753137383.2660432 4. Graph scheduled
+1753137384.982933 5. End Doreisa scheduler
+1753137385.0473335 1. Begin Doreisa scheduler
+1753137385.0515237 2. Graph partitioning done
+1753137385.053716 3. Partitioned graphs created
+1753137385.064085 4. Graph scheduled
+1753137386.8796046 5. End Doreisa scheduler
+1753137386.941634 1. Begin Doreisa scheduler
+1753137386.9460318 2. Graph partitioning done
+1753137386.9486847 3. Partitioned graphs created
+1753137386.9593768 4. Graph scheduled
+1753137387.1560016 5. End Doreisa scheduler
+1753137387.2188883 1. Begin Doreisa scheduler
+1753137387.2235358 2. Graph partitioning done
+1753137387.2260451 3. Partitioned graphs created
+1753137387.2367373 4. Graph scheduled
+1753137387.4225433 5. End Doreisa scheduler
+1753137387.4870899 1. Begin Doreisa scheduler
+1753137387.49101 2. Graph partitioning done
+1753137387.4936426 3. Partitioned graphs created
+1753137387.5040553 4. Graph scheduled
+1753137387.6813197 5. End Doreisa scheduler
+1753137387.7438524 1. Begin Doreisa scheduler
+1753137387.74776 2. Graph partitioning done
+1753137387.7500458 3. Partitioned graphs created
+1753137387.7603755 4. Graph scheduled
+1753137387.9584363 5. End Doreisa scheduler
+1753137388.0216968 1. Begin Doreisa scheduler
+1753137388.0258598 2. Graph partitioning done
+1753137388.0281427 3. Partitioned graphs created
+1753137388.038811 4. Graph scheduled
+1753137388.2518108 5. End Doreisa scheduler
+1753137388.3153064 1. Begin Doreisa scheduler
+1753137388.3196504 2. Graph partitioning done
+1753137388.322136 3. Partitioned graphs created
+1753137388.3329268 4. Graph scheduled
+1753137388.5142844 5. End Doreisa scheduler
+1753137388.577537 1. Begin Doreisa scheduler
+1753137388.582005 2. Graph partitioning done
+1753137388.5842853 3. Partitioned graphs created
+1753137388.5948648 4. Graph scheduled
+1753137388.7602882 5. End Doreisa scheduler
+1753137388.8238044 1. Begin Doreisa scheduler
+1753137388.8282428 2. Graph partitioning done
+1753137388.8305135 3. Partitioned graphs created
+1753137388.8411067 4. Graph scheduled
+1753137389.0097587 5. End Doreisa scheduler
+1753137389.0723863 1. Begin Doreisa scheduler
+1753137389.0766072 2. Graph partitioning done
+1753137389.0788589 3. Partitioned graphs created
+1753137389.0897934 4. Graph scheduled
+1753137389.25964 5. End Doreisa scheduler
+1753137389.325802 1. Begin Doreisa scheduler
+1753137389.3299584 2. Graph partitioning done
+1753137389.332184 3. Partitioned graphs created
+1753137389.3431954 4. Graph scheduled
+1753137389.5182931 5. End Doreisa scheduler
+1753137389.5810509 1. Begin Doreisa scheduler
+1753137389.5857344 2. Graph partitioning done
+1753137389.5883756 3. Partitioned graphs created
+1753137389.5993872 4. Graph scheduled
+1753137389.7783446 5. End Doreisa scheduler
+1753137389.842564 1. Begin Doreisa scheduler
+1753137389.8466587 2. Graph partitioning done
+1753137389.8493268 3. Partitioned graphs created
+1753137389.8601978 4. Graph scheduled
+1753137390.0726879 5. End Doreisa scheduler
+1753137390.1375437 1. Begin Doreisa scheduler
+1753137390.1419156 2. Graph partitioning done
+1753137390.1446912 3. Partitioned graphs created
+1753137390.1551178 4. Graph scheduled
+1753137390.3774002 5. End Doreisa scheduler
+1753137390.4415483 1. Begin Doreisa scheduler
+1753137390.4463031 2. Graph partitioning done
+1753137390.448995 3. Partitioned graphs created
+1753137390.4596872 4. Graph scheduled
+1753137390.6410806 5. End Doreisa scheduler
+1753137390.7046804 1. Begin Doreisa scheduler
+1753137390.708788 2. Graph partitioning done
+1753137390.7109427 3. Partitioned graphs created
+1753137390.72161 4. Graph scheduled
+1753137390.912925 5. End Doreisa scheduler
+1753137390.9763281 1. Begin Doreisa scheduler
+1753137390.9803314 2. Graph partitioning done
+1753137390.9827006 3. Partitioned graphs created
+1753137390.99433 4. Graph scheduled
+1753137391.167539 5. End Doreisa scheduler
+1753137391.2314832 1. Begin Doreisa scheduler
+1753137391.235837 2. Graph partitioning done
+1753137391.2388437 3. Partitioned graphs created
+1753137391.2494113 4. Graph scheduled
+1753137391.4383156 5. End Doreisa scheduler
+1753137391.5031374 1. Begin Doreisa scheduler
+1753137391.5070958 2. Graph partitioning done
+1753137391.5092988 3. Partitioned graphs created
+1753137391.5197954 4. Graph scheduled
+1753137391.710699 5. End Doreisa scheduler
+1753137391.775518 1. Begin Doreisa scheduler
+1753137391.7796798 2. Graph partitioning done
+1753137391.7819946 3. Partitioned graphs created
+1753137391.7926872 4. Graph scheduled
+1753137391.9806108 5. End Doreisa scheduler
+1753137392.0449615 1. Begin Doreisa scheduler
+1753137392.0494506 2. Graph partitioning done
+1753137392.0517478 3. Partitioned graphs created
+1753137392.062648 4. Graph scheduled
+1753137392.2471619 5. End Doreisa scheduler
+1753137392.3105872 1. Begin Doreisa scheduler
+1753137392.3145826 2. Graph partitioning done
+1753137392.316885 3. Partitioned graphs created
+1753137392.3277428 4. Graph scheduled
+1753137392.537351 5. End Doreisa scheduler
+1753137392.6010807 1. Begin Doreisa scheduler
+1753137392.605703 2. Graph partitioning done
+1753137392.6081011 3. Partitioned graphs created
+1753137392.6186504 4. Graph scheduled
+1753137392.8048532 5. End Doreisa scheduler
+1753137392.8677316 1. Begin Doreisa scheduler
+1753137392.871829 2. Graph partitioning done
+1753137392.8742254 3. Partitioned graphs created
+1753137392.8848922 4. Graph scheduled
+1753137393.0666687 5. End Doreisa scheduler
+1753137393.130545 1. Begin Doreisa scheduler
+1753137393.1351242 2. Graph partitioning done
+1753137393.1375587 3. Partitioned graphs created
+1753137393.1480417 4. Graph scheduled
+1753137393.3362494 5. End Doreisa scheduler
+1753137393.398572 1. Begin Doreisa scheduler
+1753137393.4027414 2. Graph partitioning done
+1753137393.4059045 3. Partitioned graphs created
+1753137393.4165525 4. Graph scheduled
+1753137393.6313093 5. End Doreisa scheduler
+1753137393.6949832 1. Begin Doreisa scheduler
+1753137393.6991928 2. Graph partitioning done
+1753137393.7018273 3. Partitioned graphs created
+1753137393.7131093 4. Graph scheduled
+1753137393.8914368 5. End Doreisa scheduler
+1753137393.9541428 1. Begin Doreisa scheduler
+1753137393.9582503 2. Graph partitioning done
+1753137393.9609075 3. Partitioned graphs created
+1753137393.9714851 4. Graph scheduled
+1753137395.824472 5. End Doreisa scheduler
+1753137395.8945262 1. Begin Doreisa scheduler
+1753137395.8990972 2. Graph partitioning done
+1753137395.9017503 3. Partitioned graphs created
+1753137395.9126942 4. Graph scheduled
+1753137397.9715595 5. End Doreisa scheduler
+1753137398.0348866 1. Begin Doreisa scheduler
+1753137398.0394466 2. Graph partitioning done
+1753137398.041872 3. Partitioned graphs created
+1753137398.052897 4. Graph scheduled
+1753137398.2493258 5. End Doreisa scheduler
+1753137398.3122177 1. Begin Doreisa scheduler
+1753137398.316443 2. Graph partitioning done
+1753137398.3190243 3. Partitioned graphs created
+1753137398.3296487 4. Graph scheduled
+1753137398.5112977 5. End Doreisa scheduler
+1753137398.5740483 1. Begin Doreisa scheduler
+1753137398.5788572 2. Graph partitioning done
+1753137398.5811293 3. Partitioned graphs created
+1753137398.591706 4. Graph scheduled
+1753137398.7867434 5. End Doreisa scheduler
+1753137398.8503222 1. Begin Doreisa scheduler
+1753137398.8548725 2. Graph partitioning done
+1753137398.8577938 3. Partitioned graphs created
+1753137398.8691802 4. Graph scheduled
+1753137399.0452602 5. End Doreisa scheduler
+1753137399.1098852 1. Begin Doreisa scheduler
+1753137399.114087 2. Graph partitioning done
+1753137399.116388 3. Partitioned graphs created
+1753137399.1271248 4. Graph scheduled
+1753137399.347956 5. End Doreisa scheduler
+1753137399.4125304 1. Begin Doreisa scheduler
+1753137399.4171934 2. Graph partitioning done
+1753137399.4195437 3. Partitioned graphs created
+1753137399.4304745 4. Graph scheduled
+1753137399.6576216 5. End Doreisa scheduler
+1753137399.72184 1. Begin Doreisa scheduler
+1753137399.7256837 2. Graph partitioning done
+1753137399.7279441 3. Partitioned graphs created
+1753137399.738554 4. Graph scheduled
+1753137399.9193854 5. End Doreisa scheduler
+1753137399.9849987 1. Begin Doreisa scheduler
+1753137399.9896624 2. Graph partitioning done
+1753137399.9919386 3. Partitioned graphs created
+1753137400.0026362 4. Graph scheduled
+1753137400.1788342 5. End Doreisa scheduler
+1753137400.2430968 1. Begin Doreisa scheduler
+1753137400.2471688 2. Graph partitioning done
+1753137400.2496426 3. Partitioned graphs created
+1753137400.2607996 4. Graph scheduled
+1753137400.4367433 5. End Doreisa scheduler
+1753137400.501084 1. Begin Doreisa scheduler
+1753137400.5052156 2. Graph partitioning done
+1753137400.5080373 3. Partitioned graphs created
+1753137400.5191708 4. Graph scheduled
+1753137400.6928747 5. End Doreisa scheduler
+1753137400.7565198 1. Begin Doreisa scheduler
+1753137400.7605522 2. Graph partitioning done
+1753137400.7627609 3. Partitioned graphs created
+1753137400.7731745 4. Graph scheduled
+1753137400.9474757 5. End Doreisa scheduler
+1753137401.0129738 1. Begin Doreisa scheduler
+1753137401.017343 2. Graph partitioning done
+1753137401.01969 3. Partitioned graphs created
+1753137401.0304108 4. Graph scheduled
+1753137401.2077258 5. End Doreisa scheduler
+1753137401.2732656 1. Begin Doreisa scheduler
+1753137401.2773035 2. Graph partitioning done
+1753137401.2795491 3. Partitioned graphs created
+1753137401.29012 4. Graph scheduled
+1753137401.4891417 5. End Doreisa scheduler
+1753137401.5527744 1. Begin Doreisa scheduler
+1753137401.5569096 2. Graph partitioning done
+1753137401.559287 3. Partitioned graphs created
+1753137401.5699093 4. Graph scheduled
+1753137401.7530048 5. End Doreisa scheduler
+1753137401.8175356 1. Begin Doreisa scheduler
+1753137401.822099 2. Graph partitioning done
+1753137401.8248549 3. Partitioned graphs created
+1753137401.835169 4. Graph scheduled
+1753137402.022899 5. End Doreisa scheduler
+1753137402.086504 1. Begin Doreisa scheduler
+1753137402.090958 2. Graph partitioning done
+1753137402.0932605 3. Partitioned graphs created
+1753137402.104313 4. Graph scheduled
+1753137402.292657 5. End Doreisa scheduler
+1753137402.3566647 1. Begin Doreisa scheduler
+1753137402.3605788 2. Graph partitioning done
+1753137402.3629427 3. Partitioned graphs created
+1753137402.3735964 4. Graph scheduled
+1753137402.5534818 5. End Doreisa scheduler
+1753137402.6178086 1. Begin Doreisa scheduler
+1753137402.6225839 2. Graph partitioning done
+1753137402.6252275 3. Partitioned graphs created
+1753137402.6358905 4. Graph scheduled
+1753137402.8095574 5. End Doreisa scheduler
+1753137402.872063 1. Begin Doreisa scheduler
+1753137402.8767238 2. Graph partitioning done
+1753137402.879119 3. Partitioned graphs created
+1753137402.8902335 4. Graph scheduled
+1753137403.0878584 5. End Doreisa scheduler
+1753137403.1516395 1. Begin Doreisa scheduler
+1753137403.1556265 2. Graph partitioning done
+1753137403.157987 3. Partitioned graphs created
+1753137403.169074 4. Graph scheduled
+1753137403.3522964 5. End Doreisa scheduler
+1753137403.4160926 1. Begin Doreisa scheduler
+1753137403.4202693 2. Graph partitioning done
+1753137403.4230452 3. Partitioned graphs created
+1753137403.433742 4. Graph scheduled
+1753137403.6164865 5. End Doreisa scheduler
+1753137403.6799426 1. Begin Doreisa scheduler
+1753137403.684375 2. Graph partitioning done
+1753137403.68665 3. Partitioned graphs created
+1753137403.6972363 4. Graph scheduled
+1753137403.8787632 5. End Doreisa scheduler
+1753137403.9419398 1. Begin Doreisa scheduler
+1753137403.9467463 2. Graph partitioning done
+1753137403.949304 3. Partitioned graphs created
+1753137403.960309 4. Graph scheduled
+1753137405.9667046 5. End Doreisa scheduler
+1753137406.035504 1. Begin Doreisa scheduler
+1753137406.039924 2. Graph partitioning done
+1753137406.0422802 3. Partitioned graphs created
+1753137406.0527353 4. Graph scheduled
+1753137406.2814717 5. End Doreisa scheduler
+1753137406.3476145 1. Begin Doreisa scheduler
+1753137406.3516016 2. Graph partitioning done
+1753137406.3537726 3. Partitioned graphs created
+1753137406.3644395 4. Graph scheduled
+1753137406.566776 5. End Doreisa scheduler
+1753137406.6315808 1. Begin Doreisa scheduler
+1753137406.635737 2. Graph partitioning done
+1753137406.6379783 3. Partitioned graphs created
+1753137406.6488261 4. Graph scheduled
+1753137406.8759353 5. End Doreisa scheduler
+1753137406.9421675 1. Begin Doreisa scheduler
+1753137406.9462807 2. Graph partitioning done
+1753137406.9485033 3. Partitioned graphs created
+1753137406.9594998 4. Graph scheduled
+1753137407.1347349 5. End Doreisa scheduler
+1753137407.1981165 1. Begin Doreisa scheduler
+1753137407.2026005 2. Graph partitioning done
+1753137407.2050316 3. Partitioned graphs created
+1753137407.2158697 4. Graph scheduled
+1753137407.4067678 5. End Doreisa scheduler
+1753137407.471618 1. Begin Doreisa scheduler
+1753137407.47676 2. Graph partitioning done
+1753137407.4797854 3. Partitioned graphs created
+1753137407.4907691 4. Graph scheduled
+1753137407.6596413 5. End Doreisa scheduler
+1753137407.7240996 1. Begin Doreisa scheduler
+1753137407.7284927 2. Graph partitioning done
+1753137407.7308185 3. Partitioned graphs created
+1753137407.741877 4. Graph scheduled
+1753137407.9038284 5. End Doreisa scheduler
+1753137407.968818 1. Begin Doreisa scheduler
+1753137407.9729905 2. Graph partitioning done
+1753137407.975931 3. Partitioned graphs created
+1753137407.9869144 4. Graph scheduled
+1753137408.1590059 5. End Doreisa scheduler
+1753137408.221954 1. Begin Doreisa scheduler
+1753137408.2259848 2. Graph partitioning done
+1753137408.2282805 3. Partitioned graphs created
+1753137408.2388384 4. Graph scheduled
+1753137410.2231364 5. End Doreisa scheduler
+1753137410.2920613 1. Begin Doreisa scheduler
+1753137410.2967217 2. Graph partitioning done
+1753137410.299152 3. Partitioned graphs created
+1753137410.3098352 4. Graph scheduled
+1753137410.4965415 5. End Doreisa scheduler
+1753137410.5600402 1. Begin Doreisa scheduler
+1753137410.5645201 2. Graph partitioning done
+1753137410.567189 3. Partitioned graphs created
+1753137410.5779312 4. Graph scheduled
+1753137410.75666 5. End Doreisa scheduler
+1753137410.8210433 1. Begin Doreisa scheduler
+1753137410.825683 2. Graph partitioning done
+1753137410.8279364 3. Partitioned graphs created
+1753137410.8389838 4. Graph scheduled
+1753137411.0724306 5. End Doreisa scheduler
+1753137411.1370537 1. Begin Doreisa scheduler
+1753137411.1411178 2. Graph partitioning done
+1753137411.1433113 3. Partitioned graphs created
+1753137411.1537712 4. Graph scheduled
+1753137411.3430333 5. End Doreisa scheduler
+1753137411.406068 1. Begin Doreisa scheduler
+1753137411.4107292 2. Graph partitioning done
+1753137411.4138403 3. Partitioned graphs created
+1753137411.4243376 4. Graph scheduled
+1753137411.605509 5. End Doreisa scheduler
+1753137411.671955 1. Begin Doreisa scheduler
+1753137411.6760492 2. Graph partitioning done
+1753137411.6781816 3. Partitioned graphs created
+1753137411.688571 4. Graph scheduled
+1753137411.856991 5. End Doreisa scheduler
+1753137411.9201484 1. Begin Doreisa scheduler
+1753137411.9247496 2. Graph partitioning done
+1753137411.9271367 3. Partitioned graphs created
+1753137411.937936 4. Graph scheduled
+1753137412.1040163 5. End Doreisa scheduler
+1753137412.1661017 1. Begin Doreisa scheduler
+1753137412.1702182 2. Graph partitioning done
+1753137412.1724212 3. Partitioned graphs created
+1753137412.182967 4. Graph scheduled
+1753137412.36222 5. End Doreisa scheduler
+1753137412.426743 1. Begin Doreisa scheduler
+1753137412.4306443 2. Graph partitioning done
+1753137412.4327164 3. Partitioned graphs created
+1753137412.443289 4. Graph scheduled
+1753137412.614056 5. End Doreisa scheduler
+1753137412.6783266 1. Begin Doreisa scheduler
+1753137412.6823504 2. Graph partitioning done
+1753137412.6848264 3. Partitioned graphs created
+1753137412.695534 4. Graph scheduled
+1753137412.8622148 5. End Doreisa scheduler
+1753137412.9251742 1. Begin Doreisa scheduler
+1753137412.9296882 2. Graph partitioning done
+1753137412.9319227 3. Partitioned graphs created
+1753137412.9431603 4. Graph scheduled
+1753137413.1464593 5. End Doreisa scheduler
+1753137413.2112367 1. Begin Doreisa scheduler
+1753137413.2153146 2. Graph partitioning done
+1753137413.2177603 3. Partitioned graphs created
+1753137413.2283905 4. Graph scheduled
+1753137413.4546583 5. End Doreisa scheduler
+1753137413.5193212 1. Begin Doreisa scheduler
+1753137413.5235982 2. Graph partitioning done
+1753137413.5260057 3. Partitioned graphs created
+1753137413.5365772 4. Graph scheduled
+1753137413.7252655 5. End Doreisa scheduler
+1753137413.7887247 1. Begin Doreisa scheduler
+1753137413.7926908 2. Graph partitioning done
+1753137413.795012 3. Partitioned graphs created
+1753137413.8057134 4. Graph scheduled
+1753137414.0176554 5. End Doreisa scheduler
+1753137414.082593 1. Begin Doreisa scheduler
+1753137414.0865788 2. Graph partitioning done
+1753137414.0890248 3. Partitioned graphs created
+1753137414.0995674 4. Graph scheduled
+1753137414.2758508 5. End Doreisa scheduler
+1753137414.3395758 1. Begin Doreisa scheduler
+1753137414.34355 2. Graph partitioning done
+1753137414.3458447 3. Partitioned graphs created
+1753137414.357031 4. Graph scheduled
+1753137414.534611 5. End Doreisa scheduler
+1753137414.5995736 1. Begin Doreisa scheduler
+1753137414.6044033 2. Graph partitioning done
+1753137414.6069944 3. Partitioned graphs created
+1753137414.6174886 4. Graph scheduled
+1753137414.790151 5. End Doreisa scheduler
+1753137414.8548489 1. Begin Doreisa scheduler
+1753137414.8595912 2. Graph partitioning done
+1753137414.861944 3. Partitioned graphs created
+1753137414.87251 4. Graph scheduled
+1753137415.041164 5. End Doreisa scheduler
+1753137415.1058538 1. Begin Doreisa scheduler
+1753137415.1098502 2. Graph partitioning done
+1753137415.1128423 3. Partitioned graphs created
+1753137415.1235485 4. Graph scheduled
+1753137415.2999675 5. End Doreisa scheduler
+1753137415.3640993 1. Begin Doreisa scheduler
+1753137415.3681877 2. Graph partitioning done
+1753137415.370995 3. Partitioned graphs created
+1753137415.381498 4. Graph scheduled
+1753137415.567039 5. End Doreisa scheduler
+1753137415.6306999 1. Begin Doreisa scheduler
+1753137415.6347399 2. Graph partitioning done
+1753137415.636967 3. Partitioned graphs created
+1753137415.6478527 4. Graph scheduled
+1753137415.8636906 5. End Doreisa scheduler
+1753137415.927084 1. Begin Doreisa scheduler
+1753137415.9312665 2. Graph partitioning done
+1753137415.9338067 3. Partitioned graphs created
+1753137415.9449675 4. Graph scheduled
+1753137416.1204813 5. End Doreisa scheduler
+1753137416.184234 1. Begin Doreisa scheduler
+1753137416.1883526 2. Graph partitioning done
+1753137416.1908565 3. Partitioned graphs created
+1753137416.201376 4. Graph scheduled
+1753137416.4160085 5. End Doreisa scheduler
+1753137416.4799747 1. Begin Doreisa scheduler
+1753137416.484244 2. Graph partitioning done
+1753137416.4866247 3. Partitioned graphs created
+1753137416.4973683 4. Graph scheduled
+1753137416.670866 5. End Doreisa scheduler
+1753137416.7355268 1. Begin Doreisa scheduler
+1753137416.7398243 2. Graph partitioning done
+1753137416.7429872 3. Partitioned graphs created
+1753137416.7535985 4. Graph scheduled
+1753137416.9233065 5. End Doreisa scheduler
+1753137416.9885554 1. Begin Doreisa scheduler
+1753137416.9928694 2. Graph partitioning done
+1753137416.9952316 3. Partitioned graphs created
+1753137417.006366 4. Graph scheduled
+1753137417.1918066 5. End Doreisa scheduler
+1753137417.2605436 1. Begin Doreisa scheduler
+1753137417.264566 2. Graph partitioning done
+1753137417.2667665 3. Partitioned graphs created
+1753137417.2781134 4. Graph scheduled
+1753137417.4439168 5. End Doreisa scheduler
+1753137417.5084312 1. Begin Doreisa scheduler
+1753137417.5128906 2. Graph partitioning done
+1753137417.5157056 3. Partitioned graphs created
+1753137417.52671 4. Graph scheduled
+1753137417.710352 5. End Doreisa scheduler
+1753137417.7738674 1. Begin Doreisa scheduler
+1753137417.7776551 2. Graph partitioning done
+1753137417.7796366 3. Partitioned graphs created
+1753137417.7900548 4. Graph scheduled
+1753137417.9682562 5. End Doreisa scheduler
+1753137418.0307415 1. Begin Doreisa scheduler
+1753137418.034681 2. Graph partitioning done
+1753137418.0370684 3. Partitioned graphs created
+1753137418.048252 4. Graph scheduled
+1753137418.2505672 5. End Doreisa scheduler
+1753137418.3143604 1. Begin Doreisa scheduler
+1753137418.319146 2. Graph partitioning done
+1753137418.3217556 3. Partitioned graphs created
+1753137418.3322556 4. Graph scheduled
+1753137418.5151577 5. End Doreisa scheduler
+1753137418.5789351 1. Begin Doreisa scheduler
+1753137418.5834563 2. Graph partitioning done
+1753137418.5857136 3. Partitioned graphs created
+1753137418.596127 4. Graph scheduled
+1753137418.7778487 5. End Doreisa scheduler
+1753137418.8415263 1. Begin Doreisa scheduler
+1753137418.8454294 2. Graph partitioning done
+1753137418.847657 3. Partitioned graphs created
+1753137418.8581078 4. Graph scheduled
+1753137419.0769238 5. End Doreisa scheduler
+1753137419.13944 1. Begin Doreisa scheduler
+1753137419.143629 2. Graph partitioning done
+1753137419.1458693 3. Partitioned graphs created
+1753137419.1568832 4. Graph scheduled
+1753137419.329474 5. End Doreisa scheduler
+1753137419.3925726 1. Begin Doreisa scheduler
+1753137419.3966 2. Graph partitioning done
+1753137419.3989003 3. Partitioned graphs created
+1753137419.4104083 4. Graph scheduled
+1753137419.6470592 5. End Doreisa scheduler
