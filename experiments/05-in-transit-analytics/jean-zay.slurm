@@ -113,8 +113,8 @@ for node in "${simulation_nodes[@]}"; do
 
         for i in \$(seq $((CHUNKS_PER_NODE * iNode)) $((CHUNKS_PER_NODE * (iNode+1) - 1))); do
             echo 'DEBUG'
-            echo '\$(($((2 * iNode)) + i))p'
-            python3 worker.py \$i $((CHUNKS_PER_NODE * nb_simulation_nodes)) $((CHUNKS_PER_NODE * 2)) \$(sed -n \"\$(($((2 * iNode)) + i + 1))p\" analytic_ports.txt) &
+            echo \"\$((i + 1))p\"
+            python3 worker.py \$i $((CHUNKS_PER_NODE * nb_simulation_nodes)) $((CHUNKS_PER_NODE * 2)) \$(sed -n \"\$((i + 1))p\" analytic_ports.txt) &
         done
 
         wait
