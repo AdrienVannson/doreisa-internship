@@ -481,6 +481,12 @@ As we increase the number of iterations prepared in advance, we notice that the 
 
 More importantly, if enough iterations are prepared in advance, the execution time no longer depends on the number of chunks per node.
 
+== _In transit_ analytics
+
+Until now, we considered that the simulation nodes were also in charge of analysing the data. Performing the analysis _in situ_ -- directly on the machine producing the data -- can be a good solution, especially in situations where the simulation code runs on the GPU of the machine. In this case, it usually lets the CPU cores idle, so they can be used by the analytics for free. Other simulations don't actually need all the cores of the machine, letting the other cores available for the analytics.
+
+However, some simulations run only on CPU, and performing the analysis of the data on the same machine would disturbe it in an unacceptable manner. _In transfer_ analytics help solving this problem by sending the data to other machines dedicated to the analysis. The simulation is paused during a short time, only to send the data to the analytics machines.
+
 == Conclusion
 
 Thanks to the various improvements presented in the previous sections, Doreisa became a system able to execute task graphs containing tens of thousands of tasks on clusters composed of hundreds of nodes, with very good performance.
