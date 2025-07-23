@@ -487,6 +487,18 @@ Until now, we considered that the simulation nodes were also in charge of analys
 
 However, some simulations run only on CPU, and performing the analysis of the data on the same machine would disturbe it in an unacceptable manner. _In transfer_ analytics help solving this problem by sending the data to other machines dedicated to the analysis. The simulation is paused during a short time, only to send the data to the analytics machines.
 
+#place(
+  auto,
+  scope: "parent",
+  float: true,
+  [
+    #figure(
+      image("resources/doreisa-in-transit.png", width: 90%),
+      caption: [Architecture of the Doreisa for _in-transit_ analytics],
+    ) <doreisa-in-transit>
+  ],
+)
+
 == Conclusion
 
 Thanks to the various improvements presented in the previous sections, Doreisa became a system able to execute task graphs containing tens of thousands of tasks on clusters composed of hundreds of nodes, with very good performance.
