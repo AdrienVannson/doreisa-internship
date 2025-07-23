@@ -34,6 +34,10 @@ nb_simulation_nodes=$((remaining_nodes - nb_analytic_nodes))
 tail -n +2 nodes.txt | head -n "$nb_analytic_nodes" > analytic_nodes.txt
 tail -n +$((nb_analytic_nodes + 2)) nodes.txt > simulation_nodes.txt
 
+echo "Head node: $(cat headnode.txt)"
+echo "Analytic nodes: $(cat analytic_nodes.txt)"
+echo "Simulation nodes: $(cat simulation_nodes.txt)"
+
 headnode=$(cat headnode.txt)
 mapfile -t analytic_nodes < analytic_nodes.txt
 mapfile -t simulation_nodes < simulation_nodes.txt
@@ -74,6 +78,7 @@ for node in "${analytic_nodes[@]}"; do
 
     srun --nodes=1 --nodelist=$node --ntasks=1 --cpus-per-task=40 bash -c "
         ulimit -n 65535
+        python3 -c \"from time import sleep; import random; sleep(random.random())\"
         export OPENBLAS_NUM_THREADS=1
         export RAY_worker_register_timeout_seconds=240
         node_ip=\$(ip -o -4 addr show ib0 | awk \"{print \\\$4}\" | cut -d/ -f1)
@@ -91,6 +96,10 @@ for node in "${analytic_nodes[@]}"; do
 done
 
 echo "All analytic actors started"
+
+sleep 30
+
+echo "Analytic ports: $(cat analytic_ports.txt)"
 
 # Start the simulation nodes
 # TODO start more workers per node
