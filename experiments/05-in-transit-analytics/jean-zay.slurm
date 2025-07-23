@@ -118,7 +118,8 @@ for node in "${simulation_nodes[@]}"; do
         done
 
         wait
-    "
+    " &
+
     iNode=$((iNode + 1))
 done
 
