@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=doreisa_test
 
-#SBATCH --time=00:10:00
+#SBATCH --time=00:05:00
 #SBATCH --output=job-%j.out
 #SBATCH --error=job-%j.err
 
@@ -9,7 +9,7 @@ module purge
 
 module load python/3.12.7
 
-CHUNKS_PER_NODE=40
+CHUNKS_PER_NODE=2  # TODO fix
 
 # Add Ray to the PATH
 export PATH="/linkhome/rech/genlig01/ufw76xj/.local/bin:$PATH"
@@ -29,9 +29,10 @@ total_lines=$(wc -l < nodes.txt)
 echo "Total lines in nodes.txt: $total_lines"
 head -n 1 nodes.txt > headnode.txt
 remaining_nodes=$((total_lines - 1))
-analytic_nodes=$((remaining_nodes / 3))
-tail -n +2 nodes.txt | head -n "$analytic_nodes" > analytic_nodes.txt
-tail -n +$((analytic_nodes + 2)) nodes.txt > simulation_nodes.txt
+nb_analytic_nodes=$((remaining_nodes / 3))
+nb_simulation_nodes=$((remaining_nodes - nb_analytic_nodes))
+tail -n +2 nodes.txt | head -n "$nb_analytic_nodes" > analytic_nodes.txt
+tail -n +$((nb_analytic_nodes + 2)) nodes.txt > simulation_nodes.txt
 
 headnode=$(cat headnode.txt)
 mapfile -t analytic_nodes < analytic_nodes.txt
@@ -64,17 +65,20 @@ sleep 10
 
 echo "Head node started"
 
+# Start the analytic nodes
+rm -f analytic_ports.txt
+
 iNode=0
 for node in "${analytic_nodes[@]}"; do
     echo "Starting analytic node $node"
 
-    # On Jean Zay, we are allowed to start at most 96 processes per
-    # node (see slurm.conf). We need to be careful not to exceed this limit.
     srun --nodes=1 --nodelist=$node --ntasks=1 --cpus-per-task=40 bash -c "
         ulimit -n 65535
         export OPENBLAS_NUM_THREADS=1
         export RAY_worker_register_timeout_seconds=240
         node_ip=\$(ip -o -4 addr show ib0 | awk \"{print \\\$4}\" | cut -d/ -f1)
+        echo \"\$node_ip:8000\" >> analytic_ports.txt
+        echo \"\$node_ip:8001\" >> analytic_ports.txt
         echo \"Node IP: \$node_ip\"
         ray start --address=$head_node_ip:4242 --node-ip-address=\$node_ip
         sleep 10
@@ -88,6 +92,24 @@ done
 
 echo "All analytic actors started"
 
+# Start the simulation nodes
+# TODO start more workers per node
+iNode=0
+for node in "${simulation_nodes[@]}"; do
+    echo "Starting simulation node $node"
+    srun --nodes=1 --nodelist=$node --ntasks=1 --cpus-per-task=40 bash -c "
+        ulimit -n 65535
+        python3 -c \"from time import sleep; import random; sleep(random.random())\"
 
+        for i in \$(seq $((CHUNKS_PER_NODE * iNode)) $((CHUNKS_PER_NODE * (iNode+1) - 1))); do
+            tail -n 1 analytic_ports.txt > port.txt
+            sed -i '$ d' analytic_ports.txt
+            python3 worker.py \$i $((CHUNKS_PER_NODE * nb_simulation_nodes)) $CHUNKS_PER_NODE \$(cat port.txt) &
+        done
+
+        wait
+    "
+    iNode=$((iNode + 1))
+done
 
 wait
