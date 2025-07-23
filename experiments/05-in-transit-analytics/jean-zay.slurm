@@ -84,12 +84,13 @@ for node in "${analytic_nodes[@]}"; do
         node_ip=\$(ip -o -4 addr show ib0 | awk \"{print \\\$4}\" | cut -d/ -f1)
         echo \"\$node_ip:8000\" >> analytic_ports.txt
         echo \"\$node_ip:8001\" >> analytic_ports.txt
+        echo \"\$node_ip:8002\" >> analytic_ports.txt
+        echo \"\$node_ip:8003\" >> analytic_ports.txt
         echo \"Node IP: \$node_ip\"
         ray start --address=$head_node_ip:4242 --node-ip-address=\$node_ip
         sleep 10
         ray status
-        python3 start_analytic_actor.py \$node_ip:8000 \$node_ip:8001
-        wait
+        python3 start_analytic_actor.py \$node_ip:8000 \$node_ip:8001 \$node_ip:8002 \$node_ip:8003
     " &
 
     iNode=$((iNode + 1))
@@ -113,7 +114,7 @@ for node in "${simulation_nodes[@]}"; do
         for i in \$(seq $((CHUNKS_PER_NODE * iNode)) $((CHUNKS_PER_NODE * (iNode+1) - 1))); do
             tail -n 1 analytic_ports.txt > port.txt
             sed -i '$ d' analytic_ports.txt
-            python3 worker.py \$i $((CHUNKS_PER_NODE * nb_simulation_nodes)) $CHUNKS_PER_NODE \$(cat port.txt) &
+            python3 worker.py \$i $((CHUNKS_PER_NODE * nb_simulation_nodes)) $((CHUNKS_PER_NODE * 2)) \$(cat port.txt) &
         done
 
         wait
