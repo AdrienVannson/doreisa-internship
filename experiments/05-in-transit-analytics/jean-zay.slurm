@@ -79,7 +79,7 @@ for node in "${analytic_nodes[@]}"; do
         ray start --address=$head_node_ip:4242 --node-ip-address=\$node_ip
         sleep 10
         ray status
-        python3 start_analytic_actor.py \$node_ip:8000 \$node_ip:8000
+        python3 start_analytic_actor.py \$node_ip:8000 \$node_ip:8001
         wait
     " &
 
