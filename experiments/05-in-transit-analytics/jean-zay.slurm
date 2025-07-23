@@ -16,16 +16,26 @@ export PATH="/linkhome/rech/genlig01/ufw76xj/.local/bin:$PATH"
 
 export OPENBLAS_NUM_THREADS=1
 
+# Sleep for a random time to avoid conflicts
+python3 -c "from time import sleep; import random; sleep(random.random())"
+
 # Create directories for results
 mkdir -p perfs
 
-# Find the head and worker nodes
+# Find the head, analytic and simulation nodes
 scontrol show hostnames $SLURM_JOB_NODELIST > nodes.txt
+
+total_lines=$(wc -l < nodes.txt)
+echo "Total lines in nodes.txt: $total_lines"
 head -n 1 nodes.txt > headnode.txt
-tail -n +2 nodes.txt > workernodes.txt
+remaining_nodes=$((total_lines - 1))
+analytic_nodes=$((remaining_nodes / 3))
+tail -n +2 nodes.txt | head -n "$analytic_nodes" > analytic_nodes.txt
+tail -n +$((analytic_nodes + 2)) nodes.txt > simulation_nodes.txt
 
 headnode=$(cat headnode.txt)
-mapfile -t nodes < workernodes.txt
+mapfile -t analytic_nodes < analytic_nodes.txt
+mapfile -t simulation_nodes < simulation_nodes.txt
 
 # Find the IP of the head node. We use ib0 for the InfiniBand interface.
 head_node_ip=$(srun --nodes=1 --nodelist=$headnode --ntasks-per-node=1 bash -c 'ip -o -4 addr show ib0 | awk "{print \$4}" | cut -d/ -f1')
@@ -55,8 +65,8 @@ sleep 10
 echo "Head node started"
 
 iNode=0
-for node in "${nodes[@]}"; do
-    echo "Starting node $node"
+for node in "${analytic_nodes[@]}"; do
+    echo "Starting analytic node $node"
 
     # On Jean Zay, we are allowed to start at most 96 processes per
     # node (see slurm.conf). We need to be careful not to exceed this limit.
@@ -69,15 +79,15 @@ for node in "${nodes[@]}"; do
         ray start --address=$head_node_ip:4242 --node-ip-address=\$node_ip
         sleep 10
         ray status
-        for i in \$(seq $((CHUNKS_PER_NODE * iNode)) $((CHUNKS_PER_NODE * (iNode+1) - 1))); do
-            python3 worker.py \$i $((CHUNKS_PER_NODE * (SLURM_NNODES-1))) $CHUNKS_PER_NODE &
-        done
+        python3 start_analytic_actor.py \$node_ip:8000 \$node_ip:8000
         wait
     " &
 
     iNode=$((iNode + 1))
 done
 
-echo "All workers started"
+echo "All analytic actors started"
+
+
 
 wait
