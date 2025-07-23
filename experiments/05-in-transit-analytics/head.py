@@ -24,7 +24,7 @@ def simulation_callback(arrays: da.Array, *, timestep: int):
         with open(f"{exp_dir}/results.txt", "a") as f:
             f.write(f"Starting {uuid} {len(ray.nodes()) - 1} {np.prod(arrays.numblocks)}\n")
 
-    arrays.mean().compute(doreisa_debug_logs=f"{exp_dir}/perfs/{uuid}.txt", doreisa_partitioning_strategy="random")
+    arrays.mean().compute(doreisa_debug_logs=f"{exp_dir}/perfs/{uuid}.txt")
 
     if timestep == 20:
         global start_time

@@ -26,7 +26,6 @@ mkdir -p perfs
 scontrol show hostnames $SLURM_JOB_NODELIST > nodes.txt
 
 total_lines=$(wc -l < nodes.txt)
-echo "Total lines in nodes.txt: $total_lines"
 head -n 1 nodes.txt > headnode.txt
 remaining_nodes=$((total_lines - 1))
 nb_analytic_nodes=$((remaining_nodes / 3))
@@ -100,8 +99,6 @@ echo "All analytic actors started"
 
 sleep 30
 
-echo "Analytic ports: $(cat analytic_ports.txt)"
-
 # Start the simulation nodes
 # TODO start more workers per node
 iNode=0
@@ -112,8 +109,6 @@ for node in "${simulation_nodes[@]}"; do
         python3 -c \"from time import sleep; import random; sleep(random.random())\"
 
         for i in \$(seq $((CHUNKS_PER_NODE * iNode)) $((CHUNKS_PER_NODE * (iNode+1) - 1))); do
-            echo 'DEBUG'
-            echo \"\$((i + 1))p\"
             python3 worker.py \$i $((CHUNKS_PER_NODE * nb_simulation_nodes)) $((CHUNKS_PER_NODE * 2)) \$(sed -n \"\$((i + 1))p\" analytic_ports.txt) &
         done
 
