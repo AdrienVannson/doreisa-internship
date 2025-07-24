@@ -341,7 +341,7 @@ To solve this issue, it was necessary to:
 This new version of Doreisa was benchmarked on Jean Zay with up to 256 nodes in the cluster.
 
 #figure(
-    image("resources/exp-02-total-time-v0.1.5.svg"),
+    image("resources/exp-02.svg"),
     caption: [Time per iteration with the distributed scheduler (weak scaling, 40 chunks per node)],
 ) <distributed-scheduler-total-time-v0.1.5>
 
@@ -464,12 +464,17 @@ This mechanism relies on Dask's persist API: instead of calling the `compute` me
 
 === Performance evaluation
 
+#figure(
+    image("resources/exp-03.svg", width: 105%),
+    caption: [Performance improvement of iteration preparation],
+) <perfs-detail>
+
 ==== Varying the number of nodes
 
 The performance improvement of the iteration preparation mechanism is evaluated with the same protocol as before: the number of nodes varies with a constant number of chunks per node, and the mean time per iteration is measured. The experiment is repeated five time, with a number of iterations prepared in advance varying from 0 to 8.
 
 #figure(
-    image("resources/exp-03-results.svg", width: 105%),
+    image("resources/exp-03-preparation-advance.svg", width: 105%),
     caption: [Performance improvement of iteration preparation: varying number of iterations prepared in advance],
 ) <perfs-iteration-preparation>
 
