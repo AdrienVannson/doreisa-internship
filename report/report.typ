@@ -483,9 +483,9 @@ More importantly, if enough iterations are prepared in advance, the execution ti
 
 == _In transit_ analytics
 
-Until now, we considered that the simulation nodes were also in charge of analysing the data. Performing the analysis _in situ_ -- directly on the machine producing the data -- can be a good solution, especially in situations where the simulation code runs on the GPU of the machine. In this case, it usually lets the CPU cores idle, so they can be used by the analytics for free. Other simulations don't actually need all the cores of the machine, letting the other cores available for the analytics.
+Until now, the simulation nodes of the cluster were also in charge of analysing the data. Performing the analysis _in situ_ -- directly on the machine producing the data -- can be a good solution, especially in situations where the simulation code runs on the GPU of the machine. In this case, it usually lets CPU cores idle, so they can be used by the analytics without overhead.
 
-However, some simulations run only on CPU, and performing the analysis of the data on the same machine would disturbe it in an unacceptable manner. _In transfer_ analytics help solving this problem by sending the data to other machines dedicated to the analysis. The simulation is paused during a short time, only to send the data to the analytics machines.
+However, some simulations run only on CPU, and performing the analysis of the data on the simulation nodes would disturb it in an unacceptable manner. _In transfer_ analytic helps solving this problem by making simulation processes send their data to other machines dedicated to the analysis. The simulation is only paused during the time the data is sent to the analytics machines, and can resume while the analysis is ongoing.
 
 #place(
   auto,
@@ -498,6 +498,12 @@ However, some simulations run only on CPU, and performing the analysis of the da
     ) <doreisa-in-transit>
   ],
 )
+
+@doreisa-in-transit shows how Doreisa works for _in transit_ analytics. It is similar to _in situ_ analytics previously introduced, with an important difference: simulation nodes send all their data to analytic nodes. The analytic nodes will write the data to their Ray object store, and then use it as for _in situ_ analytics.
+
+Ray can be quite heavy to start on a machine, with several processes needed: the raylet, the plasma store, the workers, etc. To avoid disturbing the simulation, in the case of _in transit_ analytics, Ray is not started at all on simulation nodes. The simulation processes are simply given an IP address and a port that they use to communicate (ie get the preprocessing callbacks and send the chunks of data) with the analytic node using #smallcaps[ZeroMQ] @zmq.
+
+The chunks of data are sent using #smallcaps[ZeroMQ] over a TCP connection, which prevents taking full advantage of the high-performance network available on the supercomputer. An improvement could be to take advantage of RDMA (Remote Direct Memory Access) to send the data more efficiently.
 
 == Conclusion
 
