@@ -1,4 +1,4 @@
-#set document(author: "Adrien Vannson", title: "Internship report")
+#set document(author: "Adrien Vannson", title: "Python Data Processing on Supercomputers for Large Parallel Numerical Simulations")
 
 #set page(numbering: "1", number-align: center)
 #set text(font: "New Computer Modern", lang: "en")
@@ -46,49 +46,49 @@
 
 Physical simulations such as Gysela @gysela or Parflow (TODO ref?).
 
-This Master thesis introduces #smallcaps[Doreisa] -- Dask-on-Ray Enabled In Situ Analytics --, a new way to process data coming from HPC simulations, easily and in a distributed and efficient manner. This system is able to scale on supercomputers such as the Adastra and Jean Zay, 
+This Master thesis introduces #smallcaps[Doreisa] -- Dask-on-Ray Enabled In Situ Analytics --, a new way to process data coming from HPC simulations, easily and in a distributed and efficient manner. This system is able to scale on supercomputers such as Jean Zay.
 
-== Performance requirements
+// == Performance requirements
 
-The proposed solution needs to scale well to some of the biggest supercomputers such as the french Adastra and Jean Zay.
+// The proposed solution needs to scale well to some of the biggest supercomputers such as Jean Zay.
 
-Adastra is hosted by the _Centre Informatique National de l’Enseignement Supérieur (CINES)_ in Montpellier. In November 2024, it was ranked \#30 in Top500, with an Rmax value of 46.10 PFlop/s. In addition to login and pre/post processing nodes, Adastra is equiped with 544 scalar nodes, and . The detailed specification is available on Adasta's website @adastra.
+// Adastra is hosted by the _Centre Informatique National de l’Enseignement Supérieur (CINES)_ in Montpellier. In November 2024, it was ranked \#30 in Top500, with an Rmax value of 46.10 PFlop/s. In addition to login and pre/post processing nodes, Adastra is equipped with 544 scalar nodes, and . The detailed specification is available on Adasta's website @adastra.
 
-Jean Zay is . In November 2024, it was ranked \#27 in Top500, with an Rmax value of 52.18 PFlop/s.
+// Jean Zay is . In November 2024, it was ranked \#27 in Top500, with an Rmax value of 52.18 PFlop/s.
 
-Given the architecture of these supercomputers, Doreisa should be able to scale to systems having thousands of nodes, producing tens of thousands to potentially hundreds of thousands of chunks of data per iteration.
+// Given the architecture of these supercomputers, Doreisa should be able to scale to systems having thousands of nodes, producing tens of thousands to potentially hundreds of thousands of chunks of data per iteration.
 
 == Structure of this report
 
-@state-of-the-art goes through the main research projects related to the subject, as well as the some tools used by these projects that will be useful for Doreisa. The first section of @doreisa-design introduces a proof of concept of Doreisa, working correctly with limited performance. The following subsections details improvements made to this solution, until the most advanced version. @performance-evaluation evaluates the performance of the application in various scenarios, and compare them to existing solutions. @challenges mentions some challenges that were encountered during the creation of Doreisa.
+@state-of-the-art goes through the main research projects related to the subject, as well as the some tools and supercomputers that will be useful for Doreisa. The first section of @doreisa-design introduces a proof of concept of Doreisa, working correctly with limited performance. The following subsections detail improvements made to this solution, until the most advanced version. @performance-evaluation evaluates the performance of the application in various scenarios. @doreisa-development mentions some challenges that were encountered during the development of Doreisa.
 
-The Doreisa implementation is available on Github @doreisa-github. The experiments run on the various supercomputers are available on Github as well @doreisa-internship-github.
+The Doreisa implementation is available on Github @doreisa-github. All the experiments are available on Github as well @doreisa-internship-github.
 
 = State of the art <state-of-the-art>
 
 == Tools
 
-The following tools are used in the . Some of the research projects related to the this Master project also rely on them.
+Doreisa relies on the following tools to work. These tools are also used by some of the other research projects related to this Master project.
 
 === Dask
 
 Dask @dask is a Python framework aiming at making distributed computing easy. The basic workflow to run computations with Dask is composed of two steps:
 
- - *Building a task graph.* The distributed computation is represented as a task graph, as the one in @dask-graph-mean. The task graph is a directed acyclic graph where each node represents a computation. There is an edge from a node $T_1$ to a node $T_2$ if $T_1$ needs the result of $T_2$ to be executed. Internally, a task graph can be represented as a simple Python dictionnary.
- - *Running the computation.* The graph is then shipped to a scheduler, which is in charge of executing all the tasks and returning the final result of the computation. Dask provides several schedulers, suited to different use case: a threaded scheduler, a multiprocessing scheduler as well as a distributed scheduler.
+ - *Building a task graph.* The distributed computation is represented as a task graph, as the one in @dask-graph-mean. The task graph is a directed acyclic graph where each node represents a computation. There is an edge from a node $T_1$ to a node $T_2$ if $T_1$ needs the result of $T_2$ to be executed. Internally, a task graph is represented as a simple Python dictionary.
+ - *Running the computation.* The graph is shipped to a scheduler, which is in charge of executing all the tasks and returning the final result of the computation. Dask provides several schedulers suited to different use cases: a threaded scheduler, a multiprocessing scheduler as well as a distributed scheduler.
 
 #figure(
     image("resources/dask-graph-mean.png", width: 80%),
     caption: [Example of a Dask task graph],
 ) <dask-graph-mean>
 
-Dask also provides APIs similar to pandas and numpy: the user can call functions similar to the ones defined in these libraries. They .
+Dask also provides APIs similar to pandas and numpy: the user can call functions similar to the ones defined in these libraries to work on distributed dataframes and arrays.
 
-In particular, a Dask array is a distributed implementation of numpy arrays. It is composed of several chunks, each chunk being represented as a numpy array. Performing computations on such a graph produces a task graph that can be executed in a distributed manner, hiding all the complexity from the final user.
+In particular, a Dask array is a distributed implementation of numpy arrays. It is composed of several chunks, each chunk being represented as a numpy array. Performing computations on a Dask array produces a task graph that can be executed in a distributed manner, hiding all the complexity from the final user.
 
 Unfortunately, Dask suffer from several limitations that have an impact on performance:
-  - Data can't be shared between workers without a copy, even when the workers are running on the same node.
-  - Dask's scheduler is centralized, and can become a bottleneck in very large-scale computations. According to Dask's documentation @dask-actors-motivation, it can handle at most around 4000 tasks per second.
+  - Data can't be shared between worker processes without being copied, even when the workers are running on the same node.
+  - Dask's scheduler is centralized and can become a bottleneck in large-scale computations. According to Dask's documentation @dask-actors-motivation, it can handle at most around 4000 tasks per second.
 
 === Ray
 
@@ -179,7 +179,7 @@ Ray actors are instances of classes defined with the `ray.remote` decorator. The
 
 === Dask-on-Ray
 
-Dask-on-Ray is a project aiming at bringing the best of Dask and Ray together. It allows executing a Dask task graph on a Ray cluster, allowing to use the simple Dask API while taking advantage of the good performance offered by Ray.
+Dask-on-Ray is a project aiming at bringing the best of Dask and Ray together. It allows executing a Dask task graph on a Ray cluster, allowing the use of the simple Dask API while taking advantage of the good performance offered by Ray.
 
 To use it, a Dask task graph should first be created, as with standard Dask. This task graph can be built using the high-level Dask abstractions such as Dask arrays. Then, Dask-on-Ray is called to execute the task graph. Dask-on-Ray is actually a Dask scheduler, that is a function taking two main parameters: a Dask task graph and a list of the keys to compute. The scheduler is in charge of computing the value of the requested keys and returning them. For each node of the task graph, the Dask-on-Ray scheduler performs a Ray `@remote` call to execute the computation on the Ray cluster.
 
@@ -193,7 +193,7 @@ In this project, we will use the Pycall plugin, which allows making the data ava
 
 == Research projects
 
-@dreher2014flexible explores a flexible solution to perfom _in situ_ and _in transit_ analytics by allowing the user to define a graph of tasks to be executed for the analytics. The model is simple (a task has some input, some output).
+@dreher2014flexible explores a flexible solution to perform _in situ_ and _in transit_ analytics by allowing the user to define a graph of tasks to be executed for the analytics. The model is simple (a task has some input, some output).
 
 === Deisa
 
@@ -201,13 +201,13 @@ Deisa
 
 === Reisa
 
-Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray instead of Dask. One of the main limitation of the approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define two callback functions:
+Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray instead of Dask. One of the main limitations of the approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define two callback functions:
 
 == Supercomputers
 
 === Jean-Zay
 
-The Jean-Zay supercomputer (see @jean-zay) is a powerful supercomputer located in Saclay, France. Following its extension in 2024, it has a peak computing power of 125.9 PFlop/s @jean-zay-presentation, which places it among the most powerful supercomputers on this planet.
+The Jean-Zay supercomputer (see @jean-zay) is a powerful supercomputer located in Saclay, France. Following its extension in 2024, it has a peak computing power of 125.9 PFlop/s @jean-zay-presentation, which places it among the most powerful supercomputers.
 
 #figure(
   image("resources/jean-zay.png", width: 100%),
@@ -248,13 +248,13 @@ Each iteration of the analysis pipeline consists of the following steps:
   2. The data produced by the simulation is placed in the Ray object store. An `ObjectRef` is produced: this reference to the data is sent to a main actor running on the head node.
   3. The head actor collects the references of all the processes. Once it has received all of them, it builds a Dask array from them.
   4. The user script receives the Dask array. It can be used as a standard Dask array, to perform any kind of analysis. Performing operations on the Dask array produces a task graph.
-  5. The task graph is passed to the Dask-on-Ray scheduler that is in charge of executing it. Each Dask task is converted to a Ray task, and scheduled by Ray. Ray takes into account data locality when scheduling tasks, so unnecessary data movements should be avoided.
+  5. The task graph is passed to the Dask-on-Ray scheduler that is in charge of executing it. Each Dask task is converted to a Ray task, and scheduled by Ray. Ray takes into account data locality when scheduling tasks, so unnecessary data movements can be avoided.
 
 === Performance evaluation
 
 This first solution has the drawback of being really centralized: the head actor needs to collect an `ObjectRef` for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks. The same node will be in charge of scheduling all these tasks, and retrieving their results.
 
-For big simulations running on hundreds of nodes, the head node would have to process tens of thousands of references and tasks at each iteration, which is too costly. @performance-naive-method demonstrates this. In this experiment, Doreisa is asked to compute the mean of a distributed array. The total number of chunks in this array is equal to the number of cores available in the cluster, so it is directly proportional to the number of nodes. With a well-parallelised system, one would expect the execution time to only slightly increase with the number of nodes (weak scaling). However, this is not the case here: the execution time is proportional to the number of nodes. In this situation, the centralized actor is clearly the bottleneck. More precisely, the analysis is composed of the following main parts:
+For big simulations running on hundreds of nodes, the head node would have to process tens of thousands of references and tasks at each iteration, which is too costly. @performance-naive-method demonstrates this. In this experiment, Doreisa is asked to compute the mean of a distributed array. The total number of chunks in this array is equal to the number of cores available in the cluster, so it is proportional to the number of nodes. With a well-parallelised system, one would expect the execution time to only slightly increase with the number of nodes (weak scaling). However, this is not the case here: the execution time is proportional to the number of nodes. In this situation, the centralized actor is clearly the bottleneck. More precisely, the analysis is composed of the following main parts:
   - Collecting the `ObjectRefs` produced by the workers.
   - Creating the Dask array as well as the task graph. For such small graphs, the time is negligible.
   - Executing the task graph using the Dask-on-Ray scheduler.
@@ -265,11 +265,11 @@ Both the reference gathering and the task graph execution are time-consuming pro
     caption: [Performance of the naive method (weak scaling with a simple analysis)],
 ) <performance-naive-method>
 
-== Building the Dask Aray <collecting-references>
+== Building the Dask array <collecting-references>
 
 At each iteration of the simulation, MPI processes produce data stored in numpy arrays. These chunks of data are placed in Ray's object store, and references to them must be sent to the head node to allow it to build a full Dask array. A first approach simply consists of having all the MPI processes send their reference to the head node directly. However, this centralized approach is not scalable enough: gathering tens of thousands of references is a costly operation that can't be performed by a single process in a reasonable time, as a lot of communications are involved. Indeed, as shown in @ref-collecting-bench (explained below), when many processes send their references one-by-one, at most around one thousand references can be collected each second. The exact value will depend on many factors, but it is not enough for our applications.
 
-To solve this problem, a simple idea consists of sending first the references to intermediate actors that will have the responsibility to collect a few of them, and send them to the head node in a single message. To see how well sending the references by group helps improving the performance, a simple setup is used. Some "simulation" processes generate numpy arrays and send references to them to the head node. The arrays are generated randomly, no simulation code is actually used. The process is repeated with a varying number of processes from 1 to 512, as well as a number of references sent by each process at each iteration varying from 1 to 256. During each measurement, 200 iterations are performed.
+To solve this problem, a simple idea consists of sending first the references to intermediate actors that will have the responsibility to collect a few of them, and send them to the head node in a single message. To see how well sending the references in groups helps improve the performance, a simple setup is used. Some "simulation" processes generate numpy arrays and send references to them to the head node. The arrays are generated randomly, no simulation code is actually used. The process is repeated with a varying number of processes from 1 to 512, as well as a number of references sent by each process at each iteration varying from 1 to 256. During each measurement, 200 iterations are performed.
 
 To avoid having to deploy the experiment on a very large cluster, several simulation scripts were started on each core. The measurement is repeated two times: one time with two simulation nodes, the other with four simulation nodes. The goal of this step is to make sure that the bottleneck actually comes from the head node and not the simulation node: it is the case if the results in these two configurations are similar. This is indeed the case: the total execution time of each scenario varies by less than 10% in the two cases. As having twice more nodes for the same task doesn't reduce the execution time, the bottleneck is indeed the head node, as expected.
 
@@ -286,9 +286,9 @@ First, we can notice that the measured values are higher when less than 8 proces
 
 With at least 8 processes, the total number of processes doesn't impact the time needed to send one reference. However, sending several references at each request greatly reduces the time needed to send one reference: it becomes possible to reduce the total time by around 20 times with this optimization.
 
-In practice, to avoid useless network use, a good compromise is to place an actor on each simulation node. This actor has the responsibility to collect all the references to arrays produced by the node, and to send them all at once to the head node. The goal of this optimization is not to have something optimal since this part is not critical to obtain good performance. It is simply to optimize it enough so that it does not become a bottleneck and slow down the whole computation.
+In practice, to avoid useless network use, a good compromise could be to place an actor on each simulation node. This actor would have the responsibility to collect all the references to arrays produced by the node, and to send them all at once to the head node. The goal of this optimization is not to have something optimal since this part is not critical to obtain good performance. It is simply to optimize it enough so that it does not become a bottleneck and slow down the whole computation.
 
-To conclude, to reduce the time taken to collect all the `ObjectRef`, it is possible to use intermediate actors on each node to collect the references first, and send them in batches to the head node. However, in the end, this optimization wasn't integrated to Doreisa: the optimization presented in the following section adopted a different approach that makes sending all the `ObjectRefs` to the head node useless.
+To conclude, to reduce the time taken to collect all the `ObjectRef`, it is possible to use intermediate actors on each node to collect the references first, and send them in batches to the head node. However, in the end, this optimization wasn't integrated to Doreisa: the optimization presented in the following section adopts a different approach that makes sending all the `ObjectRefs` to the head node useless.
 
 == Distributed scheduler
 
@@ -298,7 +298,7 @@ The issue with the proof of concept of Doreisa is that the head node becomes the
 
 As shown in @collecting-references, it is possible to reduce the time taken to collect all the references from the worker processes. Unfortunately, it doesn't solve the problem of executing the tasks: the head node still needs to create all the Ray tasks, which is costly for large task graphs.
 
-This section describes a method to distribute the scheduling of the tasks; taking advantage of Ray's distributed scheduler. The goal is to avoid forcing the head node to communicate with all the data-producing processes as well as the worker processes, but instead limit the communication to lightweight messages with an actor running on each simulation node.
+This section describes a method to distribute the scheduling of the tasks; taking advantage of Ray's distributed scheduler. The goal is to avoid forcing the head node to communicate with all the data-producing processes as well as the worker processes, but instead limit the communication to lightweight communications with actors running on each simulation node.
 
 #place(
   auto,
@@ -312,7 +312,7 @@ This section describes a method to distribute the scheduling of the tasks; takin
   ],
 )
 
-@doreisa-distributed-scheduler shows the architecture of the Doreisa distributed scheduler. The main difference with the proof-of-concept version is that an additional actor -- that we will call a `SchedulingActor` -- is started on each simulation node. The head actor will only communicate with the simulation nodes using this actor. This actor has the responsibility to collect all the `ObjectRefs` produced by the simulation nodes, and schedule the tasks sent by the head node.
+@doreisa-distributed-scheduler shows the architecture of the Doreisa distributed scheduler. The main difference with the proof-of-concept version is that an additional actor -- that we will call a `SchedulingActor` -- is started on each simulation node. The head actor will only communicate with the simulation nodes using this actor. It has the responsibility to collect all the `ObjectRefs` produced by the simulation node, and schedule the tasks sent by the head node.
 
 The steps of one iteration of the analysis are as follow:
   1. As before, the simulation processes make some chunks of data available to Doreisa using PDI.
@@ -320,21 +320,22 @@ The steps of one iteration of the analysis are as follow:
   3. When all the chunks of the node are ready, the head actor is notified.
   4. Once all the simulation nodes are ready, a Dask array is built and made available to the user. This array doesn't contain the `ObjectRefs` pointing to the data directly: for performance reasons, they are replaced by a small object indicating which object reference should be used.
   5. The user performs some computations on the Dask array, which produces a task graph. The task graph is passed to the Doreisa scheduler.
-  6. The Doreisa scheduler finds a partition the graph, creating one partition for each simulation node. The partitions are sent to the actors.
+  6. The Doreisa scheduler finds a partition of the graph, creating one partition for each simulation node. The partitions are sent to the actors.
   7. After receiving the partitioned task graphs, the scheduling actors prepare its execution. They send messages to one another to collect the `ObjectRefs` that they are missing (these `ObjectRefs` correspond to tasks scheduled by another scheduling actor). The references are placed in the task graph directly, replacing the placeholder object.
-  8. The scheduling actor sent their task graphs to the Dask-on-Ray scheduler for execution. The Dask-on-Ray scheduler will schedule the tasks using the local node's Ray scheduler.
+  8. The scheduling actor sent their task graphs to the Dask-on-Ray scheduler for execution.
+  9. The Dask-on-Ray scheduler schedules the tasks using the local node's Ray scheduler. Depending on data locality, the tasks can be executed remotely.
 
 With this approach, all the simulation nodes are in charge of scheduling a part of the task graph, effectively distributing the scheduling.
 
-=== An implementation detail
+=== Nesting ObjectRefs
 
 From an implementation perspective, there is one major difference compared to the proof-of-concept version: it is no longer possible to simply put `ObjectRefs` pointing to the data directly in the task graph that will be executed by the Dask-on-Ray scheduler. Indeed, as the scheduling is now distributed, a scheduling actor doesn't own all the `ObjectRefs` that are needed to perform the computation: it may need to ask other scheduling actors to send `ObjectRefs` corresponding to results of tasks that they scheduled. When asking another scheduling actor for an `ObjectRef`, it is not possible to directly get the actual `ObjectRef`, since it may not be ready at that time (all the actors are scheduling their tasks at the same time), and trying to get it anyway results in deadlocks.
 
-For this reason, we actually need to use futures that will return the desired `ObjectRef`, that is... an `ObjectRef` of an `ObjectRef` of the actual data. However, the Dask-on-Ray scheduler doesn't work well with nested `ObjectRefs`: it expects the references to directly contain the data.
+For this reason, we actually need to use futures that will return the desired `ObjectRef`, that is... an `ObjectRef` of an `ObjectRef` of the actual data. However, the Dask-on-Ray scheduler doesn't work with nested `ObjectRefs`: it expects the references to directly contain the data.
 
 To solve this issue, it was necessary to:
-  - Maintain the invariant that all the references are nested `ObjectRefs`, which sometimes requires artificially wrapping an `ObjectRef` inside another one.
-  - Patch a small part of the Dask-on-Ray scheduler to make it work with nest `ObjectRefs`.
+  - Maintain the invariant that all the references are nested `ObjectRefs`, which sometimes requires artificially wrapping an `ObjectRef` inside another one by calling the identity function remotely.
+  - Patch a small part of the Dask-on-Ray scheduler to make it work with nested `ObjectRefs`.
 
 === Evaluation
 
@@ -342,8 +343,10 @@ This new version of Doreisa was benchmarked on Jean Zay with up to 256 nodes in 
 
 #figure(
     image("resources/exp-02.svg"),
-    caption: [Time per iteration with the distributed scheduler (weak scaling, 40 chunks per node)],
+    caption: [Time per iteration with the #linebreak() distributed scheduler],
 ) <distributed-scheduler-total-time-v0.1.5>
+
+With less than 4 simulation nodes in the cluster, we notice a small overhead of the distributed scheduler. When more nodes are added to the cluster, the distributed scheduler becomes much more efficient than the centralized scheduler: its total execution time almost doesn't grow with the number of nodes until a new bottleneck appears at about 32 nodes.
 
 === Graph partitioning strategy
 
@@ -355,7 +358,7 @@ The partitioning strategy has an impact on the performance of the application: i
 
 This section will determine the impact of the scheduling strategy on the performance of the system by comparing two partitioning strategies.
 
-Note that the partitioning of the task graph only has an impact on which scheduling actor will have the responsibility to schedule each task. It is still the Ray scheduler of the node on which the scheduling actor runs will eventually be in charge of scheduling the task on any node of the cluster.
+Note that the partitioning of the task graph only has an impact on which scheduling actor will have the responsibility to schedule each task. It is still the Ray scheduler of the node on which the scheduling actor runs that will eventually be in charge of scheduling the task on any node of the cluster.
 
 ==== Considered strategies
 
@@ -390,16 +393,14 @@ TODO analysis
 
 Since the partitioning does not determine the nodes executing each task, since the communication cost between the actors is small and since all the communications happen in parallel, one could have expected the choice of the graph partitioning strategy to have a relatively small impact on the performance as long as the subsets of the partition have comparable sizes.
 
-It is not completely clear why . Since the greedy partitioning algorithm works very well in real-life situations
-
 === Finding the bottleneck
 
-As we saw in the previous section, the current system is able to scale well until about 64 nodes are added. Once this threeshold is reached, a new bottleneck appears and the execution time starts being proportional to the number of nodes in the Ray cluster.
+As we saw in the previous section, the current system is able to scale well until about 64 nodes are added. Once this threshold is reached, a new bottleneck appears and the execution time starts being proportional to the number of nodes in the Ray cluster.
 
-To understand where this problem comes from, a more detailed analysis was realized. This experiment is named `03-TODO` in the `doreisa-internship` repository. The total execution time of a simple data analysis has been measured with a varying number of nodes: 10, 20, 40 and 80. This experiment has been realized on the `gros` cluster from `Grid5000`. The goal is to determine what are the parts of the process that take too much time, to identify the bottleneck. Four execution times are measured:
+To understand where this problem comes from, a more detailed analysis was realized. This experiment is named `03-TODO` in the `doreisa-internship` repository. The total execution time of a simple data analysis has been measured with a varying number of nodes: 32, 64, 128 and 255. The goal is to determine what are the parts of the process that take too much time, to identify the bottleneck. Four execution times are measured:
 
   1. Without performing any analysis at all. This is the time taken by the head node to receive the information by the scheduling actors that the chunks are ready, and to build the Dask array as well as the task graph.
-  2. Executing the scheduling algorithm without sending the task graph to the scheduling actors. In addition to the previous step, each node of the task graph is assigned to a scheduling actor.
+  2. Executing the greedy scheduling algorithm without sending the task graph to the scheduling actors. In addition to the previous step, each node of the task graph is assigned to a scheduling actor.
   3. Executing the scheduling algorithm and sending the task graph to the scheduling actors, without having the actors perform any computation at all. In addition to the previous step, the information about the tasks and the scheduling are sent to the scheduling actors.
   4. Performing all the computations required for the analysis. The scheduling actors actually run the computation.
 
@@ -413,11 +414,11 @@ To understand where this problem comes from, a more detailed analysis was realiz
     caption: [Decomposition of the time per iteration depending on the cluster size],
 ) <exp-03-time-for-cluster-size>
 
-@exp-03-time-per-action shows the time per iteration for these four parts of the analytics, and @exp-03-time-for-cluster-size shows, for each cluster size, the proportion of the time spent in each phase of the computation. (TODO: delete @exp-03-time-per-action ?)
+@exp-03-time-per-action shows the time per iteration for these four parts of the analytics, and @exp-03-time-for-cluster-size shows, for each cluster size, the proportion of the time spent in each phase of the computation.
 
-First, we can notice that the distributed scheduler designed in the previous section scales very well: the execution time per iteration only slightly increase by a constant amont each time the cluster size doubles.
+First, we can notice that the distributed scheduler designed in the previous section scales very well: the execution time per iteration only increases by a constant amount each time the cluster size doubles.
 
-The high execution times for the bigger cluster sizes come from the first three tasks, which were negligible in smaller runs. To further optimize the system, we need to focus on them.
+The high execution times for the bigger cluster sizes come from the first three tasks, which were negligible in smaller runs TODO list + more details. To further optimize the system, we need to focus on them.
 
 == Iteration preparation
 
@@ -427,9 +428,9 @@ Thanks to the previous improvements, we managed to make the performance of Dorei
 
 Since the tasks that need to be performed (task graph partitioning, scheduling, etc) are already quite optimized, the idea is now to hide the time taken to execute these tasks by executing them in advance, before the data is available.
 
-We will let the user define the tasks that will need to be performed a few iterations before the data is actually available by letting them define an optional callback, called a few iterations before the data is actually available. The Doreisa scheduler is then able to immediately start shipping the task graphs to the scheduling actors, without having to wait for the data to be ready. The user can prepare several iterations in parallel, so that the preparation of iterations is never a bottleneck. The tasks will start being executed as soon as the data is available, and the user will be able retrieve and use the results from the standard callback.
+We will let the user define the tasks that will need to be performed in advance by letting them define an optional callback, called a few iterations before the data is actually available. The Doreisa scheduler is then able to immediately start shipping the task graphs to the scheduling actors, without having to wait for the data to be ready. The user can prepare several iterations in parallel, so that the preparation of iterations is never a bottleneck. The tasks will start being executed as soon as the data is available, and the user will be able retrieve and use the results from the standard callback.
 
-This mechanism relies on Dask's persist API: instead of calling the `compute` method that executes the computation and returns its result, the `persist` method starts the computation in the background and returns a Dask array containing a futures to the final result. The Doreisa scheduler needed to be updated to support this feature: if the scheduler is called from a `persist` call, it directly returns `ObjectRefs` to the final result, without getting their value.
+This mechanism relies on Dask's persist API: instead of calling the `compute` method that executes the computation and returns its result, the `persist` method starts the computation in the background and returns a Dask array containing futures to the final result. The Doreisa scheduler needs to be updated to support this feature: if the scheduler is called from a `persist` call, it directly returns `ObjectRefs` to the final result, without getting their value.
 
 === User API
 
@@ -471,7 +472,7 @@ This mechanism relies on Dask's persist API: instead of calling the `compute` me
 
 ==== Varying the number of nodes
 
-The performance improvement of the iteration preparation mechanism is evaluated with the same protocol as before: the number of nodes varies with a constant number of chunks per node, and the mean time per iteration is measured. The experiment is repeated five time, with a number of iterations prepared in advance varying from 0 to 8.
+The performance improvement of the iteration preparation mechanism is evaluated with the same protocol as before: the number of nodes varies with a constant number of chunks per node, and the mean time per iteration is measured. The experiment is repeated five times, with a number of iterations prepared in advance varying from 0 to 8.
 
 #figure(
     image("resources/exp-03-preparation-advance.svg", width: 105%),
@@ -480,11 +481,11 @@ The performance improvement of the iteration preparation mechanism is evaluated 
 
 @perfs-iteration-preparation shows the results obtained with this experiment. When no iterations are prepared in advance (which approximately corresponds to not using the preparation mechanism), the execution time ultimately starts increasing linearly with the number of nodes.
 
-As we increase the number of iterations prepared in advance, we notice that the execution time becomes smaller. When enough iterations are prepared, the expensive scheduling tasks stop being a bottleneck and the performance stops improving.
+As we increase the number of iterations prepared in advance, we notice that the execution time becomes smaller. When enough iterations are prepared, the expensive tasks stop being a bottleneck and the performance stops improving.
 
 ==== Varying the number of chunks per node
 
-More importantly, if enough iterations are prepared in advance, the execution time no longer depends on the number of chunks per node.
+More importantly, if enough iterations are prepared in advance, the execution time no longer depends on the number of chunks per node. TODO
 
 == _In transit_ analytics
 
@@ -508,13 +509,13 @@ However, some simulations run only on CPU, and performing the analysis of the da
 
 Ray can be quite heavy to start on a machine, with several processes needed: the raylet, the plasma store, the workers, etc. To avoid disturbing the simulation, in the case of _in transit_ analytics, Ray is not started at all on simulation nodes. The simulation processes are simply given an IP address and a port that they use to communicate (ie get the preprocessing callbacks and send the chunks of data) with the analytic node using #smallcaps[ZeroMQ] @zmq.
 
-The chunks of data are sent using #smallcaps[ZeroMQ] over a TCP connection, which prevents taking full advantage of the high-performance network available on the supercomputer. An improvement could be to take advantage of RDMA (Remote Direct Memory Access) to send the data more efficiently.
+The chunks of data are sent using #smallcaps[ZeroMQ] over a TCP connection, which prevents taking full advantage of the high-performance network available on the supercomputer. An improvement could be to take advantage of RDMA (Remote Direct Memory Access) to send the data more efficiently using the supercomputer's high-performance network.
 
 == Conclusion
 
 Thanks to the various improvements presented in the previous sections, Doreisa became a system able to execute task graphs containing tens of thousands of tasks on clusters composed of hundreds of nodes, with very good performance.
 
-In this section, we focused on improving the number of tasks scheduled per second, as this is probably the most important limitation of previous approaches.
+In this section, we focused on improving the number of tasks scheduled per second, as it was an important limitation of Deisa.
 
 The following section will evaluate the performance of Doreisa in more various scenarios, closer to real-life applications.
 
@@ -522,7 +523,7 @@ The following section will evaluate the performance of Doreisa in more various s
 
 == Bigger chunks
 
-All the experiments presented in the previous section were realized using chunks of data with a negligible size, to avoid having the effective computation influence the results. In this section, Doreisa is evaluated performing an analysis on an array composed of a varying number of $1000 times 10000$ chunks (40 chunks per node in the cluster). The analysis is also more expensive: we compute the mean of the values obtained after calling the function $x mapsto sin(sqrt(x+1))$ element-wise.
+All the experiments presented in the previous section were realized using chunks of data with a negligible size, to avoid having the effective computation influence the results. In this section, Doreisa is evaluated performing an analysis on an array composed of a varying number of $1000 times 10000$ chunks (40 chunks per node in the cluster). The analysis is also more expensive: we compute the mean of the values obtained after calling the function $x mapsto sin(sqrt(x+1))$ element-wise on the array.
 
 #figure(
     image("resources/exp-06.svg", width: 90%),
@@ -555,26 +556,26 @@ Even if the total amount of transmitted data per iteration is proportional to th
 
 == Integration with Parflow
 
-The integration with Parflow was realized by Andrès Bermeo Marinelli, engineer in the team.
+The integration with Parflow was realized by Andrès #smallcaps[Bermeo Marinelli] and Hugo #smallcaps[Strappazzon], engineers in the team.
 
-= Technical details
+= Development of Doreisa <doreisa-development>
 
 == Software Engineering practices
 
-This project follows :
+Doreisa has been developed following standard software engineering practices.
 
   - All the aspects of the implementation are tested. The tests are executed automatically on Github at each pull-request and on the main branch.
-  - 
   - Releases are published regularly on PyPI.
+  - Documentation is generated and published automatically at each release.
 
 
-= Challenges <challenges>
+== Challenges
 
-== Technical issues
+=== Technical issues
 
 During the development of Doreisa, I came across several problems that took me a lot of time to fully understand and solve. This section briefly describes some of them.
 
- - *Deployement on SLURM.* Supercomputers typically rely on SLURM @slurm to manage their resources. To use Doreisa on such supercomputers, it was necessary to start a Ray cluster with SLURM. When it is starting on a node, Ray starts the worker processes that will be used to execute remote tasks. The number of such processes corresponds to the number of available cores (TODO threads?) on the machine. Since supercomputers are optimized for efficient computations, each machine typically has several CPUs, each one having tens of cores. As a consequence, a lot of Ray workers can be started at the same time (TODO 40 or 80 for Jean Zay). Each of these processes performs operations on Numpy arrays. Numpy internally relies on OpenBLAS, which itself starts many threads to take advantage of the parallelism offered by the machine. This high number of threads made SLURM kill Ray processes.
+ - *Deployment on SLURM.* Supercomputers typically rely on SLURM @slurm to manage their resources. To use Doreisa on such supercomputers, it was necessary to start a Ray cluster with SLURM. When it is starting on a node, Ray starts the worker processes that will be used to execute remote tasks. The number of such processes corresponds to the number of available cores on the machine. Since supercomputers are optimized for efficient computations, each machine typically has several CPUs, each one having tens of cores. As a consequence, a lot of Ray workers can be started at the same time (TODO 40 or 80 for Jean Zay). Each of these processes performs operations on Numpy arrays. Numpy internally relies on OpenBLAS, which itself starts many threads to take advantage of the parallelism offered by the machine. This high number of threads made SLURM kill Ray processes.
 
 
 = Conclusion
@@ -582,7 +583,9 @@ During the development of Doreisa, I came across several problems that took me a
 
 = Acknowledgments
 
-Experiments presented in this paper were carried out using the Grid'5000 testbed, supported by a scientific interest group hosted by Inria and including CNRS, RENATER and several Universities as well as other organizations (see https://www.grid5000.fr).
+Some experiments presented in this paper were carried out using the Grid'5000 testbed, supported by a scientific interest group hosted by Inria and including CNRS, RENATER and several Universities as well as other organizations (see https://www.grid5000.fr).
+
+TODO
 
 
 #bibliography("bibliography.bib", style: "ieee")
