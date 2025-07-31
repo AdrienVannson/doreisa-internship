@@ -520,6 +520,39 @@ The following section will evaluate the performance of Doreisa in more various s
 
 = Performance evaluation <performance-evaluation>
 
+== Bigger chunks
+
+All the experiments presented in the previous section were realized using chunks of data with a negligible size, to avoid having the effective computation influence the results. In this section, Doreisa is evaluated performing an analysis on an array composed of a varying number of $1000 times 10000$ chunks (40 chunks per node in the cluster). The analysis is also more expensive: we compute the mean of the values obtained after calling the function $x mapsto sin(sqrt(x+1))$ element-wise.
+
+#figure(
+    image("resources/exp-06.svg", width: 90%),
+    caption: [Analysis with big chunks of data],
+) <big-chunks-eval>
+
+The results are shown in @big-chunks-eval. We can notice that the overhead introduced by Doreisa is negligible compared to the effective computation time.
+
+The experiment was realized before the development of the iteration preparation mechanism. With this optimization, the Doreisa overhead could be further reduced.
+
+== Forced data movements
+
+For some computations, it is impossible to perform all the computations directly where the data is produced, and data movements are required. Consider the task of computing the sum of the coefficients of $M + f(M)$, where $f(M)$ is M flipped on its first axis.
+
+While this computation could technically be further optimized, Dask is not able to as shown on the task graph corresponding to this computation for an array with $3 times 1$ chunks, represented in @flip-sum-task-graph.
+
+#figure(
+    image("resources/flip-sum-task-graph.png", width: 50%),
+    caption: [Task graph of a computation requiring data movements],
+) <flip-sum-task-graph>
+
+@big-chunks-eval-data-movements shows the time taken to perform this computation with a chunk shape of $40 N times 1$, where $N$ is the number of nodes in the cluster. We can notice that due to the data movements required, each iteration takes more time than before, even if the actual computation is far simpler.
+
+#figure(
+    image("resources/exp-06-data-movements.svg", width: 90%),
+    caption: [Analysis with big chunks of data, data movements required],
+) <big-chunks-eval-data-movements>
+
+Even if the total amount of transmitted data per iteration is proportional to the number of nodes in the cluster, the time per iteration doesn't grow: the high-performance network connecting the nodes of the supercomputer is performant enough not to become a bottleneck.
+
 == Integration with Parflow
 
 The integration with Parflow was realized by Andrès Bermeo Marinelli, engineer in the team.
