@@ -556,7 +556,30 @@ Even if the total amount of transmitted data per iteration is proportional to th
 
 == Integration with Parflow
 
-The integration with Parflow was realized by Andrès #smallcaps[Bermeo Marinelli] and Hugo #smallcaps[Strappazzon], engineers in the team.
+Doreisa was integrated to Parflow and evaluated with it @parflow-benchmark by Andrès #smallcaps[Bermeo Marinelli] and Hugo #smallcaps[Strappazzon], engineers in the team, using the _Leonardo_ supercomputer. This section describes the results of the evaluation.
+
+The experiment consists of running Parflow with Doreisa on four simulation nodes and one head node. The simulation runs on the CPUs: the 112 cores of the node are used as follows:
+  - 100 cores for the Parflow simulation (Parflow requires a square number).
+  - 11 cores for the Doreisa analytic.
+  - 1 core for measurements.
+
+Each node is in charge of executing the simulation on a $240 times 240 times 240$ grid composed of $10 times 10 times 1$ chunks of size $24 times 24 times 240$. The analysis consists of computing the mean of the _pressure_ array produced by Parflow at each iteration.
+
+#place(
+  auto,
+  scope: "parent",
+  float: true,
+  [
+    #figure(
+        image("resources/parflow-benchmark.png", width: 100%),
+        caption: [Benchmark of Parflow with Doreisa with 4 simulation nodes],
+    ) <parflow-benchmark-plot>
+  ],
+)
+
+@parflow-benchmark-plot shows the time spent by the simulation and the analytics, from the sixth to the ninth iteration of the simulation. The first iterations are not included since their duration is not stable enough, as parts of the system are still starting. Since the simulation is distributed, all the nodes may not start a new iteration exactly at the same time: the times are only measured from the head node and the simulation worker with rank 0.
+
+The overhead of analyzing the data with Doreisa is very small: at each iteration, the simulation is paused from about 2% to 10% of the time. During this time, the chunks of data are copied to the Ray object store of the node. After this, the simulation starts its next iteration while the analytic runs in parallel.
 
 = Development of Doreisa <doreisa-development>
 
