@@ -207,7 +207,7 @@ Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray i
 
 === Jean-Zay
 
-The Jean-Zay supercomputer (see @jean-zay) is a powerful supercomputer located in Saclay, France. Following its extension in 2024, it has a peak computing power of 125.9 PFlop/s @jean-zay-presentation, which places it among the most powerful supercomputers.
+The Jean-Zay supercomputer, shown in @jean-zay, is a powerful supercomputer located in Saclay, France. Following its extension in 2024, it has a peak computing power of 125.9 PFlop/s @jean-zay-presentation, which places it among the most powerful supercomputers. A benchmark realized before the extension ranks it 35#super[th] in the Top500 list of June 2025 @top500.
 
 #figure(
   image("resources/jean-zay.png", width: 100%),
