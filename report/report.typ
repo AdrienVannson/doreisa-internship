@@ -424,7 +424,7 @@ The high execution times for the bigger cluster sizes come from the first three 
 
 === Presentation
 
-Thanks to the previous improvements, we managed to make the performance of Doreisa acceptable in most situations. Even with a large number of nodes in the cluster, an iteration takes less than one second to be executed. However, we might want to further reduce this latency to make the system work well with even more chunks per node, even faster.
+Thanks to the previous improvements, we managed to make the performance of Doreisa acceptable in most situations. Even with a large number of nodes in the cluster, an iteration takes less than one second to be executed. However, we might want to further reduce this latency to make the system work efficiently with even more chunks per node.
 
 Since the tasks that need to be performed (task graph partitioning, scheduling, etc) are already quite optimized, the idea is now to hide the time taken to execute these tasks by executing them in advance, before the data is available.
 
