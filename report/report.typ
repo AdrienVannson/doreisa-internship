@@ -99,7 +99,7 @@ The following subsections introduce more extensively task-based programming tool
 Dask @dask is a Python framework aiming at making distributed computing easy. The basic workflow to run computations with Dask is composed of two steps:
 
  - *Building a task graph.* The distributed computation is represented as a task graph, as the one in @dask-graph-mean. The task graph is a directed acyclic graph where each node represents a computation. There is an edge from a node $T_1$ to a node $T_2$ if $T_1$ needs the result of $T_2$ to be executed. Internally, a task graph is represented as a simple Python dictionary.
- - *Running the computation.* The graph is shipped to a scheduler, which is in charge of executing all the tasks and returning the final result of the computation. Dask provides several schedulers suited to different use cases: a threaded scheduler, a multiprocessing scheduler as well as a distributed scheduler.
+ - *Running the computation.* The graph is shipped to a scheduler, which is in charge of executing all the tasks and returning the final result of the computation. Dask provides several schedulers suited to different use cases: a threaded scheduler, a multiprocessing scheduler as well as a distributed scheduler. The threaded scheduler and the multiprocessing scheduler work for single-node computations, while the distributed scheduler is able to schedule tasks across a large cluster, taking into account resource availability as well as data locality. The threaded scheduler is more lightweight, but some workloads need multiprocessing to be truly parallelized due to Python's `GIL` (Global Interpreter Lock).
 
 #figure(
     image("resources/dask-graph-mean.png", width: 80%),
@@ -110,23 +110,29 @@ Dask also provides APIs similar to pandas and numpy: the user can call functions
 
 In particular, a Dask array is a distributed implementation of numpy arrays. It is composed of several chunks, each chunk being represented as a numpy array. Performing computations on a Dask array produces a task graph that can be executed in a distributed manner, hiding all the complexity from the final user.
 
-Unfortunately, Dask suffer from several limitations that have an impact on performance:
+Dask suffers from several limitations impacting performance and the ability to scale:
   - Data can't be shared between worker processes without being copied, even when the workers are running on the same node.
-  - Dask's scheduler is centralized and can become a bottleneck in large-scale computations. According to Dask's documentation @dask-actors-motivation, it can handle at most around 4000 tasks per second.
+  - Task execution is managed by a centralized scheduler. It enables dynamic load balancing and optimization of data movements, but becomes a bottleneck at scale. According to Dask's documentation @dask-actors-motivation, it can handle at most around 4000 tasks per second.
 
 ==== Ray
 
-Ray is a Python framework. One of its building blocks, Ray Core, offers a low level API for distributed computing. Ray also provides modules for AI training, model serving, reinforcement learning, etc. In the rest of this report, Ray will only stand for Ray Core.
+Ray @ray @ray-website is a large Python framework, developped for AI and machine learning applications. One of its building blocks, Ray Core, offers a low level API for task-based distributed computing. Ray also provides modules for AI training, hyperparameter search, model serving, reinforcement learning, etc, that are implemented on top of Ray Core. In the rest of this report, Ray will only stand for Ray Core.
 
-As it is a simple and efficient system to define distributed computations, it was notably successfully used to create a state-of-the-art distributed shuffling system @exoshuffle.
+// As it is a simple and efficient system to define distributed computations, it was notably successfully used to create a state-of-the-art distributed shuffling system @exoshuffle.
 
-The following sections will briefly introduce the main abstractions provided by Ray: object references, tasks and actors. Ray also provides advanced options to choose how tasks are scheduled, the lifetime of actors, support asynchronous code with `asyncio`, etc, but introducing them is out of the scope of this report. Ray doesn't include any API similar to Dask arrays.
+Ray's scheduler is distributed: each node of the Ray cluster is able to schedule new tasks. This allows tasks to create subtasks efficiently, without having to contact a centralized scheduler as in Dask. Contrary to Dask, no description of the full task graph is available ahead of the execution.
+
+Ray's API is lower level than Dask's: it doesn't include convenient abstractions such as distributed arrays and DataFrames.
+
+The following sections briefly introduce the main abstractions provided by Ray: object references, tasks and actors. Ray also provides advanced options to choose how tasks are scheduled, the lifetime of actors, support asynchronous code with `asyncio`, etc, but introducing them is out of the scope of this report.
 
 ===== Ray `ObjectRefs`
 
-A Ray `ObjectRef` is a small Python object that points to some data. The data can be retrieved using the `ray.get` function.
+Ray relies on a distributed shared memory system @ray-ownership: each node of the cluster runs an _object store_, where Ray stores data. The data is directly accessible by the workers running on the node, and can also be retrieve remotely.
 
-An `ObjectRef` can be created by placing data directly in the Ray object store using the `ray.put` function. It can also point to the result of a call to a remote function or method, possibly before the function execution terminates.
+A Ray `ObjectRef` is a small Python object that points to data living anywhere in the Ray cluster, acting as a distributed pointer. The data can be retrieved using the `ray.get` function.
+
+An `ObjectRef` can be created by placing data directly in the Ray object store using the `ray.put` function. It can also point to the result of a call to a remote function or method, possibly before the function execution terminates. In that case, the `ObjectRef` is used as a _future_.
 
 `ObjectRefs` can be freely shared across the nodes of the Ray cluster: thanks to a distributed reference counting system, the memory is freed automatically when no `ObjectRef` pointing to it exists anymore.
 
@@ -137,12 +143,11 @@ An `ObjectRef` can be created by placing data directly in the Ray object store u
     ```python
     import ray
 
-    object_ref = ray.put([1, 2, 3])
-    assert isinstance(object_ref, ray.ObjectRef)
-    assert ray.get(object_ref) == [1, 2, 3]
+    object_ref: ray.ObjectRef = ray.put([1, 2])
+    assert ray.get(object_ref) == [1, 2]
     ```
   ],
-  caption: [Ray's `ObjectRefs`]
+  caption: [Usage of Ray's `ObjectRefs`. Putting an object to the object store produces a reference. Its value can be retrieved using `ray.get`]
 ) <ray-refs>
 
 ===== Ray tasks
@@ -203,9 +208,9 @@ Ray actors are instances of classes defined with the `ray.remote` decorator. The
 
 ==== Dask-on-Ray
 
-Dask-on-Ray is a project aiming at bringing the best of Dask and Ray together. It allows executing a Dask task graph on a Ray cluster, allowing the use of the simple Dask API while taking advantage of the good performance offered by Ray.
+Dask-on-Ray is a project aiming at bringing the best of Dask and Ray together. It allows executing a Dask task graph on a Ray cluster, allowing the use of the simple Dask API while taking advantage of the better performance offered by Ray.
 
-To use it, a Dask task graph should first be created, as with standard Dask. This task graph can be built using the high-level Dask abstractions such as Dask arrays. Then, Dask-on-Ray is called to execute the task graph. Dask-on-Ray is actually a Dask scheduler, that is a function taking two main parameters: a Dask task graph and a list of the keys to compute. The scheduler is in charge of computing the value of the requested keys and returning them. For each node of the task graph, the Dask-on-Ray scheduler performs a Ray `@remote` call to execute the computation on the Ray cluster.
+To use it, a Dask task graph is first created, as with standard Dask. This task graph can be built using the high-level Dask abstractions such as Dask arrays. Then, Dask-on-Ray is called to execute the task graph. Dask-on-Ray is actually a Dask scheduler, that is a function taking two main parameters: a Dask task graph and a list of the keys to compute. The scheduler is in charge of computing the value of the requested keys and returning them. For each node of the task graph, the Dask-on-Ray scheduler performs a Ray `@remote` call to execute the computation on the Ray cluster.
 
 As the arguments to the functions in the graph are passed directly to the Ray remote function, it is possible to put Ray's `ObjectRefs` as values in the task graph. The compute function will receive the underlying value, as expected.
 
