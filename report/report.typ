@@ -66,33 +66,35 @@ The Doreisa implementation is available on Github @doreisa-github. All the exper
 
 = State of the art <state-of-the-art>
 
-== Task programming
+== Task-based programming
 
-Task programming is a high-level programming model allowing the definition of a computation as a set of tasks that need to be executed and dependencies between them. The tasks are scheduled dynamically at runtime, taking advantage of the parallelism offered by the system executing the computation.
+Task-based programming is a high-level programming model allowing the definition of a computation as a set of tasks that need to be executed and dependencies between them. The tasks are scheduled dynamically at runtime, taking advantage of the parallelism offered by the system executing the computation.
 
-Shared memory task programming systems are designed to run on a system where the memory is shared between all the processing units. Distributed task programming systems extend task programming to distributed systems: several nodes cooperate to execute the computation, and need to communicate to each other as they do not directly share any memory.
+More specifically, the tasks can be represented in a directed acyclic graph where each node represents a task, and each edge represents a dependency between two tasks. The graph may be fully known at the beginning of the execution, or eagerly discovered as the computation progresses. A scheduling method is used to determine the execution order and place of the tasks, potentially taking into account the availability of resources and data locality. The tasks are executed in parallel, if possible. Once a task completes, its result can be passed to other tasks, as needed for the computation.
 
-=== Shared memory task programming
+Shared memory task-based programming systems are designed to run on a system where the memory is shared between all the processing units. Distributed task-based programming systems extend task-based programming to distributed systems: several nodes cooperate to execute the computation, and need to communicate to each other as they do not directly share any memory.
 
-Shared memory task programming systems often rely on the _work stealing_ scheduling algorithm: each processor has a list of tasks to perform. When a task creates subtasks, they are added to the list. Idle processors try to steal tasks from other busy processors to execute them.
+=== Shared memory task-based programming
 
-The following paragraphs describe two systems for shared memory task programming.
+Shared memory task-based programming systems often rely on the _work stealing_ scheduling algorithm: each processor has a list of tasks to perform. When a task creates subtasks, they are added to the list of the processor. Idle processors attempt to steal pending tasks from busy processors to execute them.
 
-Cilk @cilk is an extension of the C language providing support for task-based programming. Users define tasks as C functions that are able to start new tasks themselves. The tasks are scheduling with a work-stealing algorithm: by default, sub-tasks are executed on the same processor than their parent task, but idle processors can "steal" tasks from other processors.
+The following paragraphs describe two systems for shared memory task-based programming.
+
+Cilk @cilk is an extension of the C language providing support for task-based programming. Users define tasks as C functions that are able to start new tasks themselves. The tasks are scheduled with a work-stealing algorithm: by default, sub-tasks are executed on the same processor as their parent task, but idle processors can "steal" tasks from other processors.
 
 #smallcaps[Tbb] @tbb is a C++ library allowing the development of parallel applications. As it is based on standard C++ and requires only a runtime library to run, it does not rely on a custom compiler. It includes both high-level parallel algorithms and low-level abstractions. The scheduler is based on the work stealing algorithm.
 
-=== Distributed task programming
+=== Distributed task-based programming
 
-Distributed task programming extends task programming to distributed systems. As the memory is not shared between the processing units, scheduling the tasks efficiently becomes crucial to avoid costly data movements.
+Distributed task-based programming extends task-based programming to distributed systems. As the memory is not shared between the processing units, scheduling the tasks efficiently becomes crucial to avoid costly data movements. To work at scale, these systems often implement fault tolerance techniques.
 
-== _In situ_ analytics
+Parsl @parsl targets scientific workloads. It allows the user to couple a Python code with dependencies (Python functions or external tasks) that can be executed remotely on various resources. A centralized scheduler, called the `DataFlowKernel`, coordinates the execution of the tasks.
 
-== Tools
+StarPU @starpu focuses on supporting heterogeneous architectures. Tasks can have several hardware-specific implementations such as CPU and GPU, the most adapted one being chosen at runtime. It is efficient and supports various scheduling strategies.
 
-Doreisa relies on the following tools to work. These tools are also used by some of the other research projects related to this Master project.
+The following subsections introduce more extensively task-based programming tools used by Doreisa.
 
-=== Dask
+==== Dask
 
 Dask @dask is a Python framework aiming at making distributed computing easy. The basic workflow to run computations with Dask is composed of two steps:
 
@@ -112,7 +114,7 @@ Unfortunately, Dask suffer from several limitations that have an impact on perfo
   - Data can't be shared between worker processes without being copied, even when the workers are running on the same node.
   - Dask's scheduler is centralized and can become a bottleneck in large-scale computations. According to Dask's documentation @dask-actors-motivation, it can handle at most around 4000 tasks per second.
 
-=== Ray
+==== Ray
 
 Ray is a Python framework. One of its building blocks, Ray Core, offers a low level API for distributed computing. Ray also provides modules for AI training, model serving, reinforcement learning, etc. In the rest of this report, Ray will only stand for Ray Core.
 
@@ -120,7 +122,7 @@ As it is a simple and efficient system to define distributed computations, it wa
 
 The following sections will briefly introduce the main abstractions provided by Ray: object references, tasks and actors. Ray also provides advanced options to choose how tasks are scheduled, the lifetime of actors, support asynchronous code with `asyncio`, etc, but introducing them is out of the scope of this report. Ray doesn't include any API similar to Dask arrays.
 
-==== Ray `ObjectRefs`
+===== Ray `ObjectRefs`
 
 A Ray `ObjectRef` is a small Python object that points to some data. The data can be retrieved using the `ray.get` function.
 
@@ -143,7 +145,7 @@ An `ObjectRef` can be created by placing data directly in the Ray object store u
   caption: [Ray's `ObjectRefs`]
 ) <ray-refs>
 
-==== Ray tasks
+===== Ray tasks
 
 In Ray, a remote function is a function that can be executed remotely, on any available machine in the cluster. Calling a remote function will create a remote task whose result is represented by an `ObjectRef`. Calling `ray.get` on this reference will wait for the task to finish and return the result of the task.
 
@@ -170,7 +172,7 @@ Contrary to Dask, Ray is very flexible: a Ray task can create other tasks thanks
   caption: [Execution of a Ray remote task]
 ) <ray-task>
 
-==== Ray actors
+===== Ray actors
 
 Ray actors are instances of classes defined with the `ray.remote` decorator. They allow stateful computations.
 
@@ -199,13 +201,17 @@ Ray actors are instances of classes defined with the `ray.remote` decorator. The
   caption: [Example of a Ray actor]
 ) <ray-actors>
 
-=== Dask-on-Ray
+==== Dask-on-Ray
 
 Dask-on-Ray is a project aiming at bringing the best of Dask and Ray together. It allows executing a Dask task graph on a Ray cluster, allowing the use of the simple Dask API while taking advantage of the good performance offered by Ray.
 
 To use it, a Dask task graph should first be created, as with standard Dask. This task graph can be built using the high-level Dask abstractions such as Dask arrays. Then, Dask-on-Ray is called to execute the task graph. Dask-on-Ray is actually a Dask scheduler, that is a function taking two main parameters: a Dask task graph and a list of the keys to compute. The scheduler is in charge of computing the value of the requested keys and returning them. For each node of the task graph, the Dask-on-Ray scheduler performs a Ray `@remote` call to execute the computation on the Ray cluster.
 
 As the arguments to the functions in the graph are passed directly to the Ray remote function, it is possible to put Ray's `ObjectRefs` as values in the task graph. The compute function will receive the underlying value, as expected.
+
+== _In situ_ analytics
+
+
 
 === PDI
 
