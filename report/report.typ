@@ -19,7 +19,7 @@
 
   #v(1.2em)
 
-  Internship supervised by: \
+  Internship advised by: \
   *Bruno #smallcaps[Raffin]* \
   #smallcaps[DataMove team]
 
@@ -65,6 +65,28 @@ This Master thesis introduces #smallcaps[Doreisa] -- Dask-on-Ray Enabled In Situ
 The Doreisa implementation is available on Github @doreisa-github. All the experiments are available on Github as well @doreisa-internship-github.
 
 = State of the art <state-of-the-art>
+
+== Task programming
+
+Task programming is a high-level programming model allowing the definition of a computation as a set of tasks that need to be executed and dependencies between them. The tasks are scheduled dynamically at runtime, taking advantage of the parallelism offered by the system executing the computation.
+
+Shared memory task programming systems are designed to run on a system where the memory is shared between all the processing units. Distributed task programming systems extend task programming to distributed systems: several nodes cooperate to execute the computation, and need to communicate to each other as they do not directly share any memory.
+
+=== Shared memory task programming
+
+Shared memory task programming systems often rely on the _work stealing_ scheduling algorithm: each processor has a list of tasks to perform. When a task creates subtasks, they are added to the list. Idle processors try to steal tasks from other busy processors to execute them.
+
+The following paragraphs describe two systems for shared memory task programming.
+
+Cilk @cilk is an extension of the C language providing support for task-based programming. Users define tasks as C functions that are able to start new tasks themselves. The tasks are scheduling with a work-stealing algorithm: by default, sub-tasks are executed on the same processor than their parent task, but idle processors can "steal" tasks from other processors.
+
+#smallcaps[Tbb] @tbb is a C++ library allowing the development of parallel applications. As it is based on standard C++ and requires only a runtime library to run, it does not rely on a custom compiler. It includes both high-level parallel algorithms and low-level abstractions. The scheduler is based on the work stealing algorithm.
+
+=== Distributed task programming
+
+Distributed task programming extends task programming to distributed systems. As the memory is not shared between the processing units, scheduling the tasks efficiently becomes crucial to avoid costly data movements.
+
+== _In situ_ analytics
 
 == Tools
 
