@@ -213,19 +213,33 @@ To use it, a Dask task graph is first created, as with standard Dask. Then, Dask
 
 As the arguments to the functions in the graph are passed directly to the Ray remote function, it is possible to put Ray's `ObjectRefs` as values in the task graph. The compute function will dereference the `ObjectRef` automatically.
 
-== _In situ_ analytics
+== _In situ_ data processing
 
+HPC bigger and bigger, lot of data produced. XTo per iteration.
 
+To avoid having to store all the data produced by the simulation on the disk at each iteration, the analytic can be performed online, as soon as the data is available. Data should be processed as close as possible to where it is produced @in-situ-visualization. As the analysis is performed online, it becomes possible to monitor the simulation in real time, allowing an early detection of potential problems.
+
+It is possible to take advantage of _in process_, _in situ_ and _in transit_ paradigms.
+  - _In process_ analysis consists of analyzing the data directly in the process that produced it. No data movement is required at all.
+  - _In situ_ analysis consists of analyzing the data on the node that produced it. The data may be copied, but the copy remains local: it is not transmitted across the network.
+  - _In transit_ analysis consists of analyzing the data on another node than the one that produced it. Sending the data across the network is necessary.
+
+_In process_ analytic avoids data movements, but forces the simulation to wait during the analytic. Communications between nodes may be difficult to implement efficiently. _In situ_ analytic avoids useless data movements and allows the simulation to run while the data is being analyzed. However, it can steal resources such as CPU, memory or cache from the simulation, slowing it down. With _in transit_ analytic, the simulation is not disturbed as the data is analyzed remotely. The remote copy of all the data can be expensive, and additional nodes are required for the analytics.
+
+@flow-vr-in-situ explores a flexible solution to perform _in situ_ and _in transit_ analytics by allowing the user to define a graph of tasks to be executed for the analytics. The model is simple: a task corresponds to a process or a thread running an infinite loop. It has some input and some output, and is connected to other tasks. The computations are realized on resources that the simulation does not need, reducing the impact on the performances.
+
+#smallcaps[Damaris/Viz] @damaris focuses on _in situ_ visualization. It supports coupling the simulation with standard analysis pipelines as well as custom Python scripts for simple local analysis. Cores are dedicated to the analytic in order to make the execution time predictable.
+
+#smallcaps[Tins] @tins is a task-based _in situ_ framework. The analytic is performed on dedicated helper cores that can also perform simulation tasks when no analytic is needed. #smallcaps[Tins] is developed with #smallcaps[Tbb] @tbb: the simulation should be adapted to support it, and the analytic code needs to be written in C++. It focuses on optimizing the analytic inside a node, but does not support inter-node communications.
 
 === PDI
 
-PDI (the PDI Data Interface) is a project aiming at coupling C / C++ programs (typically MPI simulations) with plugins in charge of using the data for various tasks. Plugins make it possible to save the data to HDF5 files, export it to JSON, etc. The user needs to write a YAML file to choose how to use the data, without having to recompile the simulation code each time the usage changes.
+PDI (the PDI Data Interface) @pdi is a project aiming at coupling C / C++ programs (typically MPI simulations) with plugins in charge of using the data for various tasks. Plugins make it possible to save the data to HDF5 files, export it to JSON, etc. The user needs to write a YAML file to choose how to use the data, without having to recompile the simulation code each time the usage changes.
 
-In this project, we will use the Pycall plugin, which allows making the data available to a Python script as a Numpy array without copying it.
+In this project, we will use the `Pycall` plugin, which allows making the data available to a Python script as a Numpy array without copying it.
 
 == Research projects
 
-@dreher2014flexible explores a flexible solution to perform _in situ_ and _in transit_ analytics by allowing the user to define a graph of tasks to be executed for the analytics. The model is simple (a task has some input, some output).
 
 === Deisa
 
@@ -523,7 +537,7 @@ More importantly, if enough iterations are prepared in advance, the execution ti
 
 Until now, the simulation nodes of the cluster were also in charge of analysing the data. Performing the analysis _in situ_ -- directly on the machine producing the data -- can be a good solution, especially in situations where the simulation code runs on the GPU of the machine. In this case, it usually lets CPU cores idle, so they can be used by the analytics without overhead.
 
-However, some simulations run only on CPU, and performing the analysis of the data on the simulation nodes would disturb it in an unacceptable manner. _In transfer_ analytic helps solving this problem by making simulation processes send their data to other machines dedicated to the analysis. The simulation is only paused during the time the data is sent to the analytics machines, and can resume while the analysis is ongoing.
+However, some simulations run only on CPU, and performing the analysis of the data on the simulation nodes would disturb it in an unacceptable manner. _In transit_ analytic helps solving this problem by making simulation processes send their data to other machines dedicated to the analysis. The simulation is only paused during the time the data is sent to the analytics machines, and can resume while the analysis is ongoing.
 
 #place(
   auto,
