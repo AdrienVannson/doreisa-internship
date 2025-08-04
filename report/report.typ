@@ -238,9 +238,6 @@ PDI (the PDI Data Interface) @pdi is a project aiming at coupling C / C++ progra
 
 In this project, we will use the `Pycall` plugin, which allows making the data available to a Python script as a Numpy array without copying it.
 
-== Research projects
-
-
 === Deisa
 
 Deisa
@@ -249,9 +246,13 @@ Deisa
 
 Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray instead of Dask. One of the main limitations of the approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define two callback functions:
 
-== Supercomputers
+= Experiments
 
-=== Jean-Zay
+All the experiments presented in this report were performed on the Jean Zay or Leonardo supercomputers, or on the `gros` cluster of Grid5000 located in Nancy. The following sections introduce these systems.
+
+All the experiments are available on Github @doreisa-internship-github.
+
+== Jean-Zay
 
 The Jean-Zay supercomputer, shown in @jean-zay, is a powerful supercomputer located in Saclay, France. Following its extension in 2024, it has a peak computing power of 125.9 PFlop/s @jean-zay-presentation, which places it among the most powerful supercomputers. A benchmark realized before the extension ranks it 35#super[th] in the Top500 list of June 2025 @top500.
 
@@ -265,6 +266,19 @@ The experiments presented in this report were carried out using the CPU partitio
   - 192 Go of RAM
 
 The tasks are submitted using SLURM.
+
+== Leonardo
+
+== Grid5000, `gros` cluster
+
+Grid5000 @grid5000 is a large-scale testbed for research. It is composed of thousands of nodes, distributed across sites in France and Luxembourg.
+
+#figure(
+  image("resources/grid5000-gros.jpg", width: 40%),
+  caption: [The `gros` cluster of Grid5000, in Nancy],
+) <grid5000-gros>
+
+The `gros` cluster, located in Nancy, is composed of 124 nodes. Each node has an Intel Xeon Gold 5220 CPU with 18 cores, and 96 GB of RAM. The detailed specifications are available online @grid5000-nancy.
 
 = Doreisa: Dask-on-Ray Enabled In-Situ Analytics <doreisa-design>
 
