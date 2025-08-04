@@ -154,32 +154,31 @@ An `ObjectRef` can be created by placing data directly in the Ray object store u
 
 In Ray, a remote function is a function that can be executed remotely, on any available machine in the cluster. Calling a remote function will create a remote task whose result is represented by an `ObjectRef`. Calling `ray.get` on this reference will wait for the task to finish and return the result of the task.
 
-Contrary to Dask, Ray is very flexible: a Ray task can create other tasks thanks to the distributed scheduler.
-
 #figure(
   [
     #set text(0.9em)
 
     ```python
+    import time
     import ray
 
     @ray.remote
     def f(n):
       # Some expensive computation
-      return ...
+      time.sleep(3)
 
-    object_ref = f.remote(12)
-    assert isinstance(object_ref, ray.ObjectRef)
+      return 2 * n
 
-    print(ray.get(object_ref))
+    object_ref: ray.ObjectRef = f.remote(6)
+    print(ray.get(object_ref))  # 12
     ```
   ],
-  caption: [Execution of a Ray remote task]
+  caption: [Execution of a Ray remote function. Calling `.remote()` returns an `ObjectRef` immediately, `ray.get` waits for the result and retrieves it.]
 ) <ray-task>
 
 ===== Ray actors
 
-Ray actors are instances of classes defined with the `ray.remote` decorator. They allow stateful computations.
+Ray actors are instances of classes defined with the `ray.remote` decorator. They allow _stateful_ computations.
 
 #figure(
   [
@@ -203,16 +202,16 @@ Ray actors are instances of classes defined with the `ray.remote` decorator. The
     ray.get(actor.increase_counter.remote())  # 3
     ```
   ],
-  caption: [Example of a Ray actor]
+  caption: [Example of a Ray actor. The actor's internal state is preserved across method calls, allowing stateful computations.]
 ) <ray-actors>
 
 ==== Dask-on-Ray
 
-Dask-on-Ray is a project aiming at bringing the best of Dask and Ray together. It allows executing a Dask task graph on a Ray cluster, allowing the use of the simple Dask API while taking advantage of the better performance offered by Ray.
+Dask-on-Ray @dask-on-ray is a project aiming at bringing the best of Dask and Ray together. It makes it possible to execute a Dask task graph on a Ray cluster, allowing the use of the simple Dask API and abstractions such as Dask Arrays and Dask DataFrames, while taking advantage of the better performance and flexibility offered by Ray. As it does not take advantage of Ray's distributed scheduler (all the Ray tasks are created by one single node), the Dask-on-Ray scheduler can become a bottleneck when executing large task graphs.
 
-To use it, a Dask task graph is first created, as with standard Dask. This task graph can be built using the high-level Dask abstractions such as Dask arrays. Then, Dask-on-Ray is called to execute the task graph. Dask-on-Ray is actually a Dask scheduler, that is a function taking two main parameters: a Dask task graph and a list of the keys to compute. The scheduler is in charge of computing the value of the requested keys and returning them. For each node of the task graph, the Dask-on-Ray scheduler performs a Ray `@remote` call to execute the computation on the Ray cluster.
+To use it, a Dask task graph is first created, as with standard Dask. Then, Dask-on-Ray is called to execute it. Dask-on-Ray is actually a Dask scheduler, that is a function taking two main parameters: a Dask task graph and a list of tasks whose result should be returned. For each task, the Dask-on-Ray scheduler performs a Ray `remote` call to execute it on the Ray cluster.
 
-As the arguments to the functions in the graph are passed directly to the Ray remote function, it is possible to put Ray's `ObjectRefs` as values in the task graph. The compute function will receive the underlying value, as expected.
+As the arguments to the functions in the graph are passed directly to the Ray remote function, it is possible to put Ray's `ObjectRefs` as values in the task graph. The compute function will dereference the `ObjectRef` automatically.
 
 == _In situ_ analytics
 
