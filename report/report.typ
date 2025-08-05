@@ -108,7 +108,7 @@ Dask @dask is a Python framework aiming at making distributed computing easy. Th
 
 Dask also provides APIs similar to pandas and numpy: the user can call functions similar to the ones defined in these libraries to work on distributed dataframes and arrays.
 
-In particular, a Dask array is a distributed implementation of numpy arrays. It is composed of several chunks, each chunk being represented as a numpy array. Performing computations on a Dask array produces a task graph that can be executed in a distributed manner, hiding all the complexity from the final user.
+In particular, a Dask array is a distributed implementation of numpy arrays. It is composed of several _chunks_, each chunk being represented as a numpy array. Performing computations on a Dask array produces a task graph that can be executed in a distributed manner, hiding all the complexity from the final user.
 
 Dask suffers from several limitations impacting performance and the ability to scale:
   - Data can't be shared between worker processes without being copied, even when the workers are running on the same node.
@@ -254,7 +254,7 @@ All the experiments are available on Github @doreisa-internship-github.
 
 == Jean-Zay
 
-The Jean-Zay supercomputer, shown in @jean-zay, is a powerful supercomputer located in Saclay, France. Following its extension in 2024, it has a peak computing power of 125.9 PFlop/s @jean-zay-presentation, which places it among the most powerful supercomputers. A benchmark realized before the extension ranks it 35#super[th] in the Top500 list of June 2025 @top500.
+The Jean-Zay supercomputer, shown in @jean-zay, is a supercomputer located in Saclay, France. Following its extension in 2024, it has a peak computing power of 125.9 PFlop/s @jean-zay-presentation, which places it among the most powerful supercomputers. A benchmark realized before the extension ranks it 35#super[th] in the Top500 list of June 2025 @top500.
 
 #figure(
   image("resources/jean-zay.png", width: 100%),
@@ -269,6 +269,10 @@ The tasks are submitted using SLURM.
 
 == Leonardo
 
+Leonardo @leonardo is a supercomputer located in Bologna (Italy). It was ranked 10#super[th] in the Top500 list of June 2025 @top500. Its CPU partition @leonardo-cpu is composed of 1536 nodes, each having:
+  - 2 56-core Intel Xeon Platinum 8480+ CPUs
+  - 16x 32 GB DDR5-4800 (512 GB)
+
 == Grid5000, `gros` cluster
 
 Grid5000 @grid5000 is a large-scale testbed for research. It is composed of thousands of nodes, distributed across sites in France and Luxembourg.
@@ -282,9 +286,11 @@ The `gros` cluster, located in Nancy, is composed of 124 nodes. Each node has an
 
 = Doreisa: Dask-on-Ray Enabled In-Situ Analytics <doreisa-design>
 
-== First proof of concept
+== Doreisa v1: Deisa-like system using Dask-on-Ray
 
-This section describes the first proof of concept of Doreisa. This solution already made it possible to analyze data produced by HPC simulations easily. However, its design remains largely centralized, with one main actor quickly becoming the bottleneck of the analytics.
+This section describes the first working prototype of Doreisa: we will call it _Doreisa v1_. The goal is validate the choice of Dask-on-Ray to execute Dask computation on a Ray cluster with data produced by an HPC simulation. Performance is not taken into account yet. This first proof of concept works by placing the data produced by the simulation into Ray's distributed memory. For each iteration, an actor collects the references to the data from all the nodes and schedules the task graph.
+
+This solution made it possible to analyze data produced by HPC simulations easily. However, its design remains centralized, with one main actor quickly becoming the bottleneck of the analytics.
 
 === Design
 
@@ -304,21 +310,57 @@ The general design of the first version of Doreisa is shown in figure @doreisa-p
 
 Each iteration of the analysis pipeline consists of the following steps:
 
-  1. The MPI processes terminate one iteration of the simulation. The data is ready for analytics. It is made available to Doreisa using PDI, which serves as an interface between Doreisa and the simulation code.
-  2. The data produced by the simulation is placed in the Ray object store. An `ObjectRef` is produced: this reference to the data is sent to a main actor running on the head node.
-  3. The head actor collects the references of all the processes. Once it has received all of them, it builds a Dask array from them.
+  1. The MPI processes terminate one iteration of the simulation. The data, a `numpy` array corresponding to a chunk (ie part) of the full distributed array, is ready for analytics. It is made available to Doreisa using PDI, which serves as an interface between Doreisa and the simulation code.
+  2. The chunk produced by the simulation is placed in the Ray object store. An `ObjectRef` is produced: this reference to the data is sent to a main actor running on the head node.
+  3. The head actor collects the references of all the processes. Once it has received all of them, it builds a Dask array. Each chunk of the array is represented by the corresponding `ObjectRef`.
   4. The user script receives the Dask array. It can be used as a standard Dask array, to perform any kind of analysis. Performing operations on the Dask array produces a task graph.
-  5. The task graph is passed to the Dask-on-Ray scheduler that is in charge of executing it. Each Dask task is converted to a Ray task, and scheduled by Ray. Ray takes into account data locality when scheduling tasks, so unnecessary data movements can be avoided.
+  5. The task graph is passed to the Dask-on-Ray scheduler that is in charge of executing it. Each Dask task is converted to a Ray task, and scheduled by Ray. Ray takes into account data locality when scheduling tasks @ray-locality-aware-scheduling, so unnecessary data movements can be avoided.
+
+=== User API
+
+Doreisa offers a simple Python API, allowing the users to concisely define their analytics.
+
+@doreisa-api shows an example of an analytic code. In this example, the simulation produces two arrays at each iteration: `temperature` and `pressure`. The callback is called every iteration as soon as the data is available. It is given Dask arrays representing the data produced by the simulation.
+
+A sliding window mechanism allows keeping several versions of an array in memory. A _preprocessing callback_ can be defined to transform the chunks _in simulation_, before placing the data to Ray's distributed memory.
+
+#place(
+  auto,
+  scope: "parent",
+  float: true,
+  [
+    #figure(
+      [
+         ```python
+        def callback(temperature: list[da.Array], pressure: da.Array, *, timestep: int):
+            if len(temperature) == 2:
+                diff = temperature[1] - temperature[0]
+                print("Mean temperature difference:", diff.mean().compute())
+
+            print("Max pressure:", pressure.max().compute())
+
+        run_simulation(callback, [
+            ArrayDefinition("temperature", window_size=2),
+            ArrayDefinition("pressure", preprocessing_callback=lambda array: 10 * array),
+        ])
+        ```
+      ],
+      caption: [Doreisa user API],
+    ) <doreisa-api>
+  ],
+)
 
 === Performance evaluation
 
-This first solution has the drawback of being really centralized: the head actor needs to collect an `ObjectRef` for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks. The same node will be in charge of scheduling all these tasks, and retrieving their results.
+This first solution has the drawback of being centralized: the head actor needs to collect an `ObjectRef` for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks, and the same Python process has to schedule all of them. For big simulations running on hundreds of nodes, the head node has to process tens of thousands of references and tasks at each iteration.
 
-For big simulations running on hundreds of nodes, the head node would have to process tens of thousands of references and tasks at each iteration, which is too costly. @performance-naive-method demonstrates this. In this experiment, Doreisa is asked to compute the mean of a distributed array. The total number of chunks in this array is equal to the number of cores available in the cluster, so it is proportional to the number of nodes. With a well-parallelised system, one would expect the execution time to only slightly increase with the number of nodes (weak scaling). However, this is not the case here: the execution time is proportional to the number of nodes. In this situation, the centralized actor is clearly the bottleneck. More precisely, the analysis is composed of the following main parts:
+Doreisa v1 is evaluated on Jean Zay. The same experiment is repeated several times, with a varying number of nodes. Each node is in charge of 40 chunks per iteration, so the total problem size grows linearly with the number of nodes (_weak scaling_: with a well-parallelized system, one would expect the execution time to remain constant or only slightly increase with the total number of nodes). The analytic consists of computing the mean of the distributed array. To avoid interfering with Doreisa, no actual MPI simulation is executed: the chunks of data are random numpy arrays. The size of the chunks is very small ($10 times 10$) to ensure that the cost of generating them and computing operations on them is negligible: the experiment aims at measuring the overhead of Doreisa (handling the task graph, scheduling the tasks, ...): if the analytic is too heavy, the actual computations will hide this overhead, which will only be noticed on large problem sizes. The same evaluation protocol will be used in the following sections, to ensure comparable results.
+
+@performance-naive-method shows the results obtained. The execution time is proportional to the number of nodes. In this situation, the centralized actor is clearly the bottleneck. More precisely, the analysis is composed of the following main parts:
   - Collecting the `ObjectRefs` produced by the workers.
   - Creating the Dask array as well as the task graph. For such small graphs, the time is negligible.
   - Executing the task graph using the Dask-on-Ray scheduler.
-Both the reference gathering and the task graph execution are time-consuming processes, with neither being negligible relative to the other. To achieve a high-performance system, it is essential to optimize both aspects.
+Both the reference gathering and the task graph execution are time-consuming processes, with neither being negligible relative to the other. To further improve the performance, both need to be optimized.
 
 #figure(
     image("resources/exp-01.svg", width: 105%),
@@ -358,7 +400,7 @@ The issue with the proof of concept of Doreisa is that the head node becomes the
 
 As shown in @collecting-references, it is possible to reduce the time taken to collect all the references from the worker processes. Unfortunately, it doesn't solve the problem of executing the tasks: the head node still needs to create all the Ray tasks, which is costly for large task graphs.
 
-This section describes a method to distribute the scheduling of the tasks; taking advantage of Ray's distributed scheduler. The goal is to avoid forcing the head node to communicate with all the data-producing processes as well as the worker processes, but instead limit the communication to lightweight communications with actors running on each simulation node.
+This section describes a method to distribute the scheduling of the tasks; taking advantage of Ray's distributed scheduler and actor model. The goal is to avoid forcing the head node to communicate with all the data-producing processes as well as the worker processes, but instead limit the communication to lightweight communications with actors running on each simulation node.
 
 #place(
   auto,
@@ -658,7 +700,7 @@ Doreisa has been developed following standard software engineering practices.
 
 During the development of Doreisa, I came across several problems that took me a lot of time to fully understand and solve. This section briefly describes some of them.
 
- - *Deployment on SLURM.* Supercomputers typically rely on SLURM @slurm to manage their resources. To use Doreisa on such supercomputers, it was necessary to start a Ray cluster with SLURM. When it is starting on a node, Ray starts the worker processes that will be used to execute remote tasks. The number of such processes corresponds to the number of available cores on the machine. Since supercomputers are optimized for efficient computations, each machine typically has several CPUs, each one having tens of cores. As a consequence, a lot of Ray workers can be started at the same time (TODO 40 or 80 for Jean Zay). Each of these processes performs operations on Numpy arrays. Numpy internally relies on OpenBLAS, which itself starts many threads to take advantage of the parallelism offered by the machine. This high number of threads made SLURM kill Ray processes.
+ - *Deployment on SLURM.* Supercomputers typically rely on SLURM @slurm to manage their resources. To use Doreisa on such supercomputers, it was necessary to start a Ray cluster with SLURM. When it is starting on a node, Ray starts the worker processes that will be used to execute remote tasks. The number of such processes corresponds to the number of available cores on the machine. Since supercomputers are optimized for efficient computations, each machine typically has several CPUs, each one having tens of cores. As a consequence, a lot of Ray workers can be started at the same time (40 for Jean Zay). Each of these processes performs operations on Numpy arrays. Numpy internally relies on OpenBLAS, which itself starts many threads to take advantage of the parallelism offered by the machine. This high number of threads made SLURM kill Ray processes.
 
 
 = Conclusion
