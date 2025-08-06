@@ -354,7 +354,7 @@ A sliding window mechanism allows keeping several versions of an array in memory
 
 This first solution has the drawback of being centralized: the head actor needs to collect an `ObjectRef` for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks, and the same Python process has to schedule all of them. For big simulations running on hundreds of nodes, the head node has to process tens of thousands of references and tasks at each iteration.
 
-Doreisa v1 is evaluated on Jean Zay. The same experiment is repeated several times, with a varying number of nodes. Each node is in charge of 40 chunks per iteration, so the total problem size grows linearly with the number of nodes (_weak scaling_: with a well-parallelized system, one would expect the execution time to remain constant or only slightly increase with the total number of nodes). The analytic consists of computing the mean of the distributed array. To avoid interfering with Doreisa, no actual MPI simulation is executed: the chunks of data are random numpy arrays. The size of the chunks is very small ($10 times 10$) to ensure that the cost of generating them and computing operations on them is negligible: the experiment aims at measuring the overhead of Doreisa (handling the task graph, scheduling the tasks, ...): if the analytic is too heavy, the actual computations will hide this overhead, which will only be noticed on large problem sizes. The same evaluation protocol will be used in the following sections, to ensure comparable results.
+Doreisa v1 is evaluated on Jean Zay. The same experiment is repeated several times, with a varying number of nodes. Each node is in charge of 40 chunks per iteration, so the total problem size grows linearly with the number of nodes (_weak scaling_: with a well-parallelized system, one would expect the execution time to remain constant or only slightly increase with the total number of nodes). The analytic consists of computing the mean of the distributed array. The execution time is averaged across 200 iterations, the first iterations being ignored to allow a warm-up phase. To avoid interfering with Doreisa, no actual MPI simulation is executed: the chunks of data are random numpy arrays. The size of the chunks is very small ($10 times 10$) to ensure that the cost of generating them and computing operations on them is negligible: the experiment aims at measuring the overhead of Doreisa (handling the task graph, scheduling the tasks, ...): if the analytic is too heavy, the actual computations will hide this overhead, which will only be noticed on large problem sizes. The same evaluation protocol will be used in the following sections, to ensure comparable results.
 
 @performance-naive-method shows the results obtained. The execution time is proportional to the number of nodes. In this situation, the centralized actor is clearly the bottleneck. More precisely, the analysis is composed of the following main parts:
   - Collecting the `ObjectRefs` produced by the workers.
@@ -521,17 +521,17 @@ We notice that the distributed scheduler designed in the previous section scales
 
 The high execution times for the bigger cluster sizes are due to the first three tasks, which had a limited impact on smaller runs: creating the array, partitioning the task graph and sending it to the scheduling actors. These steps correspond to the centralized part of Doreisa that is executed on the head node. To further optimize the system, we need to focus on these steps.
 
-== Iteration preparation
-
-=== Presentation
+== Doreisa v3: Asynchronous task graph processing
 
 Thanks to the previous improvements, we managed to make the performance of Doreisa acceptable in most situations. Even with a large number of nodes in the cluster, an iteration takes less than one second to be executed. However, we might want to further reduce this latency to make the system work efficiently with even more chunks per node.
 
-Since the tasks that need to be performed (task graph partitioning, scheduling, etc) are already quite optimized, the idea is now to hide the time taken to execute these tasks by executing them in advance, before the data is available.
+The idea is now to hide the time taken to execute the centralized tasks mentioned in the previous section by executing them in advance, before the data is available.
 
-We will let the user define the tasks that will need to be performed in advance by letting them define an optional callback, called a few iterations before the data is actually available. The Doreisa scheduler is then able to immediately start shipping the task graphs to the scheduling actors, without having to wait for the data to be ready. The user can prepare several iterations in parallel, so that the preparation of iterations is never a bottleneck. The tasks will start being executed as soon as the data is available, and the user will be able retrieve and use the results from the standard callback.
+We let the user define the tasks that need to be performed in advance by defining an optional callback, called a few iterations before the data is actually available. The Doreisa scheduler immediately starts shipping the task graphs to the scheduling actors, without having to wait for the data to be ready. The user can prepare several iterations in parallel: this pipelining prevents the centralized processing of the task graph from becoming a bottleneck.
 
-This mechanism relies on Dask's persist API: instead of calling the `compute` method that executes the computation and returns its result, the `persist` method starts the computation in the background and returns a Dask array containing futures to the final result. The Doreisa scheduler needs to be updated to support this feature: if the scheduler is called from a `persist` call, it directly returns `ObjectRefs` to the final result, without getting their value.
+The definition of the analytic tasks before the availability of the data relies on Dask's `persist` API. Instead of calling the `compute` method that executes the computation and returns its result, the `persist` method starts the computation in the background and returns a Dask array. The internal representation of this new array is simple: it contains `ObjectRefs` to the result of the computation. Calling the `compute` method on this array will retrieve the result from the `ObjectRef`, without handeling the whole original task graph.
+
+The Doreisa scheduler needs to be updated to support this feature: if the scheduler is called from a `persist` call, it directly returns `ObjectRefs` to the final result, without getting their value.
 
 === User API
 
@@ -560,7 +560,7 @@ This mechanism relies on Dask's persist API: instead of calling the `compute` me
       )
       ```
     ],
-    caption: [Iteration preparation example],
+    caption: [Task pipelining example. The task graph is prepared in the first callback. Its return value is passed as a parameter to the second callback, which retrieves the result.],
   ) <prepare-iteration-listing>]
 )
 
@@ -571,24 +571,20 @@ This mechanism relies on Dask's persist API: instead of calling the `compute` me
     caption: [Performance improvement of iteration preparation],
 ) <perfs-detail>
 
-==== Varying the number of nodes
-
-The performance improvement of the iteration preparation mechanism is evaluated with the same protocol as before: the number of nodes varies with a constant number of chunks per node, and the mean time per iteration is measured. The experiment is repeated five times, with a number of iterations prepared in advance varying from 0 to 8.
+The performance improvement of the iteration preparation mechanism is evaluated with the same protocol as before (cf @evaluation-protocol[section]). The experiment is repeated five times, with a number of iterations prepared in advance varying from 0 to 8.
 
 #figure(
     image("resources/exp-03-preparation-advance.svg", width: 105%),
     caption: [Performance improvement of iteration preparation: varying number of iterations prepared in advance],
 ) <perfs-iteration-preparation>
 
-@perfs-iteration-preparation shows the results obtained with this experiment. When no iterations are prepared in advance (which approximately corresponds to not using the preparation mechanism), the execution time ultimately starts increasing linearly with the number of nodes.
+@perfs-iteration-preparation shows the results obtained with this experiment.
 
-As we increase the number of iterations prepared in advance, we notice that the execution time becomes smaller. When enough iterations are prepared, the expensive tasks stop being a bottleneck and the performance stops improving.
+When no iterations are prepared in advance (which approximately corresponds to not using the pipelining mechanism), the execution time ultimately starts increasing linearly with the number of nodes.
 
-==== Varying the number of chunks per node
+As we increase the number of iterations prepared in advance, we notice that the execution time becomes smaller. When enough iterations are prepared, the expensive tasks fully overlap with the previous iterations and stop being a bottleneck: the performance stops improving. Pipelining over several iterations is necessary since the execution time of the analytic is very short. Using a more expensive simulation and analytic would reduce the number of iterations to prepare in advance.
 
-More importantly, if enough iterations are prepared in advance, the execution time no longer depends on the number of chunks per node. TODO
-
-== _In transit_ analytics
+== Doreisa v4: _In transit_ analytics
 
 Until now, the simulation nodes of the cluster were also in charge of analysing the data. Performing the analysis _in situ_ -- directly on the machine producing the data -- can be a good solution, especially in situations where the simulation code runs on the GPU of the machine. In this case, it usually lets CPU cores idle, so they can be used by the analytics without overhead.
 
