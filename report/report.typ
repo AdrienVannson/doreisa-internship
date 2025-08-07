@@ -250,7 +250,9 @@ Deisa patches the Dask scheduler to add support for _external tasks_. These task
 
 === Reisa
 
-Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray instead of Dask. One of the main limitations of the approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define two callback functions:
+Reisa @reisa is an attempt to solve the limitations of Deisa by using Ray instead of Dask. One of the main limitations of this approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define their analytics with callbacks taking the `numpy` arrays produced by the simulation and the corresponding ranks as parameters. This lower-level approach makes it harder for the user to write the analytic script.
+
+Reisa is not optimized to work with large-scale simulations, and it was evaluated with at most 16 nodes.
 
 = Experiments <experiments>
 
