@@ -584,6 +584,8 @@ When no iterations are prepared in advance (which approximately corresponds to n
 
 As we increase the number of iterations prepared in advance, we notice that the execution time becomes smaller. When enough iterations are prepared, the expensive tasks fully overlap with the previous iterations and stop being a bottleneck: the performance stops improving. Pipelining over several iterations is necessary since the execution time of the analytic is very short. Using a more expensive simulation and analytic would reduce the number of iterations to prepare in advance.
 
+With 128 simulation nodes, more than 30000 tasks are executed each second. This is an order of magnitude above the peak performance of the Dask centralized scheduler, which can handle at most 4000 tasks per second according to Dask's documentation @dask-actors-motivation.
+
 == Doreisa v4: _In transit_ analytics
 
 Until now, the simulation nodes of the cluster were also in charge of analysing the data. Performing the analysis _in situ_ -- directly on the nodes producing the data -- can be a good solution, especially in situations where the simulation code runs on the GPU of the machine. In this case, it usually lets CPU cores idle, so they can be used by the analytics without overhead.
