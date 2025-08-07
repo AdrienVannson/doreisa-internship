@@ -684,11 +684,12 @@ The overhead of analyzing the data with Doreisa is very small: at each iteration
 
 == Software Engineering practices
 
-Doreisa has been developed following standard software engineering practices.
+Doreisa was developed following standard Software Engineering practices, to ensure that the project is maintainable in the long run by several engineers and researchers.
 
   - All the aspects of the implementation are tested. The tests are executed automatically on Github at each pull-request and on the main branch.
-  - Releases are published regularly on PyPI.
-  - Documentation is generated and published automatically at each release.
+  - The code is typechecked with `Pyright`. The code quality is checked, and the code is formatted using `Ruff`.
+  - Releases are published regularly on PyPI following the _semantic versioning_ scheme.
+  - The documentation is generated and published online automatically at each release @doreisa-documentation.
 
 
 == Challenges
