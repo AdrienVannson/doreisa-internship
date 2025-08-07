@@ -60,7 +60,7 @@ This Master thesis introduces #smallcaps[Doreisa] -- Dask-on-Ray Enabled In Situ
 
 == Structure of this report
 
-@state-of-the-art goes through the main research projects related to the subject, as well as the some tools and supercomputers that will be useful for Doreisa. The first section of @doreisa-design introduces a proof of concept of Doreisa, working correctly with limited performance. The following subsections detail improvements made to this solution, until the most advanced version. @performance-evaluation evaluates the performance of the application in various scenarios. @doreisa-development mentions some challenges that were encountered during the development of Doreisa.
+@state-of-the-art presents the research projects, tools that will be useful for Doreisa. @experiments describes the supercomputers used for development and performance evaluation. The first section of @doreisa-design introduces a functional Deisa-like system with limited performance. The following subsections detail improvements made to this solution, until the most advanced version. @performance-evaluation evaluates the performance of Doreisa in various scenarios. @doreisa-development mentions some challenges that were encountered during the development of Doreisa.
 
 The Doreisa implementation is available on Github @doreisa-github. All the experiments are available on Github as well @doreisa-internship-github.
 
@@ -246,7 +246,7 @@ Deisa
 
 Reisa @reisa is an attempt to solve the limitations of Deisa by relying on Ray instead of Dask. One of the main limitations of the approach is the lack of native array support. In Reisa, users no longer have a global view on the data as a Dask array: they have to manually define two callback functions:
 
-= Experiments
+= Experiments <experiments>
 
 All the experiments presented in this report were performed on the Jean Zay or Leonardo supercomputers, or on the `gros` cluster of Grid5000 located in Nancy. The following sections introduce these systems.
 
@@ -360,7 +360,7 @@ Doreisa v1 is evaluated on Jean Zay. The same experiment is repeated several tim
   - Collecting the `ObjectRefs` produced by the workers.
   - Creating the Dask array as well as the task graph. For such small graphs, the time is negligible.
   - Executing the task graph using the Dask-on-Ray scheduler.
-Both the reference gathering and the task graph execution are time-consuming processes, with neither being negligible relative to the other. To further improve the performance, both need to be optimized.
+Both the reference gathering and the task graph execution are time-consuming processes, neither one being negligible relative to the other. To further improve the performance, both need to be optimized.
 
 #figure(
     image("resources/exp-01.svg", width: 105%),
