@@ -240,7 +240,13 @@ In this project, we will use the `Pycall` plugin, which allows making the data a
 
 === Deisa
 
-Deisa
+Deisa @deisa1 @deisa2 is a Dask-based solution for _in situ_ analytic. It can be coupled with a simulation without any code change, provided that the simulation supports PDI. The data produced by the simulation is represented as a Dask array that the user manipulates to define analytic tasks. Deisa supports a _contract_-based mechanism avoiding the overhead of handling the data chunks that are not required by the analytic.
+
+Deisa lacks the flexibility of dynamically adapting the analytic to the simulation results as the simulation runs: all the analytic tasks need to be defined at the beginning of the execution. The number of iterations that can be analyzed is also fixed, which can be problematic for systems where the number of iterations is not known in advance.
+
+Its peak performance is inherently limited by the uses the Dask "distributed" scheduler, which is centralized and cannot handle more than 4000 tasks per second @dask-actors-motivation.
+
+Deisa patches the Dask scheduler to add support for _external tasks_. These tasks allow using the data produced by the simulation in the analysis: the simulation processes notify the scheduler when their chunks are ready, allowing it to start the tasks depending on these chunks. This patch is costly to maintain, as it needs to be updated each time internal changes are made to the Dask distributed scheduler.
 
 === Reisa
 
