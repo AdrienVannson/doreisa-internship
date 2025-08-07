@@ -98,7 +98,7 @@ The following subsections introduce more extensively task-based programming tool
 
 Dask @dask is a Python framework aiming at making distributed computing easy. The basic workflow to run computations with Dask is composed of two steps:
 
- - *Building a task graph.* The distributed computation is represented as a task graph, as the one in @dask-graph-mean. The task graph is a directed acyclic graph where each node represents a computation. There is an edge from a node $T_1$ to a node $T_2$ if $T_1$ needs the result of $T_2$ to be executed. Internally, a task graph is represented as a simple Python dictionary.
+ - *Building a task graph.* The distributed computation is represented as a task graph, as the one in @dask-graph-mean[figure]. The task graph is a directed acyclic graph where each node represents a computation. There is an edge from a node $T_1$ to a node $T_2$ if $T_1$ needs the result of $T_2$ to be executed. Internally, a task graph is represented as a simple Python dictionary.
  - *Running the computation.* The graph is shipped to a scheduler, which is in charge of executing all the tasks and returning the final result of the computation. Dask provides several schedulers suited to different use cases: a threaded scheduler, a multiprocessing scheduler as well as a distributed scheduler. The threaded scheduler and the multiprocessing scheduler work for single-node computations, while the distributed scheduler is able to schedule tasks across a large cluster, taking into account resource availability as well as data locality. The threaded scheduler is more lightweight, but some workloads need multiprocessing to be truly parallelized due to Python's `GIL` (Global Interpreter Lock).
 
 #figure(
@@ -106,9 +106,7 @@ Dask @dask is a Python framework aiming at making distributed computing easy. Th
     caption: [Example of a Dask task graph],
 ) <dask-graph-mean>
 
-Dask also provides APIs similar to pandas and numpy: the user can call functions similar to the ones defined in these libraries to work on distributed dataframes and arrays.
-
-In particular, a Dask array is a distributed implementation of numpy arrays. It is composed of several _chunks_, each chunk being represented as a numpy array. Performing computations on a Dask array produces a task graph that can be executed in a distributed manner, hiding all the complexity from the final user.
+Dask provides APIs similar to pandas and numpy to support working with distributed arrays and dataframes. A Dask array is a distributed implementation of numpy arrays. It is composed of several _chunks_, each chunk being a numpy array containing a part of the full array. Performing computations on a Dask array produces a task graph that can be executed in a distributed manner, hiding all the complexity from the final user.
 
 Dask suffers from several limitations impacting performance and the ability to scale:
   - Data cannot be shared between worker processes without being copied, even when the workers are running on the same node.
