@@ -44,23 +44,21 @@
 
 = Introduction
 
-Physical simulations such as Gysela @gysela or Parflow (TODO ref?).
+Physical simulations such as Gysela @gysela or Parflow @parflow1 @parflow2 @parflow3 @parflow4. TODO
 
-This Master thesis introduces #smallcaps[Doreisa] -- Dask-on-Ray Enabled In Situ Analytics --, a new way to process data coming from HPC simulations, easily and in a distributed and efficient manner. This system is able to scale on supercomputers such as Jean Zay.
+_Post hoc_ analytic involves storing simulation data to disk, and loading it later for analisis. This method is straightforward to implement as the simulation and analytic workflows are separated, avoiding the need of a complex coupling. However, the performance of _post_hoc_ analysis is fundamentally limited by disk I/O bandwidth. 
 
-// == Performance requirements
+Between 2009 and 2022, the ratio of storage I/O bandwidth to computing power of the three first supercomputers from Top500 @top500 has been divided by 25 @hpc-storage. The Jean Zay supercomputer @jean-zay-presentation offers a peak disk write speed of 1.1 TB/s @jean-zay-disks. On the other hand, modern simulations produce unprecedented volumes of data. Gysela @gysela, a gyrokinetic code for plasma simulation, generates 5D arrays of about 100 TB each iteration @deisa-parflow, highlighting the need for more efficient alternatives.
 
-// The proposed solution needs to scale well to some of the biggest supercomputers such as Jean Zay.
+To avoid this I/O bottleneck, _in situ_ analytic consists of performing the analysis on the fly, directly on the nodes where the simulation runs. _In situ_ solutions can be complex to implement since simulation and data analytic programs rely on fundamentally different technologies and paradigms. Simulation codes are performance-critical, and are developed using efficient technologies such as `C++` with MPI. On the other end, data analytic pipelines are often designed using high-level programming languages such as Python, relying on a rich ecosystem of efficient libraries.
 
-// Adastra is hosted by the _Centre Informatique National de l’Enseignement Supérieur (CINES)_ in Montpellier. In November 2024, it was ranked \#30 in Top500, with an Rmax value of 46.10 PFlop/s. In addition to login and pre/post processing nodes, Adastra is equipped with 544 scalar nodes, and . The detailed specification is available on Adasta's website @adastra.
-
-// Jean Zay is . In November 2024, it was ranked \#27 in Top500, with an Rmax value of 52.18 PFlop/s.
+This Master thesis introduces #smallcaps[Doreisa] -- Dask-on-Ray Enabled In Situ Analytics -- a scalable and efficient system for in situ analysis of simulation data. Doreisa offers a Dask-based interface, allowing a simple definition of analytic tasks. Experiments show that Doreisa scales well on hundreds of nodes, allowing it to run on the Jean Zay supercomputer. Doreisa has been integrated with Parflow, ensuring that it can effectively analyze the data of large parallel numerical simulations.
 
 // Given the architecture of these supercomputers, Doreisa should be able to scale to systems having thousands of nodes, producing tens of thousands to potentially hundreds of thousands of chunks of data per iteration.
 
 == Structure of this report
 
-@state-of-the-art presents the research projects, tools that will be useful for Doreisa. @experiments describes the supercomputers used for development and performance evaluation. The first section of @doreisa-design introduces a functional Deisa-like system with limited performance. The following subsections detail improvements made to this solution, until the most advanced version. @performance-evaluation evaluates the performance of Doreisa in various scenarios. @doreisa-development mentions some challenges that were encountered during the development of Doreisa.
+@state-of-the-art presents the research projects, tools that will be useful for Doreisa. @experiments describes the supercomputers used for development and performance evaluation. The first section of @doreisa-design introduces a functional Deisa-like system with limited performance. The following subsections detail improvements made to this solution, until the most advanced version. @performance-evaluation evaluates the performance of Doreisa in various scenarios. @doreisa-development briefly mentions practical aspects of the development of Doreisa.
 
 The Doreisa implementation is available on Github @doreisa-github. All the experiments are available on Github as well @doreisa-internship-github.
 
@@ -655,7 +653,7 @@ Even if the total amount of transmitted data per iteration is proportional to th
 
 == Integration with Parflow
 
-Doreisa was integrated to Parflow and evaluated with it @parflow-benchmark by Andrès #smallcaps[Bermeo Marinelli] and Hugo #smallcaps[Strappazzon], engineers in the team, using the _Leonardo_ supercomputer. This section describes the results of the evaluation.
+Doreisa was integrated to Parflow @parflow1 @parflow2 @parflow3 @parflow4 and evaluated with it @parflow-benchmark by Andrès #smallcaps[Bermeo Marinelli] and Hugo #smallcaps[Strappazzon], engineers in the team, using the _Leonardo_ supercomputer. As Parflow already supports PDI, the integration was straightforward and no change to the simulation code were required. This section describes the results of the evaluation.
 
 The experiment consists of running Parflow with Doreisa on four simulation nodes and one head node. The simulation runs on the CPUs: the 112 cores of the node are used as follows:
   - 100 cores for the Parflow simulation (Parflow requires a square number).
