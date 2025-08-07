@@ -369,28 +369,28 @@ Both the reference gathering and the task graph execution are time-consuming pro
 
 == Building the Dask array <collecting-references>
 
-At each iteration of the simulation, MPI processes produce data stored in numpy arrays. These chunks of data are placed in Ray's object store, and references to them must be sent to the head node to allow it to build a full Dask array. A first approach simply consists of having all the MPI processes send their reference to the head node directly. However, this centralized approach is not scalable enough: gathering tens of thousands of references is a costly operation that cannot be performed by a single process in a reasonable time, as a lot of communications are involved. Indeed, as shown in @ref-collecting-bench (explained below), when many processes send their references one-by-one, at most around one thousand references can be collected each second. The exact value will depend on many factors, but it is not enough for our applications.
+In Doreisa v1, at each iteration, each simulation process sends an `ObjectRef` to its data to the head actor. This centralized approach is not scalable enough: gathering all these references is a costly operation whose execution time is proportional to the number of references. When many processes send their references one-by-one, at most around three thousand references can be collected each second (@ref-collecting-bench[figure]).
 
-To solve this problem, a simple idea consists of sending first the references to intermediate actors that will have the responsibility to collect a few of them, and send them to the head node in a single message. To see how well sending the references in groups helps improve the performance, a simple setup is used. Some "simulation" processes generate numpy arrays and send references to them to the head node. The arrays are generated randomly, no simulation code is actually used. The process is repeated with a varying number of processes from 1 to 512, as well as a number of references sent by each process at each iteration varying from 1 to 256. During each measurement, 200 iterations are performed.
+To solve this problem, a simple idea consists of sending first the references to intermediate actors that then transmit them to the head node in a single message.
 
-To avoid having to deploy the experiment on a very large cluster, several simulation scripts were started on each core. The measurement is repeated two times: one time with two simulation nodes, the other with four simulation nodes. The goal of this step is to make sure that the bottleneck actually comes from the head node and not the simulation node: it is the case if the results in these two configurations are similar. This is indeed the case: the total execution time of each scenario varies by less than 10% in the two cases. As having twice more nodes for the same task does not reduce the execution time, the bottleneck is indeed the head node, as expected.
+We evaluated this optimization on the _gros_ cluster of the Nancy site of Grid5000 as follows. Python processes sent `ObjectRefs` to a centralized Ray actor. The process was repeated with a varying number of processes from 1 to 512, as well as a number of references sent by each process at each iteration varying from 1 to 256. During each measurement, 200 iterations were performed. Note that this experiment only benchmarked `ObjectRefs` collecting in Ray, without using the whole Doreisa implementation.
 
-This experiment was performed on the _gros_ cluster of the Nancy site of Grid5000. The exact specifications are available online at #link("https://www.grid5000.fr/w/Nancy:Hardware#gros").
+To avoid having to deploy the experiment on a very large cluster, several Python scripts were started on each core. The measurement was repeated two times: one time with two nodes sending references, the other time with four. As the total execution time in each scenario varied by less than 10%, it was confirmed that the bottleneck actually came from the head node and not the simulation node.
 
 #figure(
     image("resources/ref-collecting-bench.png", width: 105%),
-    caption: [Time (ms) needed to collect a reference depending on the number of processes and references sent by each process],
+    caption: [Time (ms) needed to collect _one_ reference depending on the number of processes and references sent by each process],
 ) <ref-collecting-bench>
 
-@ref-collecting-bench shows, for various number of processes and references sent by process, the time needed to send one reference.
-
-First, we can notice that the measured values are higher when less than 8 processes are used. This is expected: with a small number of processes, the measured time includes some time where, for instance, the head node is idle, waiting for data. These measurements do not correspond to a realistic use case, as HPC simulations involve a much higher number of processes. When more processes are sending data to the head node, their number does not matter anymore and the measured values stabilize. In the next paragraph, we will focus on the results obtained with at least 8 processes.
+We can notice (@ref-collecting-bench[figure]) that the measured values are higher when less than 8 processes are used. This is expected: with a small number of processes, the measured time includes some time where, for instance, the centralized actor is idle, waiting for data. These measurements do not correspond to a realistic use case, as HPC simulations involve a much higher number of processes. When more processes are sending data to the head node, their number does not matter anymore and the measured values stabilize. In the next paragraph, we will focus on the results obtained with at least 8 processes.
 
 With at least 8 processes, the total number of processes does not impact the time needed to send one reference. However, sending several references at each request greatly reduces the time needed to send one reference: it becomes possible to reduce the total time by around 20 times with this optimization.
 
-In practice, to avoid useless network use, a good compromise could be to place an actor on each simulation node. This actor would have the responsibility to collect all the references to arrays produced by the node, and to send them all at once to the head node. The goal of this optimization is not to have something optimal since this part is not critical to obtain good performance. It is simply to optimize it enough so that it does not become a bottleneck and slow down the whole computation.
+In practice, to reduce network usage, a good compromise is to place one actor on each simulation node. This actor has the responsibility to collect all the chunk references produced by the simulation process, and to send them all at once to the head node.
 
-To conclude, to reduce the time taken to collect all the `ObjectRef`, it is possible to use intermediate actors on each node to collect the references first, and send them in batches to the head node. However, in the end, this optimization was not integrated to Doreisa: the optimization presented in the following section adopts a different approach that makes sending all the `ObjectRefs` to the head node useless.
+Another solution could have been to rely on collective operations such as MPI's `gather` to collect the references, but these operations are not directly supported by Ray's distributed reference counting system.
+
+To conclude, to reduce the time taken to collect all the `ObjectRef`, it is possible to use intermediate actors on each node to collect the references first, and send them in batches to the head node. However, in the end, this optimization was not integrated to Doreisa: the approach presented in the next section makes this optimization useless.
 
 == Doreisa v2: Distributed scheduler
 
@@ -698,6 +698,7 @@ Future work:
   - Optimizing memory usage (avoid the data copy?)
   - Improve user API
   - More evaluation
+  - Support other data structures (meshes)
 
 = Acknowledgments
 
