@@ -111,7 +111,7 @@ Dask also provides APIs similar to pandas and numpy: the user can call functions
 In particular, a Dask array is a distributed implementation of numpy arrays. It is composed of several _chunks_, each chunk being represented as a numpy array. Performing computations on a Dask array produces a task graph that can be executed in a distributed manner, hiding all the complexity from the final user.
 
 Dask suffers from several limitations impacting performance and the ability to scale:
-  - Data can't be shared between worker processes without being copied, even when the workers are running on the same node.
+  - Data cannot be shared between worker processes without being copied, even when the workers are running on the same node.
   - Task execution is managed by a centralized scheduler. It enables dynamic load balancing and optimization of data movements, but becomes a bottleneck at scale. According to Dask's documentation @dask-actors-motivation, it can handle at most around 4000 tasks per second.
 
 ==== Ray
@@ -122,7 +122,7 @@ Ray @ray @ray-website is a large Python framework, developed for AI and machine 
 
 Ray's scheduler is distributed: each node of the Ray cluster is able to schedule new tasks. This allows tasks to create subtasks efficiently, without having to contact a centralized scheduler as in Dask. Contrary to Dask, no description of the full task graph is available ahead of the execution.
 
-Ray's API is lower level than Dask's: it doesn't include convenient abstractions such as distributed arrays and DataFrames.
+Ray's API is lower level than Dask's: it does not include convenient abstractions such as distributed arrays and DataFrames.
 
 The following sections briefly introduce the main abstractions provided by Ray: object references, tasks and actors. Ray also provides advanced options to choose how tasks are scheduled, the lifetime of actors, support asynchronous code with `asyncio`, etc, but introducing them is out of the scope of this report.
 
@@ -369,11 +369,11 @@ Both the reference gathering and the task graph execution are time-consuming pro
 
 == Building the Dask array <collecting-references>
 
-At each iteration of the simulation, MPI processes produce data stored in numpy arrays. These chunks of data are placed in Ray's object store, and references to them must be sent to the head node to allow it to build a full Dask array. A first approach simply consists of having all the MPI processes send their reference to the head node directly. However, this centralized approach is not scalable enough: gathering tens of thousands of references is a costly operation that can't be performed by a single process in a reasonable time, as a lot of communications are involved. Indeed, as shown in @ref-collecting-bench (explained below), when many processes send their references one-by-one, at most around one thousand references can be collected each second. The exact value will depend on many factors, but it is not enough for our applications.
+At each iteration of the simulation, MPI processes produce data stored in numpy arrays. These chunks of data are placed in Ray's object store, and references to them must be sent to the head node to allow it to build a full Dask array. A first approach simply consists of having all the MPI processes send their reference to the head node directly. However, this centralized approach is not scalable enough: gathering tens of thousands of references is a costly operation that cannot be performed by a single process in a reasonable time, as a lot of communications are involved. Indeed, as shown in @ref-collecting-bench (explained below), when many processes send their references one-by-one, at most around one thousand references can be collected each second. The exact value will depend on many factors, but it is not enough for our applications.
 
 To solve this problem, a simple idea consists of sending first the references to intermediate actors that will have the responsibility to collect a few of them, and send them to the head node in a single message. To see how well sending the references in groups helps improve the performance, a simple setup is used. Some "simulation" processes generate numpy arrays and send references to them to the head node. The arrays are generated randomly, no simulation code is actually used. The process is repeated with a varying number of processes from 1 to 512, as well as a number of references sent by each process at each iteration varying from 1 to 256. During each measurement, 200 iterations are performed.
 
-To avoid having to deploy the experiment on a very large cluster, several simulation scripts were started on each core. The measurement is repeated two times: one time with two simulation nodes, the other with four simulation nodes. The goal of this step is to make sure that the bottleneck actually comes from the head node and not the simulation node: it is the case if the results in these two configurations are similar. This is indeed the case: the total execution time of each scenario varies by less than 10% in the two cases. As having twice more nodes for the same task doesn't reduce the execution time, the bottleneck is indeed the head node, as expected.
+To avoid having to deploy the experiment on a very large cluster, several simulation scripts were started on each core. The measurement is repeated two times: one time with two simulation nodes, the other with four simulation nodes. The goal of this step is to make sure that the bottleneck actually comes from the head node and not the simulation node: it is the case if the results in these two configurations are similar. This is indeed the case: the total execution time of each scenario varies by less than 10% in the two cases. As having twice more nodes for the same task does not reduce the execution time, the bottleneck is indeed the head node, as expected.
 
 This experiment was performed on the _gros_ cluster of the Nancy site of Grid5000. The exact specifications are available online at #link("https://www.grid5000.fr/w/Nancy:Hardware#gros").
 
@@ -384,13 +384,13 @@ This experiment was performed on the _gros_ cluster of the Nancy site of Grid500
 
 @ref-collecting-bench shows, for various number of processes and references sent by process, the time needed to send one reference.
 
-First, we can notice that the measured values are higher when less than 8 processes are used. This is expected: with a small number of processes, the measured time includes some time where, for instance, the head node is idle, waiting for data. These measurements do not correspond to a realistic use case, as HPC simulations involve a much higher number of processes. When more processes are sending data to the head node, their number doesn't matter anymore and the measured values stabilize. In the next paragraph, we will focus on the results obtained with at least 8 processes.
+First, we can notice that the measured values are higher when less than 8 processes are used. This is expected: with a small number of processes, the measured time includes some time where, for instance, the head node is idle, waiting for data. These measurements do not correspond to a realistic use case, as HPC simulations involve a much higher number of processes. When more processes are sending data to the head node, their number does not matter anymore and the measured values stabilize. In the next paragraph, we will focus on the results obtained with at least 8 processes.
 
-With at least 8 processes, the total number of processes doesn't impact the time needed to send one reference. However, sending several references at each request greatly reduces the time needed to send one reference: it becomes possible to reduce the total time by around 20 times with this optimization.
+With at least 8 processes, the total number of processes does not impact the time needed to send one reference. However, sending several references at each request greatly reduces the time needed to send one reference: it becomes possible to reduce the total time by around 20 times with this optimization.
 
 In practice, to avoid useless network use, a good compromise could be to place an actor on each simulation node. This actor would have the responsibility to collect all the references to arrays produced by the node, and to send them all at once to the head node. The goal of this optimization is not to have something optimal since this part is not critical to obtain good performance. It is simply to optimize it enough so that it does not become a bottleneck and slow down the whole computation.
 
-To conclude, to reduce the time taken to collect all the `ObjectRef`, it is possible to use intermediate actors on each node to collect the references first, and send them in batches to the head node. However, in the end, this optimization wasn't integrated to Doreisa: the optimization presented in the following section adopts a different approach that makes sending all the `ObjectRefs` to the head node useless.
+To conclude, to reduce the time taken to collect all the `ObjectRef`, it is possible to use intermediate actors on each node to collect the references first, and send them in batches to the head node. However, in the end, this optimization was not integrated to Doreisa: the optimization presented in the following section adopts a different approach that makes sending all the `ObjectRefs` to the head node useless.
 
 == Doreisa v2: Distributed scheduler
 
@@ -431,7 +431,7 @@ With this approach, all the simulation nodes are in charge of scheduling a part 
 
 === `ObjectRefs` sharing, nested `ObjectRefs` <object-refs-sharing>
 
-From an implementation perspective, there is one major difference compared to the proof-of-concept version: it is no longer possible to simply put `ObjectRefs` pointing to the data directly in the task graph that will be executed by the Dask-on-Ray scheduler. Indeed, as the scheduling is now distributed, a scheduling actor doesn't own all the `ObjectRefs` that are needed to perform the computation: it may need to ask other scheduling actors to send `ObjectRefs` corresponding to results of tasks that they scheduled (see step 7 of @doreisa-distributed-scheduler[figure]).
+From an implementation perspective, there is one major difference compared to the proof-of-concept version: it is no longer possible to simply put `ObjectRefs` pointing to the data directly in the task graph that will be executed by the Dask-on-Ray scheduler. Indeed, as the scheduling is now distributed, a scheduling actor does not own all the `ObjectRefs` that are needed to perform the computation: it may need to ask other scheduling actors to send `ObjectRefs` corresponding to results of tasks that they scheduled (see step 7 of @doreisa-distributed-scheduler[figure]).
 
 When asking another scheduling actor for an `ObjectRef`, the remote call produces an `ObjectRef` containing the result of the call, which is itself an `ObjectRef`. It is not possible to call `ray.get` on the actual `ObjectRef` from the second reference since it may not be ready at that time. Trying to call it anyway can result in deadlocks: an actor $A$ might require an `ObjectRef` from another actor $B$ to schedule its task graph, while $B$ also requires an `ObjectRef` from $A$ to do so.
 
@@ -469,7 +469,7 @@ The problems of graph partitioning and acyclic directed acyclic graph partitioni
 
 We developed two partitioning strategies:
 
- - *Random partitioning.* Each task is randomly assigned to a scheduling actor, subject to the constraint that the resulting partition is balanced: the sizes of the subsets differ by at most one. This strategy doesn't try to minimize the number of _cut edges_, that is the number of edges connecting two vertices in different components.
+ - *Random partitioning.* Each task is randomly assigned to a scheduling actor, subject to the constraint that the resulting partition is balanced: the sizes of the subsets differ by at most one. This strategy does not try to minimize the number of _cut edges_, that is the number of edges connecting two vertices in different components.
   #figure(
     image("resources/random-partitioning.png", width: 60%),
     caption: [Random task graph partitioning],
@@ -545,7 +545,7 @@ The Doreisa scheduler needs to be updated to support this feature: if the schedu
     text(0.8em)[
       ```python
       def prepare_iteration(array: da.Array, *, timestep: int) -> da.Array:
-          # We can't use compute here since the data is not available yet
+          # We cannot use compute here since the data is not available yet
           return array.sum().persist()
 
       def simulation_callback(array: da.Array, *, timestep: int, preparation_result: da.Array):
@@ -608,17 +608,11 @@ Ray can be heavy to start on a machine, with several processes needed: the rayle
 
 The chunks of data are sent using #smallcaps[ZeroMQ] over a TCP connection, which prevents taking full advantage of the high-performance network available on the supercomputer. An improvement could be to take advantage of RDMA (Remote Direct Memory Access) to send the data more efficiently using the supercomputer's high-performance network, for instance using UCX @ucx.
 
-== Conclusion
-
-Thanks to the various improvements presented in the previous sections, Doreisa became a system able to execute task graphs containing tens of thousands of tasks on clusters composed of hundreds of nodes, with very good performance.
-
-In this section, we focused on improving the number of tasks scheduled per second, as it was an important limitation of Deisa.
-
-The following section will evaluate the performance of Doreisa in more various scenarios, closer to real-life applications.
-
 = Performance evaluation <performance-evaluation>
 
-== Bigger chunks
+We evaluate the performance of Doreisa in more various scenarios, closer to real-life applications.
+
+== Simulation producing bigger chunks
 
 All the experiments presented in the previous section were realized using chunks of data with a negligible size, to avoid having the effective computation influence the results. In this section, Doreisa is evaluated performing an analysis on an array composed of a varying number of $1000 times 10000$ chunks (40 chunks per node in the cluster). The analysis is also more expensive: we compute the mean of the values obtained after calling the function $x mapsto sin(sqrt(x+1))$ element-wise on the array.
 
@@ -627,29 +621,29 @@ All the experiments presented in the previous section were realized using chunks
     caption: [Analysis with big chunks of data],
 ) <big-chunks-eval>
 
-The results are shown in @big-chunks-eval. We can notice that the overhead introduced by Doreisa is negligible compared to the effective computation time.
+We notice (@big-chunks-eval[figure]) that the overhead introduced by Doreisa is negligible compared to the effective computation time.
 
 The experiment was realized before the development of the iteration preparation mechanism. With this optimization, the Doreisa overhead could be further reduced.
 
 == Forced data movements
 
-For some computations, it is impossible to perform all the computations directly where the data is produced, and data movements are required. Consider the task of computing the sum of the coefficients of $M + f(M)$, where $f(M)$ is M flipped on its first axis.
+For some task graphs, it is impossible to perform all the computations where the data is produced, and data movements are required. Suppose that $M$ is a Dask array composed of three chunks (the chunk shape is $3 times 1$). Consider the task of computing the sum of the coefficients of $sin(M + tilde(M))$, where $tilde(M)$ is M flipped on its first axis.
 
-While this computation could technically be further optimized, Dask is not able to as shown on the task graph corresponding to this computation for an array with $3 times 1$ chunks, represented in @flip-sum-task-graph.
+To perform this computation, moving the chunk at position $(0, 0)$ and $(2, 0)$ is the same node is necessary. This data movement can be seen on the task graph produced by Dask (@flip-sum-task-graph[figure]), where two `add` nodes need both chunks.
 
 #figure(
     image("resources/flip-sum-task-graph.png", width: 50%),
     caption: [Task graph of a computation requiring data movements],
 ) <flip-sum-task-graph>
 
-@big-chunks-eval-data-movements shows the time taken to perform this computation with a chunk shape of $40 N times 1$, where $N$ is the number of nodes in the cluster. We can notice that due to the data movements required, each iteration takes more time than before, even if the actual computation is far simpler.
+@big-chunks-eval-data-movements shows the time taken to perform the same computation with a chunk shape of $40 N times 1$, where $N$ is the number of nodes in the cluster. Due to the data movements required, each iteration takes more time than before, even if the computation is simpler.
 
 #figure(
     image("resources/exp-06-data-movements.svg", width: 90%),
-    caption: [Analysis with big chunks of data, data movements required],
+    caption: [Analyzing big chunks of data, data movements required],
 ) <big-chunks-eval-data-movements>
 
-Even if the total amount of transmitted data per iteration is proportional to the number of nodes in the cluster, the time per iteration doesn't grow: the high-performance network connecting the nodes of the supercomputer is performant enough not to become a bottleneck.
+Even if the total amount of transmitted data per iteration is proportional to the number of nodes in the cluster, the time per iteration does not grow: the high-performance network connecting the nodes of the supercomputer is performant enough not to become a bottleneck.
 
 == Integration with Parflow
 
@@ -674,9 +668,9 @@ Each node is in charge of executing the simulation on a $240 times 240 times 240
   ],
 )
 
-@parflow-benchmark-plot shows the time spent by the simulation and the analytics, from the sixth to the ninth iteration of the simulation. The first iterations are not included since their duration is not stable enough, as parts of the system are still starting. Since the simulation is distributed, all the nodes may not start a new iteration exactly at the same time: the times are only measured from the head node and the simulation worker with rank 0.
+@parflow-benchmark-plot shows the time spent by the simulation and the analytics, from the sixth to the ninth iteration of the simulation. The first iterations are not included since their duration is not stable enough, as parts of the system are still starting. Since the simulation is distributed, all the nodes may not start a new iteration exactly at the same time: the times are only measured on the head node and the simulation worker with rank 0.
 
-The overhead of analyzing the data with Doreisa is very small: at each iteration, the simulation is paused from about 2% to 10% of the time. During this time, the chunks of data are copied to the Ray object store of the node. After this, the simulation starts its next iteration while the analytic runs in parallel.
+The overhead of analyzing the data with Doreisa is very small: at each iteration, the simulation is paused from about 2% to 10% of the time (this corresponds to the PDI line on @parflow-benchmark-plot[figure]). During this time, the chunks of data are copied to the Ray object store of the node. After this, the simulation starts its next iteration while the analytic runs in parallel.
 
 = Development of Doreisa <doreisa-development>
 
@@ -698,8 +692,12 @@ During the development of Doreisa, I came across several problems that took me a
  - *Deployment on SLURM.* Supercomputers typically rely on SLURM @slurm to manage their resources. To use Doreisa on such supercomputers, it was necessary to start a Ray cluster with SLURM. When it is starting on a node, Ray starts the worker processes that will be used to execute remote tasks. The number of such processes corresponds to the number of available cores on the machine. Since supercomputers are optimized for efficient computations, each machine typically has several CPUs, each one having tens of cores. As a consequence, a lot of Ray workers can be started at the same time (40 for Jean Zay). Each of these processes performs operations on Numpy arrays. Numpy internally relies on OpenBLAS, which itself starts many threads to take advantage of the parallelism offered by the machine. This high number of threads made SLURM kill Ray processes.
 
 
-= Conclusion
+= Conclusion and future work
 
+Future work:
+  - Optimizing memory usage (avoid the data copy?)
+  - Improve user API
+  - More evaluation
 
 = Acknowledgments
 
