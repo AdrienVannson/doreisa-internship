@@ -44,17 +44,17 @@
 
 = Introduction
 
-Physical simulations such as Gysela @gysela or Parflow @parflow1 @parflow2 @parflow3 @parflow4. TODO
+As the world's most powerful supercomputers have reached a new computational power threshold, now exceeding the exaflop @top500, it has become possible to run large-scale simulations of complex phenomena with unprecedented precision. This has opened new applications in a wide range of scientific domains. Large simulation codes such as Gysela @gysela -- a gyrokinetic code for plasma simulation -- and Parflow @parflow1 @parflow2 @parflow3 @parflow4 -- a physics-based integrated hydrologic model simulating hydrological, groundwater and land-surface processes -- leverage this computational power.
 
-_Post hoc_ analytic involves storing simulation data to disk, and loading it later for analisis. This method is straightforward to implement as the simulation and analytic workflows are separated, avoiding the need of a complex coupling. However, the performance of _post_hoc_ analysis is fundamentally limited by disk I/O bandwidth. 
+These simulations typically follow an iterative process, generating a large amount of data at each iteration. The data produced is then used by scientists for visualization and/or analysis.
 
-Between 2009 and 2022, the ratio of storage I/O bandwidth to computing power of the three first supercomputers from Top500 @top500 has been divided by 25 @hpc-storage. The Jean Zay supercomputer @jean-zay-presentation offers a peak disk write speed of 1.1 TB/s @jean-zay-disks. On the other hand, modern simulations produce unprecedented volumes of data. Gysela @gysela, a gyrokinetic code for plasma simulation, generates 5D arrays of about 100 TB each iteration @deisa-parflow, highlighting the need for more efficient alternatives.
+_Post hoc_ analytics involves storing simulation data to disk and loading it later for analysis. It is straightforward to implement as the simulation and analysis workflows are separated, avoiding the need for a complex coupling. However, the performance of _post hoc_ analytics is fundamentally limited by disk I/O bandwidth. 
 
-To avoid this I/O bottleneck, _in situ_ analytic consists of performing the analysis on the fly, directly on the nodes where the simulation runs. _In situ_ solutions can be complex to implement since simulation and data analytic programs rely on fundamentally different technologies and paradigms. Simulation codes are performance-critical, and are developed using efficient technologies such as `C++` with MPI. On the other end, data analytic pipelines are often designed using high-level programming languages such as Python, relying on a rich ecosystem of efficient libraries.
+Between 2009 and 2022, the ratio of storage I/O bandwidth to computing power of the first three supercomputers listed in Top500 @top500 has been divided by 25 @hpc-storage. The Jean Zay supercomputer @jean-zay-presentation offers a peak disk write speed of 1.1 TB/s @jean-zay-disks. On the other hand, modern simulations produce unprecedented volumes of data. Gysela generates 5D arrays of about 100 TB at each iteration @deisa-gysela, highlighting the need for more efficient alternatives.
 
-This Master thesis introduces #smallcaps[Doreisa] -- Dask-on-Ray Enabled In Situ Analytics -- a scalable and efficient system for in situ analysis of simulation data. Doreisa offers a Dask-based interface, allowing a simple definition of analytic tasks. Experiments show that Doreisa scales well on hundreds of nodes, allowing it to run on the Jean Zay supercomputer. Doreisa has been integrated with Parflow, ensuring that it can effectively analyze the data of large parallel numerical simulations.
+To avoid this I/O bottleneck, _in situ_ analytics consists of performing the analysis on the fly, directly on the nodes where the simulation runs. _In situ_ solutions can be complex to implement since simulation and data analysis programs rely on fundamentally different technologies and paradigms. Simulation codes are performance-critical and are developed using efficient technologies such as `C++` with MPI. On the other hand, data analysis pipelines are often designed using high-level programming languages such as Python, relying on a rich ecosystem of efficient libraries.
 
-// Given the architecture of these supercomputers, Doreisa should be able to scale to systems having thousands of nodes, producing tens of thousands to potentially hundreds of thousands of chunks of data per iteration.
+This Master's project introduces #smallcaps[Doreisa] -- Dask-on-Ray Enabled In Situ Analytics -- a scalable and efficient system for in situ analysis of simulation data. Doreisa offers a Dask-based interface, allowing a simple definition of analysis tasks. Experiments show that Doreisa scales well to hundreds of nodes, allowing it to run on the Jean Zay supercomputer. Doreisa has been integrated with Parflow, ensuring that it can effectively analyze the data produced by large parallel numerical simulations.
 
 == Structure of this report
 
@@ -213,20 +213,20 @@ As the arguments to the functions in the graph are passed directly to the Ray re
 
 HPC bigger and bigger, lot of data produced. XTo per iteration.
 
-To avoid having to store all the data produced by the simulation on the disk at each iteration, the analytic can be performed online, as soon as the data is available. Data should be processed as close as possible to where it is produced @in-situ-visualization. As the analysis is performed online, it becomes possible to monitor the simulation in real time, allowing an early detection of potential problems.
+To avoid having to store all the data produced by the simulation on the disk at each iteration, the analysis can be performed online, as soon as the data is available. Data should be processed as close as possible to where it is produced @in-situ-visualization. As the analysis is performed online, it becomes possible to monitor the simulation in real time, allowing an early detection of potential problems.
 
 It is possible to take advantage of _in process_, _in situ_ and _in transit_ paradigms.
   - _In process_ analysis consists of analyzing the data directly in the process that produced it. No data movement is required at all.
   - _In situ_ analysis consists of analyzing the data on the node that produced it. The data may be copied, but the copy remains local: it is not transmitted across the network.
   - _In transit_ analysis consists of analyzing the data on another node than the one that produced it. Sending the data across the network is necessary.
 
-_In process_ analytic avoids data movements, but forces the simulation to wait during the analytic. Communications between nodes may be difficult to implement efficiently. _In situ_ analytic avoids useless data movements and allows the simulation to run while the data is being analyzed. However, it can steal resources such as CPU, memory or cache from the simulation, slowing it down. With _in transit_ analytic, the simulation is not disturbed as the data is analyzed remotely. The remote copy of all the data can be expensive, and additional nodes are required for the analytics.
+_In process_ analytics avoids data movements, but forces the simulation to wait during the analysis. Communications between nodes may be difficult to implement efficiently. _In situ_ analytics avoids useless data movements and allows the simulation to run while the data is being analyzed. However, it can steal resources such as CPU, memory or cache from the simulation, slowing it down. With _in transit_ analytics, the simulation is not disturbed as the data is analyzed remotely. The remote copy of all the data can be expensive, and additional nodes are required for the analytics.
 
 @flow-vr-in-situ explores a flexible solution to perform _in situ_ and _in transit_ analytics by allowing the user to define a graph of tasks to be executed for the analytics. The model is simple: a task corresponds to a process or a thread running an infinite loop. It has some input and some output, and is connected to other tasks. The computations are realized on resources that the simulation does not need, reducing the impact on the performances.
 
-#smallcaps[Damaris/Viz] @damaris focuses on _in situ_ visualization. It supports coupling the simulation with standard analysis pipelines as well as custom Python scripts for simple local analysis. Cores are dedicated to the analytic in order to make the execution time predictable.
+#smallcaps[Damaris/Viz] @damaris focuses on _in situ_ visualization. It supports coupling the simulation with standard analysis pipelines as well as custom Python scripts for simple local analysis. Cores are dedicated to the analysis in order to make the execution time predictable.
 
-#smallcaps[Tins] @tins is a task-based _in situ_ framework. The analytic is performed on dedicated helper cores that can also perform simulation tasks when no analytic is needed. #smallcaps[Tins] is developed with #smallcaps[Tbb] @tbb: the simulation should be adapted to support it, and the analytic code needs to be written in C++. It focuses on optimizing the analytic inside a node, but does not support inter-node communications.
+#smallcaps[Tins] @tins is a task-based _in situ_ framework. The analysis is performed on dedicated helper cores that can also perform simulation tasks when no analysis is needed. #smallcaps[Tins] is developed with #smallcaps[Tbb] @tbb: the simulation should be adapted to support it, and the analytic code needs to be written in C++. It focuses on optimizing the analysis inside a node, but does not support inter-node communications.
 
 === PDI
 
@@ -236,9 +236,9 @@ In this project, we will use the `Pycall` plugin, which allows making the data a
 
 === Deisa
 
-Deisa @deisa1 @deisa2 is a Dask-based solution for _in situ_ analytic. It can be coupled with a simulation without any code change, provided that the simulation supports PDI. The data produced by the simulation is represented as a Dask array that the user manipulates to define analytic tasks. Deisa supports a _contract_-based mechanism avoiding the overhead of handling the data chunks that are not required by the analytic.
+Deisa @deisa1 @deisa2 is a Dask-based solution for _in situ_ analytics. It can be coupled with a simulation without any code change, provided that the simulation supports PDI. The data produced by the simulation is represented as a Dask array that the user manipulates to define analytic tasks. Deisa supports a _contract_-based mechanism avoiding the overhead of handling the data chunks that are not required by the analysis.
 
-Deisa lacks the flexibility of dynamically adapting the analytic to the simulation results as the simulation runs: all the analytic tasks need to be defined at the beginning of the execution. The number of iterations that can be analyzed is also fixed, which can be problematic for systems where the number of iterations is not known in advance.
+Deisa lacks the flexibility of dynamically adapting the analysis to the simulation results as the simulation runs: all the analytic tasks need to be defined at the beginning of the execution. The number of iterations that can be analyzed is also fixed, which can be problematic for systems where the number of iterations is not known in advance.
 
 Its peak performance is inherently limited by the uses the Dask "distributed" scheduler, which is centralized and cannot handle more than 4000 tasks per second @dask-actors-motivation.
 
@@ -358,7 +358,7 @@ A sliding window mechanism allows keeping several versions of an array in memory
 
 This first solution has the drawback of being centralized: the head actor needs to collect an `ObjectRef` for each chunk produced by the simulation. Plus, the number of tasks represented in the Dask task graph will be of the same order of magnitude as the number of chunks, and the same Python process has to schedule all of them. For big simulations running on hundreds of nodes, the head node has to process tens of thousands of references and tasks at each iteration.
 
-Doreisa v1 is evaluated on Jean Zay. The same experiment is repeated several times, with a varying number of nodes. Each node is in charge of 40 chunks per iteration, so the total problem size grows linearly with the number of nodes (_weak scaling_: with a well-parallelized system, one would expect the execution time to remain constant or only slightly increase with the total number of nodes). The analytic consists of computing the mean of the distributed array. The execution time is averaged across 200 iterations, the first iterations being ignored to allow a warm-up phase. To avoid interfering with Doreisa, no actual MPI simulation is executed: the chunks of data are random numpy arrays. The size of the chunks is very small ($10 times 10$) to ensure that the cost of generating them and computing operations on them is negligible: the experiment aims at measuring the overhead of Doreisa (handling the task graph, scheduling the tasks, ...): if the analytic is too heavy, the actual computations will hide this overhead, which will only be noticed on large problem sizes. The same evaluation protocol will be used in the following sections, to ensure comparable results.
+Doreisa v1 is evaluated on Jean Zay. The same experiment is repeated several times, with a varying number of nodes. Each node is in charge of 40 chunks per iteration, so the total problem size grows linearly with the number of nodes (_weak scaling_: with a well-parallelized system, one would expect the execution time to remain constant or only slightly increase with the total number of nodes). The analysis consists of computing the mean of the distributed array. The execution time is averaged across 200 iterations, the first iterations being ignored to allow a warm-up phase. To avoid interfering with Doreisa, no actual MPI simulation is executed: the chunks of data are random numpy arrays. The size of the chunks is very small ($10 times 10$) to ensure that the cost of generating them and computing operations on them is negligible: the experiment aims at measuring the overhead of Doreisa (handling the task graph, scheduling the tasks, ...): if the analysis is too heavy, the actual computations will hide this overhead, which will only be noticed on large problem sizes. The same evaluation protocol will be used in the following sections, to ensure comparable results.
 
 @performance-naive-method shows the results obtained. The execution time is proportional to the number of nodes. In this situation, the centralized actor is clearly the bottleneck. More precisely, the analysis is composed of the following main parts:
   - Collecting the `ObjectRefs` produced by the workers.
@@ -586,7 +586,7 @@ The performance improvement of the iteration preparation mechanism is evaluated 
 
 When no iterations are prepared in advance (which approximately corresponds to not using the pipelining mechanism), the execution time ultimately starts increasing linearly with the number of nodes.
 
-As we increase the number of iterations prepared in advance, we notice that the execution time becomes smaller. When enough iterations are prepared, the expensive tasks fully overlap with the previous iterations and stop being a bottleneck: the performance stops improving. Pipelining over several iterations is necessary since the execution time of the analytic is very short. Using a more expensive simulation and analytic would reduce the number of iterations to prepare in advance.
+As we increase the number of iterations prepared in advance, we notice that the execution time becomes smaller. When enough iterations are prepared, the expensive tasks fully overlap with the previous iterations and stop being a bottleneck: the performance stops improving. Pipelining over several iterations is necessary since the execution time of the analysis is very short. Using a more expensive simulation and analysis would reduce the number of iterations to prepare in advance.
 
 With 128 simulation nodes, more than 30000 tasks are executed each second. This is an order of magnitude above the peak performance of the Dask centralized scheduler, which can handle at most 4000 tasks per second according to Dask's documentation @dask-actors-motivation.
 
@@ -594,7 +594,7 @@ With 128 simulation nodes, more than 30000 tasks are executed each second. This 
 
 Until now, the simulation nodes of the cluster were also in charge of analysing the data. Performing the analysis _in situ_ -- directly on the nodes producing the data -- can be a good solution, especially in situations where the simulation code runs on the GPU of the machine. In this case, it usually lets CPU cores idle, so they can be used by the analytics without overhead.
 
-However, some simulations run only on CPU, and performing the analysis of the data on the simulation nodes would disturb them in an unacceptable manner @damaris. With _in transit_ analytic, instead of having the simulation processes perform a local copy of the data, they now send it directly to _in transit_ nodes. They then return to the simulation, without being pertubed by the analytic tasks.
+However, some simulations run only on CPU, and performing the analysis of the data on the simulation nodes would disturb them in an unacceptable manner @damaris. With _in transit_ analytics, instead of having the simulation processes perform a local copy of the data, they now send it directly to _in transit_ nodes. They then return to the simulation, without being pertubed by the analytic tasks.
 
 #place(
   auto,
@@ -657,7 +657,7 @@ Doreisa was integrated to Parflow @parflow1 @parflow2 @parflow3 @parflow4 and ev
 
 The experiment consists of running Parflow with Doreisa on four simulation nodes and one head node. The simulation runs on the CPUs: the 112 cores of the node are used as follows:
   - 100 cores for the Parflow simulation (Parflow requires a square number).
-  - 11 cores for the Doreisa analytic.
+  - 11 cores for the Doreisa analysis.
   - 1 core for measurements.
 
 Each node is in charge of executing the simulation on a $240 times 240 times 240$ grid composed of $10 times 10 times 1$ chunks of size $24 times 24 times 240$. The analysis consists of computing the mean of the _pressure_ array produced by Parflow at each iteration.
@@ -676,7 +676,7 @@ Each node is in charge of executing the simulation on a $240 times 240 times 240
 
 @parflow-benchmark-plot shows the time spent by the simulation and the analytics, from the sixth to the ninth iteration of the simulation. The first iterations are not included since their duration is not stable enough, as parts of the system are still starting. Since the simulation is distributed, all the nodes may not start a new iteration exactly at the same time: the times are only measured on the head node and the simulation worker with rank 0.
 
-The overhead of analyzing the data with Doreisa is very small: at each iteration, the simulation is paused from about 2% to 10% of the time (this corresponds to the PDI line on @parflow-benchmark-plot[figure]). During this time, the chunks of data are copied to the Ray object store of the node. After this, the simulation starts its next iteration while the analytic runs in parallel.
+The overhead of analyzing the data with Doreisa is very small: at each iteration, the simulation is paused from about 2% to 10% of the time (this corresponds to the PDI line on @parflow-benchmark-plot[figure]). During this time, the chunks of data are copied to the Ray object store of the node. After this, the simulation starts its next iteration while the analysis runs in parallel.
 
 = Development of Doreisa <doreisa-development>
 
